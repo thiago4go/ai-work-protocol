@@ -4,6 +4,11 @@
 
 TEMPLATES_DIR="templates"
 
+# Ensure necessary directories exist
+mkdir -p plans/inprogress
+mkdir -p plans/backlog
+mkdir -p plans/completed
+
 # List templates if requested
 if [ "$1" == "list" ] || [ -z "$1" ]; then
     echo "📚 Templates Available:"
@@ -33,14 +38,14 @@ fi
 
 # Check WIP limits
 if [ "$TYPE" == "project" ]; then
-    ACTIVE_COUNT=$(find plans/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | wc -l)
+    ACTIVE_COUNT=$(find plans/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | wc -l || echo 0)
     if [ "$ACTIVE_COUNT" -ge 1 ]; then
         echo "⚠️  PROJECT limit reached (1 active). Creating in backlog instead."
         echo "   Complete current project or use 'make activate' to swap."
         OUTPUT_DIR="plans/backlog"
     fi
 elif [ "$TYPE" == "task" ]; then
-    ACTIVE_COUNT=$(find plans/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | wc -l)
+    ACTIVE_COUNT=$(find plans/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | wc -l || echo 0)
     if [ "$ACTIVE_COUNT" -ge 1 ]; then
         echo "⚠️  TASK limit reached (1 active). Creating in backlog instead."
         echo "   Complete current task or use 'make activate' to swap."
@@ -83,13 +88,15 @@ if [ -f "$BASE_TEMPLATE" ]; then
     # Copy template first
     cp "$TEMPLATE_PATH" "$TEMP_FILE"
     
-    # Extract workflow from base template and insert before ---INSTRUCTIONS---
-    if grep -q "^---INSTRUCTIONS---" "$TEMP_FILE"; then
-        # Extract base workflow
-        awk '/^---WORKFLOW-BASE---$/,/^---END-WORKFLOW-BASE---$/' "$BASE_TEMPLATE" > /tmp/base_workflow_$$.md
+    # Extract workflow from base template and insert at end of file
+    if [ -f "$BASE_TEMPLATE" ]; then
+        # Extract base workflow (without markers)
+        awk '/^---WORKFLOW-BASE---$/,/^---END-WORKFLOW-BASE---$/' "$BASE_TEMPLATE" | grep -v "^---WORKFLOW-BASE---$" | grep -v "^---END-WORKFLOW-BASE---$" > /tmp/base_workflow_$$.md
         
-        # Insert base workflow after ---INSTRUCTIONS--- line
-        sed -i '/^---INSTRUCTIONS---$/r /tmp/base_workflow_$$.md' "$TEMP_FILE"
+        # Append base workflow at end of file
+        echo "" >> "$TEMP_FILE"
+        echo "## Workflow from Base Template" >> "$TEMP_FILE"
+        cat /tmp/base_workflow_$$.md >> "$TEMP_FILE"
         
         # Clean up temp file
         rm -f /tmp/base_workflow_$$.md
@@ -118,12 +125,11 @@ awk '/^---INSTRUCTIONS---$/,/^---END-INSTRUCTIONS---$/' "$OUTPUT" | grep -v "^--
 echo ""
 echo "Open $OUTPUT to see full instructions and begin work."
 
-# Remove instructions and workflow markers from file
-sed -i '/^---WORKFLOW-BASE---$/,/^---END-WORKFLOW-BASE---$/d' "$OUTPUT"
+# Remove only instructions section from file (keep workflow)
 sed -i '/^---INSTRUCTIONS---$/,/^---END-INSTRUCTIONS---$/d' "$OUTPUT"
 
 # Auto-commit
-if [ "${AUTO_COMMIT:-true}" == "true" ]; then
+if [ "${AUTO_COMMIT:-true}" == "true" ] && git rev-parse --git-dir > /dev/null 2>&1; then
     git add "$OUTPUT" 2>/dev/null
     git commit -m "Create $TYPE: $TITLE" >/dev/null 2>&1 && echo "✅ Auto-committed"
 fi

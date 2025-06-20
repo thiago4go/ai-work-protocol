@@ -1,6 +1,27 @@
-# Memory System v2.0
+# Memory System for AI Work Protocol
 
+This is a RAG-integrated work system with AI guidance.
 RAG-integrated work system with PROJECT → TASK → STEP hierarchy.
+It uses the amazing mcp by [ttommyth](https://github.com/ttommyth/rag-memory-mcp) to manage memory and knowledge graph.
+
+How to use:
+
+```bash
+# clone this repo into as memory/ directory into your project
+git clone https://github.com/thiago4go/ai-work-protocol.git memory/ 
+```
+
+Prompt to initiate the system:
+
+```
+You are a stateless AI powered by RAG Knowledge Graph. 
+Without RAG = No memory = No context = No learning.
+
+READ THIS FIRST:
+Scan all memory/ directories
+THIS MUST BE FOLLOWED:
+memory/AI_PROTOCOL.md
+```
 
 ## Core Commands
 ```bash

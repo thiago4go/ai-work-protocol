@@ -4,6 +4,8 @@ This is a RAG-integrated work system with AI guidance.
 RAG-integrated work system with PROJECT → TASK → STEP hierarchy.
 It uses the amazing mcp by [ttommyth](https://github.com/ttommyth/rag-memory-mcp) to manage memory and knowledge graph.
 
+For UI/UX it uses the fantastic mcps from [angiejones](https://github.com/angiejones/mcp-selenium) and ui components from [ymadd](https://github.com/ymadd/shadcn-ui-mcp-server).
+
 How to use:
 
 ```bash

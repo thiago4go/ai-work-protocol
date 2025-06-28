@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Deep analysis task with 5W1H framework and comprehensive research"
+    "description": "Deep analysis task with 5W1H framework and comprehensive research",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -77,7 +78,7 @@
           "how": "Compare findings, identify gaps, propose solutions"
         },
         "rag_queries": [
-          "rag_memory___hybridSearch query=\"synthesis techniques for technical analysis\"",
+          "rag_memory___hybridSearch query=\"synthesis techniques for technical_analysis\"",
           "rag_memory___hybridSearch query=\"{{DOMAIN}} decision frameworks\"",
           "rag_memory___hybridSearch query=\"technical recommendation templates\""
         ],
@@ -138,6 +139,76 @@
           "This template is for DEEP understanding, not quick implementation.",
           "Take time to research thoroughly - the insights guide everything else."
         ]
+      }
+    },
+    "placeholders_guide": {
+      "ANALYSIS_GOAL": {
+        "type": "string",
+        "description": "The goal of the analysis."
+      },
+      "WHAT_ANALYZING": {
+        "type": "string",
+        "description": "What is being analyzed."
+      },
+      "WHY_IMPORTANT": {
+        "type": "string",
+        "description": "Why the analysis is important."
+      },
+      "WHO_STAKEHOLDERS": {
+        "type": "string",
+        "description": "Stakeholders involved."
+      },
+      "WHEN_TIMELINE": {
+        "type": "string",
+        "description": "Timeline for the analysis."
+      },
+      "WHERE_SCOPE": {
+        "type": "string",
+        "description": "Scope of the analysis."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      },
+      "COMPONENT_TO_ANALYZE": {
+        "type": "string",
+        "description": "Component to analyze."
+      },
+      "ANALYSIS_REASON": {
+        "type": "string",
+        "description": "Reason for analysis."
+      },
+      "TECH_STACK": {
+        "type": "string",
+        "description": "Technology stack."
+      },
+      "PROJECT_TYPE": {
+        "type": "string",
+        "description": "Type of project."
+      },
+      "DOMAIN": {
+        "type": "string",
+        "description": "Domain of the analysis."
+      },
+      "PROBLEM_DOMAIN": {
+        "type": "string",
+        "description": "Problem domain."
+      },
+      "KEY_CONCEPT_1": {
+        "type": "string",
+        "description": "First key concept."
+      },
+      "KEY_CONCEPT_2": {
+        "type": "string",
+        "description": "Second key concept."
+      },
+      "CONCEPT_1": {
+        "type": "string",
+        "description": "First concept for relationship."
+      },
+      "CONCEPT_2": {
+        "type": "string",
+        "description": "Second concept for relationship."
       }
     }
   }

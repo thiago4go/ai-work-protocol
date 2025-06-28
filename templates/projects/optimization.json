@@ -6,7 +6,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Performance optimization project"
+    "description": "Performance optimization project",
+    "template_version": "1.1"
   },
   "details": {
     "project_name": "{{TITLE}}",
@@ -22,11 +23,11 @@
       "Sustainable: No increase in resource usage/cost"
     ],
     "optimization_strategy": [
-      "Profile Current: Where is time actually spent? (1 day)",
-      "Quick Wins: Cache, indexes, obvious fixes (1 day)",
-      "Measure Impact: Did quick wins help? How much? (0.5 day)",
-      "Deep Changes: Algorithm/architecture if needed (2-3 days)",
-      "Validate: Load test, measure, tune (1 day)"
+      "Profile Current: Where is time actually spent?",
+      "Quick Wins: Cache, indexes, obvious fixes",
+      "Measure Impact: Did quick wins help? How much?",
+      "Deep Changes: Algorithm/architecture if needed",
+      "Validate: Load test, measure, tune"
     ],
     "performance_baseline": {
       "metric": "{{METRIC_NAME}}",
@@ -62,6 +63,76 @@
         "Optimize the right metric (user-facing)",
         "Document why each change helps"
       ]
+    },
+    "placeholders_guide": {
+      "FEATURE/SYSTEM": {
+        "type": "string",
+        "description": "Feature or system to optimize."
+      },
+      "TARGET_MULTIPLIER": {
+        "type": "string",
+        "description": "Target speed multiplier."
+      },
+      "CURRENT_METRIC": {
+        "type": "string",
+        "description": "Current performance metric."
+      },
+      "TARGET_METRIC": {
+        "type": "string",
+        "description": "Target performance metric."
+      },
+      "HOW_SLOWNESS_AFFECTS_USERS": {
+        "type": "string",
+        "description": "How slowness affects users."
+      },
+      "USE_CASE": {
+        "type": "string",
+        "description": "Specific use case for optimization."
+      },
+      "P95_TARGET": {
+        "type": "string",
+        "description": "Target P95 latency."
+      },
+      "METRIC_NAME": {
+        "type": "string",
+        "description": "Name of the performance metric."
+      },
+      "CURRENT_P50": {
+        "type": "string",
+        "description": "Current P50 value."
+      },
+      "CURRENT_P95": {
+        "type": "string",
+        "description": "Current P95 value."
+      },
+      "CURRENT_P99": {
+        "type": "string",
+        "description": "Current P99 value."
+      },
+      "BOTTLENECK_1": {
+        "type": "string",
+        "description": "First suspected bottleneck."
+      },
+      "IMPACT_1": {
+        "type": "string",
+        "description": "Impact of first bottleneck."
+      },
+      "BOTTLENECK_2": {
+        "type": "string",
+        "description": "Second suspected bottleneck."
+      },
+      "IMPACT_2": {
+        "type": "string",
+        "description": "Impact of second bottleneck."
+      },
+      "BOTTLENECK_3": {
+        "type": "string",
+        "description": "Third suspected bottleneck."
+      },
+      "IMPACT_3": {
+        "type": "string",
+        "description": "Impact of third bottleneck."
+      }
     }
   }
 }

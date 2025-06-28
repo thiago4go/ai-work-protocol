@@ -6,7 +6,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "UI Design PROJECT with MCP tools integration"
+    "description": "UI Design PROJECT with MCP tools integration",
+    "template_version": "1.1"
   },
   "details": {
     "project_name": "{{TITLE}}",
@@ -25,11 +26,11 @@
       "Responsive: Works on mobile, tablet, desktop"
     ],
     "ui_ux_task_sequence": [
-      "Research & Wireframing: Analyze competitors, create low-fi designs (1-2 days)",
-      "Component Selection: Choose shadcn/ui components (0.5 days)",
-      "Prototype: Build interactive prototype (2-3 days)",
-      "User Testing: Validate with target users (1-2 days)",
-      "Refinement: Iterate based on feedback (1-2 days)"
+      "Research & Wireframing: Analyze competitors, create low-fi designs",
+      "Component Selection: Choose shadcn/ui components",
+      "Prototype: Build interactive prototype",
+      "User Testing: Validate with target users",
+      "Refinement: Iterate based on feedback"
     ],
     "mcp_tool_integration": {
       "selenium": "Visual testing, user flow automation, screenshot documentation",
@@ -49,6 +50,40 @@
         "Create automated visual tests for each major feature",
         "Store screenshots and test results in RAG for future reference"
       ]
+    },
+    "placeholders_guide": {
+      "PROJECT_GOAL": {
+        "type": "string",
+        "description": "A concise statement of the project's primary objective."
+      },
+      "DESIGN_CHALLENGE": {
+        "type": "string",
+        "description": "Description of the design challenge."
+      },
+      "TARGET_USERS": {
+        "type": "string",
+        "description": "Description of the target user group."
+      },
+      "BRAND_CONSTRAINTS": {
+        "type": "string",
+        "description": "Brand guidelines or constraints."
+      },
+      "KEY_TASKS": {
+        "type": "string",
+        "description": "Key tasks users should be able to complete."
+      },
+      "TIMELINE": {
+        "type": "string",
+        "description": "Estimated project timeline (e.g., '2 weeks', '1 month')."
+      },
+      "BUDGET": {
+        "type": "string",
+        "description": "Project budget."
+      },
+      "TECH_CONSTRAINTS": {
+        "type": "string",
+        "description": "Technical limitations."
+      }
     }
   }
 }

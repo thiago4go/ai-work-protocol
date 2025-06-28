@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "User Testing TASK with Selenium automation support"
+    "description": "User Testing TASK with Selenium automation support",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -27,45 +28,37 @@
     "steps": [
       {
         "description": "Test Planning",
-        "estimate": "2h",
         "status": "pending"
       },
       {
         "description": "Environment Setup",
-        "estimate": "1h",
         "status": "pending"
       },
       {
         "description": "Pilot Testing",
-        "estimate": "2h",
         "status": "pending"
       },
       {
         "description": "User Sessions",
-        "estimate": "6h",
         "status": "pending"
       },
       {
         "description": "Automated Testing",
-        "estimate": "3h",
         "status": "pending"
       },
       {
         "description": "Analysis & Reporting",
-        "estimate": "4h",
         "status": "pending"
       }
     ],
     "test_scenarios": [
       {
         "task": "{{TASK_DESCRIPTION}}",
-        "success_criteria": "{{SUCCESS_METRIC}}",
-        "time_limit": "{{TIME_LIMIT}}"
+        "success_criteria": "{{SUCCESS_METRIC}}"
       },
       {
         "task": "{{TASK_DESCRIPTION}}",
-        "success_criteria": "{{SUCCESS_METRIC}}",
-        "time_limit": "{{TIME_LIMIT}}"
+        "success_criteria": "{{SUCCESS_METRIC}}"
       }
     ],
     "definition_of_done": [
@@ -92,6 +85,36 @@
         "Document everything, even small issues",
         "Use both qualitative and quantitative data"
       ]
+    },
+    "placeholders_guide": {
+      "TEST_TYPE": {
+        "type": "string",
+        "description": "Type of user test (moderated/unmoderated/automated)."
+      },
+      "FEATURE_NAME": {
+        "type": "string",
+        "description": "Name of the feature under test."
+      },
+      "USER_DEMOGRAPHICS": {
+        "type": "string",
+        "description": "Demographics of target users."
+      },
+      "PARTICIPANT_COUNT": {
+        "type": "string",
+        "description": "Number of participants."
+      },
+      "TASK_DESCRIPTION": {
+        "type": "string",
+        "description": "Description of the task."
+      },
+      "SUCCESS_METRIC": {
+        "type": "string",
+        "description": "Success metric for the task."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      }
     }
   }
 }

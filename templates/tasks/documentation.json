@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Documentation creation task"
+    "description": "Documentation creation task",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -32,33 +33,27 @@
     "steps": [
       {
         "description": "Outline: List all questions docs must answer",
-        "status": "pending",
-        "est": "30m"
+        "status": "pending"
       },
       {
         "description": "Quick Start: Minimal working example",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
         "description": "Core Concepts: Explain key ideas simply",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
         "description": "Reference: Complete API/configuration",
-        "status": "pending",
-        "est": "2h"
+        "status": "pending"
       },
       {
         "description": "Troubleshooting: Common issues + solutions",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
         "description": "Test: Have someone follow the docs",
-        "status": "pending",
-        "est": "30m"
+        "status": "pending"
       }
     ],
     "documentation_structure": [
@@ -84,6 +79,40 @@
         "Include \"why\" not just \"how\"",
         "Add diagrams where helpful"
       ]
+    },
+    "placeholders_guide": {
+      "SYSTEM/FEATURE": {
+        "type": "string",
+        "description": "System or feature to document."
+      },
+      "AUDIENCE": {
+        "type": "string",
+        "description": "Target audience for the documentation."
+      },
+      "USER_GOAL": {
+        "type": "string",
+        "description": "User goal enabled by the documentation."
+      },
+      "TASK": {
+        "type": "string",
+        "description": "Task the audience should complete."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      },
+      "TECHNICAL_LEVEL": {
+        "type": "string",
+        "description": "Technical level of the audience."
+      },
+      "README/API/TUTORIAL/GUIDE": {
+        "type": "string",
+        "description": "Format of the documentation."
+      },
+      "WHERE_PUBLISHED": {
+        "type": "string",
+        "description": "Location where documentation will be published."
+      }
     }
   }
 }

@@ -1,45 +1,72 @@
 {
-  "metadata": {
-    "type": "project",
-    "status": "active",
-    "priority": "high",
-    "created": "{{DATE}}",
-    "updated": "{{DATE}}",
-    "title": "{{TITLE}}",
-    "description": "Standard PROJECT template"
+  "project_name": "{{TITLE}}",
+  "goal": "{{PROJECT_GOAL}}",
+  "context": {
+    "problem": "{{PROBLEM_DESCRIPTION}}",
+    "solution": "{{PROPOSED_SOLUTION}}",
+    "users": "{{TARGET_USERS}}"
   },
-  "details": {
-    "project_name": "{{TITLE}}",
-    "goal": "{{PROJECT_GOAL}}",
-    "context": {
-      "problem": "{{PROBLEM_DESCRIPTION}}",
-      "solution": "{{PROPOSED_SOLUTION}}",
-      "users": "{{TARGET_USERS}}"
+  "success_criteria": [
+    "Functionality: {{CORE_FEATURE}} works for {{TARGET_USER}}",
+    "Quality: Zero critical bugs, <2s response time",
+    "Adoption: {{TARGET_USER}} can complete {{KEY_TASK}} without help"
+  ],
+  "value_driven_task_sequence": [
+    "Discovery: What's the smallest thing that proves value?",
+    "MVP: Build just that → Get feedback",
+    "Iterate: Fix top 3 issues from feedback",
+    "Scale: Only after MVP validated",
+    "Polish: Documentation, edge cases, performance"
+  ],
+  "constraints": {
+    "timeline": "{{TIMELINE}}",
+    "resources": "{{RESOURCES}}",
+    "dependencies": "{{DEPENDENCIES}}"
+  },
+  "instructions": {
+    "inherits_from": "base_project.md workflow",
+    "project_specific": [
+      "Focus on clear problem definition before solution",
+      "Break down into discrete, testable features",
+      "Each task should produce working code or clear decisions"
+    ]
+  },
+  "placeholders_guide": {
+    "PROJECT_GOAL": {
+      "type": "string",
+      "description": "A concise statement of the project's primary objective."
     },
-    "success_criteria": [
-      "Functionality: {{CORE_FEATURE}} works for {{TARGET_USER}}",
-      "Quality: Zero critical bugs, <2s response time",
-      "Adoption: {{TARGET_USER}} can complete {{KEY_TASK}} without help"
-    ],
-    "value_driven_task_sequence": [
-      "Discovery: What's the smallest thing that proves value? (1-2 days)",
-      "MVP: Build just that → Get feedback (2-3 days)",
-      "Iterate: Fix top 3 issues from feedback (1-2 days)",
-      "Scale: Only after MVP validated (2-3 days)",
-      "Polish: Documentation, edge cases, performance (1-2 days)"
-    ],
-    "constraints": {
-      "timeline": "{{TIMELINE}}",
-      "resources": "{{RESOURCES}}",
-      "dependencies": "{{DEPENDENCIES}}"
+    "PROBLEM_DESCRIPTION": {
+      "type": "string",
+      "description": "Detailed description of the problem this project aims to solve."
     },
-    "instructions": {
-      "inherits_from": "base_project.md workflow",
-      "project_specific": [
-        "Focus on clear problem definition before solution",
-        "Break down into discrete, testable features",
-        "Each task should produce working code or clear decisions"
-      ]
+    "PROPOSED_SOLUTION": {
+      "type": "string",
+      "description": "Brief overview of the proposed solution."
+    },
+    "TARGET_USERS": {
+      "type": "string",
+      "description": "Description of the target user group."
+    },
+    "CORE_FEATURE": {
+      "type": "string",
+      "description": "The main feature to be implemented."
+    },
+    "KEY_TASK": {
+      "type": "string",
+      "description": "A key task users should be able to complete."
+    },
+    "TIMELINE": {
+      "type": "string",
+      "description": "Estimated project timeline (e.g., '2 weeks', '1 month')."
+    },
+    "RESOURCES": {
+      "type": "string",
+      "description": "Required resources (e.g., '2 developers', 'cloud budget')."
+    },
+    "DEPENDENCIES": {
+      "type": "string",
+      "description": "External dependencies or prerequisites."
     }
   }
 }

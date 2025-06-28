@@ -6,7 +6,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "System integration project"
+    "description": "System integration project",
+    "template_version": "1.1"
   },
   "details": {
     "project_name": "{{TITLE}}",
@@ -22,11 +23,11 @@
       "Observable: Monitoring, alerting, and debugging tools ready"
     ],
     "integration_plan": [
-      "Define Contract: API spec, data schema, error codes (1 day)",
-      "Build Mock: Fake integration for testing (1 day)",
-      "Implement Core: Basic happy path working (2 days)",
-      "Add Resilience: Retries, circuit breakers, backpressure (2 days)",
-      "Production Ready: Monitoring, alerts, runbooks (1 day)"
+      "Define Contract: API spec, data schema, error codes",
+      "Build Mock: Fake integration for testing",
+      "Implement Core: Basic happy path working",
+      "Add Resilience: Retries, circuit breakers, backpressure",
+      "Production Ready: Monitoring, alerts, runbooks"
     ],
     "technical_design": {
       "protocol": "{{REST/GraphQL/gRPC/Message Queue}}",
@@ -48,6 +49,56 @@
         "Add monitoring from day one",
         "Document everything (runbooks!)"
       ]
+    },
+    "placeholders_guide": {
+      "SYSTEM_A": {
+        "type": "string",
+        "description": "Name of System A."
+      },
+      "SYSTEM_B": {
+        "type": "string",
+        "description": "Name of System B."
+      },
+      "PURPOSE": {
+        "type": "string",
+        "description": "Purpose of the integration."
+      },
+      "DATA_TYPE": {
+        "type": "string",
+        "description": "Type of data being transferred."
+      },
+      "EXPECTED_TRANSACTIONS": {
+        "type": "string",
+        "description": "Expected transactions per day."
+      },
+      "DATA_SIZE": {
+        "type": "string",
+        "description": "Size of data per transaction."
+      },
+      "MAX_LATENCY": {
+        "type": "string",
+        "description": "Maximum acceptable latency."
+      },
+      "REST/GraphQL/gRPC/Message Queue": {
+        "type": "string",
+        "description": "Integration protocol."
+      },
+      "AUTH_METHOD": {
+        "type": "string",
+        "description": "Authentication method."
+      },
+      "JSON/XML/Protobuf": {
+        "type": "string",
+        "description": "Data format."
+      },
+      "RETRY_STRATEGY": {
+        "type": "string",
+        "description": "Error handling/retry strategy."
+      },
+      "RATE_LIMIT": {
+        "type": "string",
+        "description": "Rate limit of System B."
+      }
     }
   }
 }

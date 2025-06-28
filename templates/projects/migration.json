@@ -6,7 +6,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Data or system migration project"
+    "description": "Data or system migration project",
+    "template_version": "1.1"
   },
   "details": {
     "project_name": "{{TITLE}}",
@@ -22,12 +23,12 @@
       "Timely: Completed within {{TIME_WINDOW}}"
     ],
     "migration_strategy": [
-      "Analyze Source: Document schema, count records (1 day)",
-      "Build Pipeline: Create migration scripts + validation (2 days)",
-      "Test Migration: Run on subset, verify accuracy (1 day)",
-      "Dry Run: Full migration to staging (1 day)",
-      "Execute: Production migration with monitoring (1 day)",
-      "Validate: Confirm all data, cleanup source (1 day)"
+      "Analyze Source: Document schema, count records",
+      "Build Pipeline: Create migration scripts + validation",
+      "Test Migration: Run on subset, verify accuracy",
+      "Dry Run: Full migration to staging",
+      "Execute: Production migration with monitoring",
+      "Validate: Confirm all data, cleanup source"
     ],
     "migration_details": {
       "data_types": "{{TABLES/COLLECTIONS/FILES}}",
@@ -53,6 +54,60 @@
         "Monitor throughout migration",
         "Keep source until verified"
       ]
+    },
+    "placeholders_guide": {
+      "WHAT": {
+        "type": "string",
+        "description": "What is being migrated."
+      },
+      "SOURCE": {
+        "type": "string",
+        "description": "Source system/location."
+      },
+      "DESTINATION": {
+        "type": "string",
+        "description": "Destination system/location."
+      },
+      "DATA_SIZE": {
+        "type": "string",
+        "description": "Size of data being migrated."
+      },
+      "STORAGE_SIZE": {
+        "type": "string",
+        "description": "Storage size."
+      },
+      "ACCEPTABLE_DOWNTIME": {
+        "type": "string",
+        "description": "Acceptable downtime window."
+      },
+      "BUSINESS_IMPACT_IF_FAILED": {
+        "type": "string",
+        "description": "Business impact if migration fails."
+      },
+      "TIME_WINDOW": {
+        "type": "string",
+        "description": "Time window for completion."
+      },
+      "TABLES/COLLECTIONS/FILES": {
+        "type": "string",
+        "description": "Types of data being migrated."
+      },
+      "ANY_SCHEMA_CHANGES": {
+        "type": "string",
+        "description": "Any schema changes during migration."
+      },
+      "WHAT_DEPENDS_ON_THIS_DATA": {
+        "type": "string",
+        "description": "Dependencies on this data."
+      },
+      "BACKUP_TIME": {
+        "type": "string",
+        "description": "Time of backup."
+      },
+      "STRATEGY": {
+        "type": "string",
+        "description": "Migration strategy (e.g., 'zero-downtime')."
+      }
     }
   }
 }

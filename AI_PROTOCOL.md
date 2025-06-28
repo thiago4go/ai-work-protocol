@@ -74,7 +74,7 @@ READ: CURRENT_IMPLEMENTATION.json (parse as JSON)
 ### Scenario 2: Working on a Step
 **WHAT TO DO**:
 1. Find current step: Read task file (parse JSON).
-2. Update start time: Modify `CURRENT_IMPLEMENTATION.json` (update JSON, then write file).
+2. Update progress: Modify `CURRENT_IMPLEMENTATION.json` (update JSON, then write file).
 3. Query RAG for guidance: Use your RAG tool to search for guidance based on the step description.
 4. DO THE ACTUAL WORK.
 5. Mark step complete: Update task file with completion status (update JSON, then write file).
@@ -88,19 +88,20 @@ READ: CURRENT_IMPLEMENTATION.json (parse as JSON)
 3. Read template: Use your file reading tool for `templates/projects/{{ type }}.json` or `templates/tasks/{{ type }}.json`.
 4. Fill in details: Create new project/task content (JSON) based on template and provided title/details.
 5. Write new file: Use your file writing tool to the determined path.
-6. Update mission: Modify `CURRENT_IMPLEMENTATION.json` (update JSON, then write file).
-7. Store project/task entity in RAG (use your RAG tools).
+6. **IMPORTANT**: If creating a project, ensure all project details are filled and `CURRENT_IMPLEMENTATION.json` is updated to reflect the fully defined project *before* creating any tasks for it.
+7. Update mission: Modify `CURRENT_IMPLEMENTATION.json` (update JSON, then write file).
+8. Store project/task entity in RAG (use your RAG tools).
 
 ## PRAGMATIC UPDATE RULES
 
 ### After Step Completion (REQUIRED)
-**WHAT**: Mark step as done, record duration.
-**WHY**: Track progress and velocity patterns.
+**WHAT**: Mark step as done.
+**WHY**: Track progress.
 **HOW**: Update task file (update JSON, then write file) + `CURRENT_IMPLEMENTATION.json` (update JSON, then write file).
-**EXAMPLE**: In JSON, change `"status": "inprogress"` to `"status": "completed", "duration": "45m"`.
+**EXAMPLE**: In JSON, change `"status": "inprogress"` to `"status": "completed"`.
 
 ### During Active Work (HELPFUL)
-**WHAT**: Update current state every 30 minutes.
+**WHAT**: Update current state periodically.
 **WHY**: Maintain context for interruptions.
 **HOW**: Modify `CURRENT_IMPLEMENTATION.json` with current status (update JSON, then write file).
 **SKIP IF**: Quick tasks or uninterrupted work.
@@ -147,12 +148,7 @@ rag_memory___createEntities entities=[
       "domain": "{{ work_domain | default('general') }}",
       "status": "{{ current_status }}",
       "context": "{{ context_summary | truncate(500) }}",
-      "tags": {{ relevant_tags | to_json }},
-      "metrics": {
-        "estimated_duration": "{{ estimated_time }}",
-        "actual_duration": "{{ actual_time | default('in_progress') }}",
-        "complexity": "{{ complexity_rating | default('medium') }}"
-      }
+      "tags": {{ relevant_tags | to_json }}
     }
   }
 ]
@@ -189,7 +185,6 @@ rag_memory___hybridSearch query="{{ final_query }}"
 3. **RAG = LONG-TERM MEMORY (MANDATORY)**:
    - Past projects/tasks/steps
    - Patterns and solutions
-   - Velocity and estimates
    - Continuous learning
 
 ## DIRECTORY STRUCTURE

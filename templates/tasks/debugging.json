@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Systematic debugging task"
+    "description": "Systematic debugging task",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -32,28 +33,23 @@
     "steps": [
       {
         "description": "Reproduce locally with minimal test case",
-        "status": "pending",
-        "est": "30m"
+        "status": "pending"
       },
       {
         "description": "Binary search: Find last working version",
-        "status": "pending",
-        "est": "45m"
+        "status": "pending"
       },
       {
         "description": "Isolate variables: What exactly triggers it?",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
-        "description": "Form hypothesis \u2192 Test \u2192 Document results",
-        "status": "pending",
-        "est": "2h"
+        "description": "Form hypothesis ",
+        "status": "pending"
       },
       {
-        "description": "Implement fix \u2192 Verify \u2192 Add regression test",
-        "status": "pending",
-        "est": "1h"
+        "description": "Implement fix ",
+        "status": "pending"
       }
     ],
     "debug_toolkit": {
@@ -77,6 +73,56 @@
         "Use binary search to isolate",
         "Keep debug log of what tried"
       ]
+    },
+    "placeholders_guide": {
+      "SYSTEM/FEATURE": {
+        "type": "string",
+        "description": "System or feature being debugged."
+      },
+      "PROBLEM_BEHAVIOR": {
+        "type": "string",
+        "description": "Description of the problematic behavior."
+      },
+      "USER_IMPACT": {
+        "type": "string",
+        "description": "Impact of the problem on users."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      },
+      "WHAT_IS_BROKEN": {
+        "type": "string",
+        "description": "What is broken."
+      },
+      "WHEN_STARTED": {
+        "type": "string",
+        "description": "When the problem started."
+      },
+      "HOW_OFTEN": {
+        "type": "string",
+        "description": "Frequency of the problem."
+      },
+      "LOG_LOCATION": {
+        "type": "string",
+        "description": "Location of logs."
+      },
+      "METRIC": {
+        "type": "string",
+        "description": "Metric to compare."
+      },
+      "LAST_KNOWN_GOOD": {
+        "type": "string",
+        "description": "Last known good version."
+      },
+      "FIRST_BROKEN": {
+        "type": "string",
+        "description": "First broken version."
+      },
+      "KEY_FUNCTIONS": {
+        "type": "string",
+        "description": "Key functions for debugging."
+      }
     }
   }
 }

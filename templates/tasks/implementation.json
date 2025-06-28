@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Implementation task template"
+    "description": "Implementation task template",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -29,33 +30,27 @@
     "steps": [
       {
         "description": "Setup: Load design from RAG + verify dependencies",
-        "status": "pending",
-        "estimated_time": "20m"
+        "status": "pending"
       },
       {
         "description": "Core logic: Implement main functionality (no edge cases)",
-        "status": "pending",
-        "estimated_time": "2h"
+        "status": "pending"
       },
       {
         "description": "Happy path test: Verify basic functionality works",
-        "status": "pending",
-        "estimated_time": "30m"
+        "status": "pending"
       },
       {
         "description": "Edge cases: Handle errors + validate inputs",
-        "status": "pending",
-        "estimated_time": "1h"
+        "status": "pending"
       },
       {
         "description": "Integration: Connect to existing code + full test suite",
-        "status": "pending",
-        "estimated_time": "1h"
+        "status": "pending"
       },
       {
         "description": "Polish: Refactor + document + commit working code",
-        "status": "pending",
-        "estimated_time": "30m"
+        "status": "pending"
       }
     ],
     "success_criteria": [
@@ -85,6 +80,48 @@
         "Performance validated",
         "Documentation complete"
       ]
+    },
+    "placeholders_guide": {
+      "IMPLEMENTATION_GOAL": {
+        "type": "string",
+        "description": "The specific goal of this implementation task."
+      },
+      "TARGET_USER": {
+        "type": "string",
+        "description": "The target user for this feature."
+      },
+      "USER_GOAL": {
+        "type": "string",
+        "description": "What the user wants to achieve."
+      },
+      "SPECIFIC_ACTION": {
+        "type": "string",
+        "description": "A specific action the user can perform."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      },
+      "BENEFIT": {
+        "type": "string",
+        "description": "The benefit for the user."
+      },
+      "MEASURABLE_OUTCOME": {
+        "type": "string",
+        "description": "A measurable outcome of the implementation."
+      },
+      "APPROACH": {
+        "type": "string",
+        "description": "The technical approach for implementation."
+      },
+      "DEPENDENCIES": {
+        "type": "string",
+        "description": "Technical dependencies."
+      },
+      "TEST_STRATEGY": {
+        "type": "string",
+        "description": "Testing strategy."
+      }
     }
   }
 }

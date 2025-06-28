@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Style Guide Documentation TASK for design system consistency"
+    "description": "Style Guide Documentation TASK for design system consistency",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -27,32 +28,26 @@
     "steps": [
       {
         "description": "Foundation Documentation",
-        "estimate": "3h",
         "status": "pending"
       },
       {
         "description": "Component Catalog",
-        "estimate": "4h",
         "status": "pending"
       },
       {
         "description": "Pattern Library",
-        "estimate": "3h",
         "status": "pending"
       },
       {
         "description": "Visual Examples",
-        "estimate": "4h",
         "status": "pending"
       },
       {
         "description": "Code Guidelines",
-        "estimate": "2h",
         "status": "pending"
       },
       {
         "description": "Documentation Site",
-        "estimate": "3h",
         "status": "pending"
       }
     ],
@@ -87,6 +82,28 @@
         "Keep it updated - stale guides hurt more than help",
         "Consider your audience (devs vs designers)"
       ]
+    },
+    "placeholders_guide": {
+      "BRAND_REFERENCE": {
+        "type": "string",
+        "description": "Reference to brand guidelines."
+      },
+      "DEVELOPERS_DESIGNERS_PMS": {
+        "type": "string",
+        "description": "Target audience for the style guide."
+      },
+      "VISUAL_COMPONENTS_PATTERNS": {
+        "type": "string",
+        "description": "Scope of visual components and patterns."
+      },
+      "WEB_PDF_FIGMA": {
+        "type": "string",
+        "description": "Format of the style guide."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      }
     }
   }
 }

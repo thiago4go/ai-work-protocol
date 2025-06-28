@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Visual Regression Testing TASK using Selenium MCP"
+    "description": "Visual Regression Testing TASK using Selenium MCP",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -25,32 +26,26 @@
     "steps": [
       {
         "description": "Setup Test Environment",
-        "estimate": "1h",
         "status": "pending"
       },
       {
         "description": "Create/Update Baseline",
-        "estimate": "3h",
         "status": "pending"
       },
       {
         "description": "Implement Test Suite",
-        "estimate": "4h",
         "status": "pending"
       },
       {
         "description": "Run Regression Tests",
-        "estimate": "2h",
         "status": "pending"
       },
       {
         "description": "Document Findings",
-        "estimate": "2h",
         "status": "pending"
       },
       {
         "description": "Update Test Coverage",
-        "estimate": "1h",
         "status": "pending"
       }
     ],
@@ -78,6 +73,24 @@
         "Document why each baseline was approved",
         "Keep history of visual changes in RAG"
       ]
+    },
+    "placeholders_guide": {
+      "TEST_SCOPE": {
+        "type": "string",
+        "description": "Scope of the visual regression test."
+      },
+      "BASELINE_VERSION": {
+        "type": "string",
+        "description": "Baseline version for comparison."
+      },
+      "CRITICAL_USER_PATHS": {
+        "type": "string",
+        "description": "Critical user paths to test."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      }
     }
   }
 }

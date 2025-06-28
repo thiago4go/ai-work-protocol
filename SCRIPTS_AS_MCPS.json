@@ -1,0 +1,194 @@
+{
+  "scripts": [
+    {
+      "name": "status.sh",
+      "description": "Displays the current status of active projects and tasks, including WIP limits and basic statistics.",
+      "usage": "run_shell_command(command='scripts/status.sh')",
+      "arguments": [],
+      "expected_output": "Human-readable text output detailing active project/task, progress, and general next steps.",
+      "ai_usage": "Call this at the beginning of a session or when needing an overview of the current work state.",
+      "related_ai_workflow": [
+        "AI_PROTOCOL.md: Scenario 1: Starting Fresh Conversation (Step 1)"
+      ]
+    },
+    {
+      "name": "create.sh",
+      "description": "Creates a new project or task file from a specified template. Handles WIP limits by moving new items to the backlog if limits are reached. Populates the new JSON file with initial metadata and performs variable substitutions.",
+      "usage": "run_shell_command(command='scripts/create.sh <type> <template> \"<title>\" [parent_project]')",
+      "arguments": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": true,
+          "values": ["project", "task"]
+        },
+        {
+          "name": "template",
+          "type": "string",
+          "required": true,
+          "description": "The name of the template (e.g., standard, bugfix, implementation, discovery). Corresponds to a .json file in templates/projects/ or templates/tasks/."
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "The title of the new project or task. Must be enclosed in quotes if it contains spaces."
+        },
+        {
+          "name": "parent_project",
+          "type": "string",
+          "required": false,
+          "description": "For tasks, the slug (filename without .json) of the parent project. If omitted for a task, the script attempts to auto-detect the active project."
+        }
+      ],
+      "expected_output": "Confirmation message of creation, including the filename. May include warnings if WIP limits are hit.",
+      "ai_usage": "Call this when a new project or task needs to be initiated. After creation, the AI should read the newly created JSON file to fill in detailed content.",
+      "related_ai_workflow": [
+        "AI_PROTOCOL.md: Scenario 1: Starting Fresh Conversation (Step 4)",
+        "AI_PROTOCOL.md: Scenario 3: Creating New Project/Task"
+      ],
+      "important_note": "After creating a project, the AI MUST ensure all project details are filled and CURRENT_IMPLEMENTATION.json is updated to reflect the fully defined project *before* creating any tasks for it."
+    },
+    {
+      "name": "activate.sh",
+      "description": "Moves a specified project or task from the working/backlog/ directory to working/inprogress/. If an item of the same type is already active, it will be swapped (moved to working/backlog/). Ensures only one project and one task are active at a time.",
+      "usage": "run_shell_command(command='scripts/activate.sh <file_pattern>')",
+      "arguments": [
+        {
+          "name": "file_pattern",
+          "type": "string",
+          "required": true,
+          "description": "A pattern to match the filename (or part of it) of the project/task in the backlog. Example: 2025-06-28_my-project."
+        }
+      ],
+      "expected_output": "Confirmation of activation and any swaps that occurred. Warnings if an active project is required for a task.",
+      "ai_usage": "Call this when a new project/task needs to be brought into active work, or when swapping between backlog items.",
+      "related_ai_workflow": []
+    },
+    {
+      "name": "complete.sh",
+      "description": "Marks the current active task as completed and moves its JSON file from working/inprogress/ to working/completed/. Updates the task's status within its JSON content.",
+      "usage": "run_shell_command(command='scripts/complete.sh [task_filename]')",
+      "arguments": [
+        {
+          "name": "task_filename",
+          "type": "string",
+          "required": false,
+          "description": "The filename (e.g., 2025-06-28_my-task.json) of the task to complete. If omitted, the script attempts to auto-detect the currently active task."
+        }
+      ],
+      "expected_output": "Confirmation of task completion and archiving. Provides guidance for the AI to update CURRENT_IMPLEMENTATION.json and store lessons learned in RAG.",
+      "ai_usage": "Call this when all steps of an active task are finished. Follow the output guidance to update state and RAG.",
+      "related_ai_workflow": [
+        "AI_PROTOCOL.md: Pragmatic Update Rules: After Step Completion"
+      ]
+    },
+    {
+      "name": "dashboard.sh",
+      "description": "Provides a visual, human-readable dashboard of the current work progress, including active project/task titles, progress bars, and overall statistics. Primarily for human consumption.",
+      "usage": "run_shell_command(command='scripts/dashboard.sh')",
+      "arguments": [],
+      "expected_output": "Formatted text output representing the dashboard.",
+      "ai_usage": "Infrequently, for a high-level overview, or if specifically requested by a human user to display progress.",
+      "related_ai_workflow": []
+    },
+    {
+      "name": "git_utils.sh",
+      "description": "This script contains utility functions for Git operations (e.g., auto_commit, checkpoint_commit). It is primarily sourced by other scripts (create.sh, activate.sh, complete.sh) and not intended for direct execution as a standalone command by the AI.",
+      "usage": "Not for direct run_shell_command by the AI. Its functions are called internally by other workflow scripts.",
+      "arguments": [],
+      "expected_output": "None (functions are sourced).",
+      "ai_usage": "The AI should be aware that other scripts handle Git commits automatically. It does not need to call this directly.",
+      "related_ai_workflow": []
+    },
+    {
+      "name": "list",
+      "description": "Lists all available project and task templates.",
+      "usage": "run_shell_command(command='scripts/create.sh list')",
+      "arguments": [],
+      "expected_output": "Formatted text output listing available templates.",
+      "ai_usage": "Call this to discover available templates when creating new projects or tasks.",
+      "related_ai_workflow": []
+    },
+    {
+      "name": "backlog",
+      "description": "Lists all projects and tasks currently in the backlog.",
+      "usage": "run_shell_command(command='scripts/backlog.sh')",
+      "arguments": [],
+      "expected_output": "Formatted text output listing backlog items.",
+      "ai_usage": "Call this to view queued work and identify items to activate.",
+      "related_ai_workflow": []
+    },
+    {
+      "name": "suggest",
+      "description": "Provides intelligent suggestions for the next action based on current state and RAG memory. Analyzes patterns, blockers, and successful approaches.",
+      "usage": "Conceptual AI workflow, not a direct script call.",
+      "arguments": [
+        {
+          "name": "focus",
+          "type": "string",
+          "required": false,
+          "description": "Optional focus area for suggestions (e.g., 'estimation accuracy')."
+        }
+      ],
+      "expected_output": "AI-generated suggestions and relevant RAG queries.",
+      "ai_usage": "The AI should perform RAG queries and analyze CURRENT_IMPLEMENTATION.json and CRITICAL_FINDINGS.md to generate suggestions.",
+      "related_ai_workflow": []
+    },
+    {
+      "name": "checkpoint",
+      "description": "Saves the complete work state to RAG for recovery or context switching. Creates a RAG document with full context, an entity tracking checkpoint metadata, and a Git commit.",
+      "usage": "Conceptual AI workflow, not a direct script call.",
+      "arguments": [
+        {
+          "name": "reason",
+          "type": "string",
+          "required": false,
+          "description": "Optional reason for creating the checkpoint (e.g., 'Switching to urgent bug')."
+        }
+      ],
+      "expected_output": "Confirmation of checkpoint creation and RAG storage.",
+      "ai_usage": "The AI should update CURRENT_IMPLEMENTATION.json, store its state in RAG, and trigger a Git commit.",
+      "related_ai_workflow": []
+    },
+    {
+      "name": "learn",
+      "description": "Analyzes recent work to identify patterns, estimate accuracy, and solutions. Extracts duration patterns, common blockers, successful approaches, and meta-patterns.",
+      "usage": "Conceptual AI workflow, not a direct script call.",
+      "arguments": [
+        {
+          "name": "focus",
+          "type": "string",
+          "required": false,
+          "description": "Optional focus area for learning (e.g., 'estimation accuracy')."
+        }
+      ],
+      "expected_output": "AI-generated insights and stored patterns in RAG.",
+      "ai_usage": "The AI should review completed steps, identify patterns, store them in RAG, and update CRITICAL_FINDINGS.md.",
+      "related_ai_workflow": []
+    },
+    {
+      "name": "findings",
+      "description": "Searches for critical findings and lessons learned from RAG. The CRITICAL_FINDINGS.md file only contains an index - full data is in RAG.",
+      "usage": "Conceptual AI workflow, not a direct script call.",
+      "arguments": [
+        {
+          "name": "keyword",
+          "type": "string",
+          "required": false,
+          "description": "Optional keyword to search for specific topics."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "Optional type to filter findings (e.g., 'blocker', 'pattern')."
+        }
+      ],
+      "expected_output": "AI-generated search results from RAG.",
+      "ai_usage": "The AI should perform RAG queries to retrieve relevant findings and lessons learned.",
+      "related_ai_workflow": []
+    }
+  ],
+  "ai_interaction_principle": "The AI should use these scripts as its primary interface for managing the workflow. After executing a script, the AI should always read CURRENT_IMPLEMENTATION.json and query RAG to re-establish its full context and determine the next logical step, as per AI_PROTOCOL.md."
+}

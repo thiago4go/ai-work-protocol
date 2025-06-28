@@ -7,13 +7,14 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Test creation or improvement task"
+    "description": "Test creation or improvement task",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
     "objective_value": {
       "what": "Add tests for {{COMPONENT/FEATURE}}",
-      "why": "Prevent {{SPECIFIC_REGRESSION}} + enable confident changes",
+      "why": "Prevent {{SPECIFIC_REGRESSION}} + enable confident confident changes",
       "done_when": "Coverage >{{TARGET_COVERAGE}}% + edge cases tested"
     },
     "context": {
@@ -32,33 +33,27 @@
     "steps": [
       {
         "description": "Map input space: List all possible inputs/states",
-        "status": "pending",
-        "est": "30m"
+        "status": "pending"
       },
       {
         "description": "Happy paths: Basic success scenarios",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
         "description": "Edge cases: Boundaries, nulls, empty, huge",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
         "description": "Error paths: What should fail gracefully",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
         "description": "Performance tests: Add benchmarks if needed",
-        "status": "pending",
-        "est": "30m"
+        "status": "pending"
       },
       {
         "description": "Run with coverage: Verify we hit targets",
-        "status": "pending",
-        "est": "20m"
+        "status": "pending"
       }
     ],
     "test_categories": {
@@ -74,13 +69,6 @@
         "examples": [
           "{{WORKFLOW_1}}: Verify {{INTEGRATION_1}}",
           "{{WORKFLOW_2}}: Verify {{INTEGRATION_2}}"
-        ]
-      },
-      "e2e_tests": {
-        "description": "only critical paths",
-        "examples": [
-          "{{USER_JOURNEY_1}}",
-          "{{USER_JOURNEY_2}}"
         ]
       }
     },
@@ -99,6 +87,88 @@
         "Mock external dependencies",
         "Test edge cases thoroughly"
       ]
+    },
+    "placeholders_guide": {
+      "COMPONENT/FEATURE": {
+        "type": "string",
+        "description": "Component or feature to add tests for."
+      },
+      "SPECIFIC_REGRESSION": {
+        "type": "string",
+        "description": "Specific regression to prevent."
+      },
+      "TARGET_COVERAGE": {
+        "type": "string",
+        "description": "Target test coverage percentage."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      },
+      "CURRENT_COVERAGE": {
+        "type": "string",
+        "description": "Current test coverage."
+      },
+      "FRAMEWORK": {
+        "type": "string",
+        "description": "Test framework being used."
+      },
+      "UNIT/INTEGRATION/E2E": {
+        "type": "string",
+        "description": "Focus of the tests (Unit/Integration/E2E)."
+      },
+      "UNIT_TARGET": {
+        "type": "string",
+        "description": "Unit test coverage target."
+      },
+      "FUNCTION_1": {
+        "type": "string",
+        "description": "First function to test."
+      },
+      "BEHAVIOR_1": {
+        "type": "string",
+        "description": "Behavior of first function."
+      },
+      "FUNCTION_2": {
+        "type": "string",
+        "description": "Second function to test."
+      },
+      "BEHAVIOR_2": {
+        "type": "string",
+        "description": "Behavior of second function."
+      },
+      "EDGE_CASE_1": {
+        "type": "string",
+        "description": "First edge case."
+      },
+      "WORKFLOW_1": {
+        "type": "string",
+        "description": "First integration workflow."
+      },
+      "INTEGRATION_1": {
+        "type": "string",
+        "description": "First integration."
+      },
+      "WORKFLOW_2": {
+        "type": "string",
+        "description": "Second integration workflow."
+      },
+      "INTEGRATION_2": {
+        "type": "string",
+        "description": "Second integration."
+      },
+      "USER_JOURNEY_1": {
+        "type": "string",
+        "description": "First user journey."
+      },
+      "USER_JOURNEY_2": {
+        "type": "string",
+        "description": "Second user journey."
+      },
+      "TIME_LIMIT": {
+        "type": "string",
+        "description": "Time limit for unit tests."
+      }
     }
   }
 }

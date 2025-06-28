@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Wireframing TASK for low-fidelity design exploration"
+    "description": "Wireframing TASK for low-fidelity design exploration",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -27,32 +28,26 @@
     "steps": [
       {
         "description": "Competitor Analysis",
-        "estimate": "2h",
         "status": "pending"
       },
       {
         "description": "Information Architecture",
-        "estimate": "2h",
         "status": "pending"
       },
       {
         "description": "Sketch Exploration",
-        "estimate": "3h",
         "status": "pending"
       },
       {
         "description": "Digital Wireframes",
-        "estimate": "4h",
         "status": "pending"
       },
       {
         "description": "Responsive Variations",
-        "estimate": "3h",
         "status": "pending"
       },
       {
         "description": "Flow Documentation",
-        "estimate": "2h",
         "status": "pending"
       }
     ],
@@ -80,6 +75,28 @@
         "Always annotate your thinking",
         "Test ideas quickly before investing in details"
       ]
+    },
+    "placeholders_guide": {
+      "FEATURE_NAME": {
+        "type": "string",
+        "description": "Name of the feature or page being wireframed."
+      },
+      "USER_GOALS": {
+        "type": "string",
+        "description": "User goals for the feature."
+      },
+      "CONTENT_TYPES": {
+        "type": "string",
+        "description": "Types of content to be included."
+      },
+      "REFERENCE_SITES": {
+        "type": "string",
+        "description": "Reference websites for inspiration."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      }
     }
   }
 }

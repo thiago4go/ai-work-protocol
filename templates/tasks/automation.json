@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Process automation task"
+    "description": "Process automation task",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -18,7 +19,7 @@
     },
     "context": {
       "project": "{{PARENT_PROJECT}}",
-      "current_process": "{{MANUAL_STEPS}} taking {{CURRENT_TIME}}",
+      "current_process": "{{MANUAL_STEPS}}",
       "target": "Reduce to {{TARGET_TIME}} with {{AUTOMATION_LEVEL}}% automation",
       "triggers": "{{WHEN_RUNS}}"
     },
@@ -32,40 +33,34 @@
     "steps": [
       {
         "description": "Document current manual process in detail",
-        "status": "pending",
-        "estimate": "30m"
+        "status": "pending"
       },
       {
         "description": "Identify automation boundaries + exceptions",
-        "status": "pending",
-        "estimate": "30m"
+        "status": "pending"
       },
       {
         "description": "Build core automation for happy path",
-        "status": "pending",
-        "estimate": "2h"
+        "status": "pending"
       },
       {
         "description": "Add error handling + alerting",
-        "status": "pending",
-        "estimate": "1h"
+        "status": "pending"
       },
       {
         "description": "Test with real data + edge cases",
-        "status": "pending",
-        "estimate": "1h"
+        "status": "pending"
       },
       {
         "description": "Create runbook for failures",
-        "status": "pending",
-        "estimate": "30m"
+        "status": "pending"
       }
     ],
     "process_mapping": {
       "current_manual_steps": [
-        "{{MANUAL_STEP_1}} ",
-        "{{MANUAL_STEP_2}} ",
-        "{{MANUAL_STEP_3}} "
+        "{{MANUAL_STEP_1}}",
+        "{{MANUAL_STEP_2}}",
+        "{{MANUAL_STEP_3}}"
       ],
       "exceptions_requiring_human": [
         "{{EXCEPTION_1}}",
@@ -87,6 +82,96 @@
         "Make it observable (logs/metrics)",
         "Document for operators"
       ]
+    },
+    "placeholders_guide": {
+      "MANUAL_PROCESS": {
+        "type": "string",
+        "description": "Description of the manual process to automate."
+      },
+      "TIME_SAVED": {
+        "type": "string",
+        "description": "Estimated time saved per week."
+      },
+      "ERROR_TYPE": {
+        "type": "string",
+        "description": "Type of errors to reduce."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      },
+      "MANUAL_STEPS": {
+        "type": "string",
+        "description": "Description of current manual steps."
+      },
+      "CURRENT_TIME": {
+        "type": "string",
+        "description": "Current time taken by the manual process."
+      },
+      "TARGET_TIME": {
+        "type": "string",
+        "description": "Target time after automation."
+      },
+      "AUTOMATION_LEVEL": {
+        "type": "string",
+        "description": "Target automation level."
+      },
+      "WHEN_RUNS": {
+        "type": "string",
+        "description": "Triggers for automation."
+      },
+      "PROCESS_TYPE": {
+        "type": "string",
+        "description": "Type of process."
+      },
+      "MANUAL_STEP_1": {
+        "type": "string",
+        "description": "First manual step."
+      },
+      "MANUAL_STEP_2": {
+        "type": "string",
+        "description": "Second manual step."
+      },
+      "MANUAL_STEP_3": {
+        "type": "string",
+        "description": "Third manual step."
+      },
+      "METHOD_1": {
+        "type": "string",
+        "description": "Automation method for step 1."
+      },
+      "METHOD_2": {
+        "type": "string",
+        "description": "Automation method for step 2."
+      },
+      "METHOD_3": {
+        "type": "string",
+        "description": "Automation method for step 3."
+      },
+      "EXCEPTION_1": {
+        "type": "string",
+        "description": "First exception requiring human intervention."
+      },
+      "EXCEPTION_2": {
+        "type": "string",
+        "description": "Second exception requiring human intervention."
+      },
+      "CURRENT_ERROR": {
+        "type": "string",
+        "description": "Current error rate."
+      },
+      "TARGET_ERROR": {
+        "type": "string",
+        "description": "Target error rate."
+      },
+      "SUCCESS_TARGET": {
+        "type": "string",
+        "description": "Success target percentage."
+      },
+      "PAYBACK_PERIOD": {
+        "type": "string",
+        "description": "Payback period for ROI."
+      }
     }
   }
 }

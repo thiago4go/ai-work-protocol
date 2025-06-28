@@ -6,7 +6,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Bug fixing project"
+    "description": "Bug fixing project",
+    "template_version": "1.1"
   },
   "details": {
     "project_name": "{{TITLE}}",
@@ -23,11 +24,11 @@
       "Root Cause: Documented to prevent similar bugs"
     ],
     "fix_strategy": [
-      "Reproduce Reliably: Document exact steps (0.5 day)",
-      "Isolate Root Cause: Debug to find actual problem (1-2 days)",
-      "Implement Fix: Minimal change that solves issue (1 day)",
-      "Add Regression Test: Automated test for this case (0.5 day)",
-      "Verify Fix: Test in multiple scenarios (0.5 day)"
+      "Reproduce Reliably: Document exact steps",
+      "Isolate Root Cause: Debug to find actual problem",
+      "Implement Fix: Minimal change that solves issue",
+      "Add Regression Test: Automated test for this case",
+      "Verify Fix: Test in multiple scenarios"
     ],
     "bug_details": {
       "steps_to_reproduce": [
@@ -52,6 +53,52 @@
         "Make minimal necessary change",
         "Document for future prevention"
       ]
+    },
+    "placeholders_guide": {
+      "BUG_DESCRIPTION": {
+        "type": "string",
+        "description": "Description of the bug."
+      },
+      "SEVERITY_LEVEL": {
+        "type": "string",
+        "description": "Severity level of the bug."
+      },
+      "USERS_AFFECTED": {
+        "type": "string",
+        "description": "Number or description of users affected."
+      },
+      "WHAT_USERS_SEE": {
+        "type": "string",
+        "description": "What users observe."
+      },
+      "WHEN_STARTED": {
+        "type": "string",
+        "description": "When the bug started."
+      },
+      "HOW_OFTEN": {
+        "type": "string",
+        "description": "Frequency of the bug."
+      },
+      "STEP_1": {
+        "type": "string",
+        "description": "Step 1 to reproduce."
+      },
+      "STEP_2": {
+        "type": "string",
+        "description": "Step 2 to reproduce."
+      },
+      "STEP_3": {
+        "type": "string",
+        "description": "Step 3 to reproduce."
+      },
+      "EXPECTED_BEHAVIOR": {
+        "type": "string",
+        "description": "Expected behavior."
+      },
+      "ACTUAL_BEHAVIOR": {
+        "type": "string",
+        "description": "Actual behavior."
+      }
     }
   }
 }

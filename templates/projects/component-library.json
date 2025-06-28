@@ -6,7 +6,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Component Library PROJECT for reusable UI components"
+    "description": "Component Library PROJECT for reusable UI components",
+    "template_version": "1.1"
   },
   "details": {
     "project_name": "{{TITLE}}",
@@ -25,11 +26,11 @@
       "Testing: 100% visual regression coverage with Selenium"
     ],
     "component_development_sequence": [
-      "Foundation Setup: Design tokens, themes, utilities (1-2 days)",
-      "Core Components: Buttons, forms, cards (3-4 days)",
-      "Layout Components: Grid, containers, navigation (2-3 days)",
-      "Complex Components: Data tables, modals, wizards (3-4 days)",
-      "Documentation Site: Usage guide and examples (2-3 days)"
+      "Foundation Setup: Design tokens, themes, utilities",
+      "Core Components: Buttons, forms, cards",
+      "Layout Components: Grid, containers, navigation",
+      "Complex Components: Data tables, modals, wizards",
+      "Documentation Site: Usage guide and examples"
     ],
     "component_standards": {
       "naming": "{{NAMING_CONVENTION}}",
@@ -58,6 +59,40 @@
         "Version carefully - breaking changes hurt adoption",
         "Test across all target projects"
       ]
+    },
+    "placeholders_guide": {
+      "PROJECT_GOAL": {
+        "type": "string",
+        "description": "A concise statement of the project's primary objective."
+      },
+      "DESIGN_SYSTEM_NAME": {
+        "type": "string",
+        "description": "Name of the design system."
+      },
+      "TARGET_PROJECTS": {
+        "type": "string",
+        "description": "Projects where components will be used."
+      },
+      "COMPONENT_CATEGORIES": {
+        "type": "string",
+        "description": "Categories of components to be included."
+      },
+      "COMPONENT_COUNT": {
+        "type": "string",
+        "description": "Number of reusable components."
+      },
+      "PROJECT_COUNT": {
+        "type": "string",
+        "description": "Number of projects where components will be adopted."
+      },
+      "NAMING_CONVENTION": {
+        "type": "string",
+        "description": "Component naming convention."
+      },
+      "BROWSER_MATRIX": {
+        "type": "string",
+        "description": "Browser support matrix."
+      }
     }
   }
 }

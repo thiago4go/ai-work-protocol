@@ -6,7 +6,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Responsive Design PROJECT for multi-device optimization"
+    "description": "Responsive Design PROJECT for multi-device optimization",
+    "template_version": "1.1"
   },
   "details": {
     "project_name": "{{TITLE}}",
@@ -25,12 +26,12 @@
       "Testing: Automated tests for all breakpoints"
     ],
     "responsive_design_task_sequence": [
-      "Device Audit: Analyze current state across devices (1-2 days)",
-      "Breakpoint Strategy: Define responsive system (1 day)",
-      "Component Adaptation: Make components responsive (3-4 days)",
-      "Layout Optimization: Improve layouts per device (2-3 days)",
-      "Performance Tuning: Optimize for mobile (2-3 days)",
-      "Cross-Device Testing: Validate on real devices (2-3 days)"
+      "Device Audit: Analyze current state across devices",
+      "Breakpoint Strategy: Define responsive system",
+      "Component Adaptation: Make components responsive",
+      "Layout Optimization: Improve layouts per device",
+      "Performance Tuning: Optimize for mobile",
+      "Cross-Device Testing: Validate on real devices"
     ],
     "technical_approach": {
       "css_strategy": "{{CSS_APPROACH}}",
@@ -74,6 +75,64 @@
         "Performance is part of responsive design",
         "Document breakpoint decisions in RAG"
       ]
+    },
+    "placeholders_guide": {
+      "PROJECT_GOAL": {
+        "type": "string",
+        "description": "A concise statement of the project's primary objective."
+      },
+      "CURRENT_RESPONSIVE_ISSUES": {
+        "type": "string",
+        "description": "Description of current responsive issues."
+      },
+      "DEVICE_MATRIX": {
+        "type": "string",
+        "description": "Target device matrix."
+      },
+      "DEVICE_USAGE_STATS": {
+        "type": "string",
+        "description": "User device usage statistics."
+      },
+      "PERFORMANCE_TARGETS": {
+        "type": "string",
+        "description": "Performance targets."
+      },
+      "DEVICE_COUNT": {
+        "type": "string",
+        "description": "Number of target devices."
+      },
+      "LOAD_TIME": {
+        "type": "string",
+        "description": "Target load time."
+      },
+      "CSS_APPROACH": {
+        "type": "string",
+        "description": "CSS strategy."
+      },
+      "GRID_FRAMEWORK": {
+        "type": "string",
+        "description": "Grid framework."
+      },
+      "IMAGE_OPTIMIZATION": {
+        "type": "string",
+        "description": "Image optimization strategy."
+      },
+      "FONT_STRATEGY": {
+        "type": "string",
+        "description": "Font loading strategy."
+      },
+      "LEGACY_REQUIREMENTS": {
+        "type": "string",
+        "description": "Legacy browser support requirements."
+      },
+      "FRAMEWORK_CONSTRAINTS": {
+        "type": "string",
+        "description": "Framework-specific constraints."
+      },
+      "TIMELINE": {
+        "type": "string",
+        "description": "Estimated project timeline."
+      }
     }
   }
 }

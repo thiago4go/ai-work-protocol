@@ -6,7 +6,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Research spike or investigation project"
+    "description": "Research spike or investigation project",
+    "template_version": "1.1"
   },
   "details": {
     "project_name": "{{TITLE}}",
@@ -22,11 +23,11 @@
       "Actionable: Clear next steps with effort estimates"
     ],
     "investigation_plan": [
-      "Form Hypotheses: List 3 possible answers + implications (0.5 day)",
-      "Design Experiments: How to test each hypothesis (0.5 day)",
-      "Gather Evidence: Run experiments, collect data (2-3 days)",
-      "Analyze Results: Compare findings, identify patterns (1 day)",
-      "Document Decision: Clear recommendation + rationale (0.5 day)"
+      "Form Hypotheses: List 3 possible answers + implications",
+      "Design Experiments: How to test each hypothesis",
+      "Gather Evidence: Run experiments, collect data",
+      "Analyze Results: Compare findings, identify patterns",
+      "Document Decision: Clear recommendation + rationale"
     ],
     "hypotheses_to_test": [
       {
@@ -56,6 +57,52 @@
         "Create artifacts (benchmarks, POCs) for future reference",
         "Focus on decision enablement"
       ]
+    },
+    "placeholders_guide": {
+      "KEY_QUESTION": {
+        "type": "string",
+        "description": "The key question to be answered."
+      },
+      "WHAT_WE_DONT_KNOW": {
+        "type": "string",
+        "description": "What is currently unknown."
+      },
+      "BUSINESS_IMPACT": {
+        "type": "string",
+        "description": "Business impact if the question is not answered."
+      },
+      "WAITING_DECISIONS": {
+        "type": "string",
+        "description": "Decisions blocked by this unknown."
+      },
+      "MAX_DAYS": {
+        "type": "string",
+        "description": "Maximum number of days for the investigation."
+      },
+      "HYPOTHESIS_1": {
+        "type": "string",
+        "description": "First hypothesis."
+      },
+      "TEST_METHOD_1": {
+        "type": "string",
+        "description": "Test method for first hypothesis."
+      },
+      "HYPOTHESIS_2": {
+        "type": "string",
+        "description": "Second hypothesis."
+      },
+      "TEST_METHOD_2": {
+        "type": "string",
+        "description": "Test method for second hypothesis."
+      },
+      "HYPOTHESIS_3": {
+        "type": "string",
+        "description": "Third hypothesis."
+      },
+      "TEST_METHOD_3": {
+        "type": "string",
+        "description": "Test method for third hypothesis."
+      }
     }
   }
 }

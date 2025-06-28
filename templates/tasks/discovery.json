@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Research and discovery task template"
+    "description": "Research and discovery task template",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -27,28 +28,23 @@
     "steps": [
       {
         "description": "Query RAG for \"{{TITLE}}\" patterns ",
-        "status": "pending",
-        "est": "30m"
+        "status": "pending"
       },
       {
         "description": "Define problem constraints ",
-        "status": "pending",
-        "est": "45m"
+        "status": "pending"
       },
       {
         "description": "Research 2-3 solution approaches ",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
         "description": "Test riskiest assumption ",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
         "description": "Document decision + rationale ",
-        "status": "pending",
-        "est": "30m"
+        "status": "pending"
       }
     ],
     "success_criteria_decision_gates": [
@@ -66,6 +62,20 @@
         "Link findings to project goals",
         "If no prior art found, document that explicitly"
       ]
+    },
+    "placeholders_guide": {
+      "TASK_OBJECTIVE": {
+        "type": "string",
+        "description": "The objective of the discovery task."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      },
+      "RESEARCH_TOPIC": {
+        "type": "string",
+        "description": "The topic of research."
+      }
     }
   }
 }

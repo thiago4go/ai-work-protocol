@@ -6,7 +6,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "UX Improvement PROJECT focusing on user experience optimization"
+    "description": "UX Improvement PROJECT focusing on user experience optimization",
+    "template_version": "1.1"
   },
   "details": {
     "project_name": "{{TITLE}}",
@@ -25,11 +26,11 @@
       "Accessibility: Meet WCAG 2.1 {{LEVEL}} standards"
     ],
     "ux_improvement_task_sequence": [
-      "User Research: Understand current pain points (2-3 days)",
-      "Journey Mapping: Document current vs ideal flows (1-2 days)",
-      "Design Solutions: Create improved workflows (2-3 days)",
-      "Prototype Testing: Validate improvements (2-3 days)",
-      "Implementation: Roll out improvements (3-4 days)"
+      "User Research: Understand current pain points",
+      "Journey Mapping: Document current vs ideal flows",
+      "Design Solutions: Create improved workflows",
+      "Prototype Testing: Validate improvements",
+      "Implementation: Roll out improvements"
     ],
     "research_methods": [
       "Quantitative: Analytics, A/B tests, performance metrics",
@@ -50,6 +51,64 @@
         "Consider gradual rollout to minimize disruption",
         "Document all user feedback in RAG"
       ]
+    },
+    "placeholders_guide": {
+      "PROJECT_GOAL": {
+        "type": "string",
+        "description": "A concise statement of the project's primary objective."
+      },
+      "CURRENT_UX_ISSUES": {
+        "type": "string",
+        "description": "Description of current UX issues."
+      },
+      "DESIRED_UX_IMPROVEMENTS": {
+        "type": "string",
+        "description": "Description of desired UX improvements."
+      },
+      "USER_PAIN_POINTS": {
+        "type": "string",
+        "description": "List of user pain points."
+      },
+      "UX_METRICS": {
+        "type": "string",
+        "description": "Key UX metrics to track."
+      },
+      "USABILITY_METRIC": {
+        "type": "string",
+        "description": "Specific usability metric."
+      },
+      "KEY_TASK": {
+        "type": "string",
+        "description": "A key task users should be able to complete."
+      },
+      "PERCENTAGE": {
+        "type": "string",
+        "description": "Percentage improvement."
+      },
+      "ERROR_REDUCTION": {
+        "type": "string",
+        "description": "Percentage error reduction."
+      },
+      "SATISFACTION_SCORE": {
+        "type": "string",
+        "description": "Target satisfaction score."
+      },
+      "LEVEL": {
+        "type": "string",
+        "description": "WCAG level (A, AA, AAA)."
+      },
+      "DISRUPTION_TOLERANCE": {
+        "type": "string",
+        "description": "Tolerance for user disruption."
+      },
+      "TECH_CONSTRAINTS": {
+        "type": "string",
+        "description": "Technical constraints."
+      },
+      "TIMELINE": {
+        "type": "string",
+        "description": "Estimated project timeline."
+      }
     }
   }
 }

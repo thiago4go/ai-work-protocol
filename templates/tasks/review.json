@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Code or design review task"
+    "description": "Code or design review task",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -27,33 +28,28 @@
       "rag_memory___hybridSearch query=\"{{COMPONENT}} coding standards patterns\"",
       "rag_memory___searchNodes query=\"type:standard category:{{REVIEW_TYPE}}\"",
       "# Find common issues",
-      "rag_memory___searchNodes query=\"type:review_finding component:{{COMPONENT}}\"
+      "rag_memory___searchNodes query=\"type:review_finding component:{{COMPONENT}}\""
     ],
     "steps": [
       {
         "description": "Understand context: Why was this built?",
-        "status": "pending",
-        "est": "20m"
+        "status": "pending"
       },
       {
         "description": "Functionality: Does it meet requirements?",
-        "status": "pending",
-        "est": "45m"
+        "status": "pending"
       },
       {
         "description": "Edge cases: What could break this?",
-        "status": "pending",
-        "est": "45m"
+        "status": "pending"
       },
       {
         "description": "Quality: Performance, security, maintainability",
-        "status": "pending",
-        "est": "1h"
+        "status": "pending"
       },
       {
         "description": "Document findings + discuss with author",
-        "status": "pending",
-        "est": "30m"
+        "status": "pending"
       }
     ],
     "review_checklist": {
@@ -87,6 +83,48 @@
         "Suggest improvements, not just problems",
         "Be constructive and respectful"
       ]
+    },
+    "placeholders_guide": {
+      "WHAT_TO_REVIEW": {
+        "type": "string",
+        "description": "What is being reviewed."
+      },
+      "PURPOSE": {
+        "type": "string",
+        "description": "Purpose of the review."
+      },
+      "QUALITY_ASPECT": {
+        "type": "string",
+        "description": "Quality aspect to ensure."
+      },
+      "DEADLINE": {
+        "type": "string",
+        "description": "Review deadline."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      },
+      "CODE/DESIGN/ARCHITECTURE": {
+        "type": "string",
+        "description": "Type of review."
+      },
+      "FILES/COMPONENTS/SYSTEMS": {
+        "type": "string",
+        "description": "Scope of the review."
+      },
+      "AUTHOR": {
+        "type": "string",
+        "description": "Author of the reviewed item."
+      },
+      "COMPONENT": {
+        "type": "string",
+        "description": "Component being reviewed."
+      },
+      "REVIEW_TYPE": {
+        "type": "string",
+        "description": "Type of review."
+      }
     }
   }
 }

@@ -7,7 +7,8 @@
     "created": "{{DATE}}",
     "updated": "{{DATE}}",
     "title": "{{TITLE}}",
-    "description": "Interactive Prototyping TASK with shadcn/ui components"
+    "description": "Interactive Prototyping TASK with shadcn/ui components",
+    "template_version": "1.1"
   },
   "details": {
     "task_name": "{{TITLE}}",
@@ -25,32 +26,26 @@
     "steps": [
       {
         "description": "Component Research",
-        "estimate": "2h",
         "status": "pending"
       },
       {
         "description": "Build Layout Structure",
-        "estimate": "3h",
         "status": "pending"
       },
       {
         "description": "Add Interactivity",
-        "estimate": "4h",
         "status": "pending"
       },
       {
         "description": "Visual Polish",
-        "estimate": "2h",
         "status": "pending"
       },
       {
         "description": "Automated Testing Setup",
-        "estimate": "3h",
         "status": "pending"
       },
       {
         "description": "User Flow Documentation",
-        "estimate": "2h",
         "status": "pending"
       }
     ],
@@ -78,6 +73,32 @@
         "Use Selenium to verify all interactions work",
         "Document component customizations for reuse"
       ]
+    },
+    "placeholders_guide": {
+      "FEATURE_NAME": {
+        "type": "string",
+        "description": "Name of the feature."
+      },
+      "USER_TYPE": {
+        "type": "string",
+        "description": "Type of user."
+      },
+      "USER_GOAL": {
+        "type": "string",
+        "description": "User goal."
+      },
+      "USER_BENEFIT": {
+        "type": "string",
+        "description": "User benefit."
+      },
+      "DESIGN_REFERENCE": {
+        "type": "string",
+        "description": "Reference to design specifications."
+      },
+      "PARENT_PROJECT": {
+        "type": "string",
+        "description": "The parent project of this task."
+      }
     }
   }
 }

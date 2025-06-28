@@ -38,13 +38,13 @@ fi
 
 # Check WIP limits
 if [ "$TYPE" == "project" ]; then
-    ACTIVE_COUNT=$(find working/inprogress -name "*.json" -exec grep -l "\"type\": \"project\"" {} \; 2>/dev/null | wc -l || echo 0)
+    ACTIVE_COUNT=$(find working/inprogress -name "*.json" -exec jq -e '.metadata.type == "project"' {} >/dev/null \; -print | wc -l || echo 0)
     if [ "$ACTIVE_COUNT" -ge 1 ]; then
         echo "⚠️  PROJECT limit reached (1 active). Creating in backlog instead."
         OUTPUT_DIR="working/backlog"
     fi
 elif [ "$TYPE" == "task" ]; then
-    ACTIVE_COUNT=$(find working/inprogress -name "*.json" -exec grep -l "\"type\": \"task\"" {} \; 2>/dev/null | wc -l || echo 0)
+    ACTIVE_COUNT=$(find working/inprogress -name "*.json" -exec jq -e '.metadata.type == "task"' {} >/dev/null \; -print | wc -l || echo 0)
     if [ "$ACTIVE_COUNT" -ge 1 ]; then
         echo "⚠️  TASK limit reached (1 active). Creating in backlog instead."
         OUTPUT_DIR="working/backlog"
@@ -52,7 +52,14 @@ elif [ "$TYPE" == "task" ]; then
     
     # Auto-detect parent if not provided
     if [ -z "$PARENT_PROJECT" ]; then
-        PARENT_PROJECT_FILE=$(find working/inprogress -name "*.json" -exec grep -l "\"type\": \"project\"" {} \; 2>/dev/null | head -1)
+        PARENT_PROJECT_FILE=""
+        for file in $(find working/inprogress -name "*.json"); do
+            if jq -e '.metadata.type == "project"' "$file" >/dev/null 2>&1; then
+                PARENT_PROJECT_FILE="$file"
+                break
+            fi
+        done
+
         if [ -z "$PARENT_PROJECT_FILE" ]; then
             echo "❌ No active PROJECT found. Create a PROJECT first."
             exit 1
@@ -88,20 +95,20 @@ TEMPLATE_CONTENT=$(cat "$TEMPLATE_PATH")
 # Merge with base template if it exists
 if [ -f "$BASE_TEMPLATE_PATH" ]; then
     BASE_CONTENT=$(cat "$BASE_TEMPLATE_PATH")
-    # Use jq to merge, specifically adding workflow_guidance from base to the top-level
-    # This assumes the specific template is the primary object and base provides workflow_guidance
+    # Merge specific template content with base workflow guidance
+    # This assumes specific template has metadata and details, and base has workflow_guidance
     MERGED_CONTENT=$(echo "$TEMPLATE_CONTENT" | jq --argjson base_wf "$BASE_CONTENT" '. + $base_wf')
 else
     MERGED_CONTENT="$TEMPLATE_CONTENT"
 fi
 
 # Perform variable replacements using jq
-# Use --arg to pass shell variables safely to jq
+# This is done in a separate step for clarity and robustness
 FINAL_CONTENT=$(echo "$MERGED_CONTENT" | \
     jq --arg date_iso "$DATE_ISO" \
        --arg title "$TITLE" \
        --arg parent_project "$PARENT_PROJECT" \
-       '.metadata.created = $date_iso | .metadata.updated = $date_iso | .metadata.title = $title | if .metadata.type == "project" then .details.project_name = $title elif .metadata.type == "task" then .details.task_name = $title | .metadata.parent_project = $parent_project else . end')
+       '.metadata.created = $date_iso | .metadata.updated = $date_iso | .metadata.title = $title | .details.project_name = ($title | select(. != null)) | .details.task_name = ($title | select(. != null)) | .metadata.parent_project = ($parent_project | select(. != null))')
 
 # Write the final JSON content to the output file
 echo "$FINAL_CONTENT" > "$OUTPUT"

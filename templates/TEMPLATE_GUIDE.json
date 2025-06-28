@@ -1,0 +1,186 @@
+{
+  "title": "Template Guide for LLMs",
+  "description": "This guide provides a summary of the available project and task templates to help you select the most appropriate one for your needs. Each template is designed to be a starting point and should be customized with specific details.",
+  "projects": {
+    "description": "Projects define the 'what' and 'why' of the work. They are high-level containers for tasks.",
+    "categories": {
+      "Development": [
+        {
+          "template": "standard",
+          "what": "A new feature or product.",
+          "why": "To deliver new value to users.",
+          "how": "Follows a standard discovery, MVP, iteration, and polish sequence."
+        },
+        {
+          "template": "refactor",
+          "what": "Improve existing code without changing its external behavior.",
+          "why": "To reduce technical debt, improve maintainability, and enhance performance.",
+          "how": "Measure baseline, create a safety net of tests, make incremental changes, and validate each step."
+        },
+        {
+          "template": "bugfix",
+          "what": "Fix a bug in the system.",
+          "why": "To resolve an issue that is negatively impacting users.",
+          "how": "Reproduce the bug, isolate the root cause, implement a minimal fix, and add a regression test."
+        },
+        {
+          "template": "integration",
+          "what": "Connect two or more systems.",
+          "why": "To enable data flow and new functionality between systems.",
+          "how": "Define a contract, build a mock, implement the core logic, add resilience, and make it production-ready."
+        },
+        {
+          "template": "optimization",
+          "what": "Improve the performance of a system or feature.",
+          "why": "To make the system faster, more efficient, and scalable.",
+          "how": "Profile the current system, identify bottlenecks, implement quick wins, and then make deeper changes if necessary."
+        },
+        {
+          "template": "migration",
+          "what": "Move data or a system from one environment to another.",
+          "why": "To upgrade infrastructure, consolidate systems, or adopt new technology.",
+          "how": "Analyze the source, build a pipeline, test the migration, perform a dry run, execute the migration, and validate the results."
+        }
+      ],
+      "UI/UX": [
+        {
+          "template": "ui-design",
+          "what": "A new user interface.",
+          "why": "To create a visually appealing, user-friendly, and accessible interface.",
+          "how": "Research, wireframe, select components, prototype, user test, and refine."
+        },
+        {
+          "template": "ux-improvement",
+          "what": "An improvement to the user experience of an existing product.",
+          "why": "To make a product easier to use, more efficient, and more enjoyable for users.",
+          "how": "Conduct user research, map user journeys, design solutions, test prototypes, and implement improvements."
+        },
+        {
+          "template": "component-library",
+          "what": "A collection of reusable UI components.",
+          "why": "To ensure design consistency, improve development efficiency, and promote code reuse.",
+          "how": "Set up a foundation, build core components, create layout components, develop complex components, and create a documentation site."
+        },
+        {
+          "template": "responsive-design",
+          "what": "A responsive design for a website or application.",
+          "why": "To ensure a consistent and optimal user experience across all devices.",
+          "how": "Audit the current state, define a breakpoint strategy, adapt components, optimize layouts, tune performance, and test across devices."
+        }
+      ],
+      "Research": [
+        {
+          "template": "investigation",
+          "what": "An investigation to answer a specific question.",
+          "why": "To de-risk a project, inform a decision, or explore a new technology.",
+          "how": "Formulate hypotheses, design experiments, gather evidence, analyze results, and document the decision."
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "description": "Tasks define the 'how' of the work. They are the concrete steps that need to be taken to complete a project.",
+    "categories": {
+      "Planning": [
+        {
+          "template": "discovery",
+          "what": "Research and discovery to understand a problem before building a solution.",
+          "why": "To ensure that the right problem is being solved and that the proposed solution is viable.",
+          "how": "Query RAG for patterns, define problem constraints, research solution approaches, test the riskiest assumption, and document the decision."
+        },
+        {
+          "template": "wireframing",
+          "what": "Low-fidelity designs to explore layout options and user flows.",
+          "why": "To quickly and cheaply explore different design ideas before committing to a high-fidelity design.",
+          "how": "Analyze competitors, define the information architecture, sketch explorations, create digital wireframes, and document user flows."
+        }
+      ],
+      "Building": [
+        {
+          "template": "implementation",
+          "what": "The implementation of a feature or component.",
+          "why": "To build the core logic of a feature or component.",
+          "how": "Set up the environment, implement the core logic, write tests, handle edge cases, integrate with existing code, and polish the final product."
+        },
+        {
+          "template": "prototyping",
+          "what": "An interactive prototype to test a design or concept.",
+          "why": "To get user feedback on a design or concept before building the final product.",
+          "how": "Research components, build the layout, add interactivity, polish the visuals, and set up automated testing."
+        },
+        {
+          "template": "poc",
+          "what": "A proof of concept to prove that a concept or approach is feasible.",
+          "why": "To de-risk a project before committing to a full implementation.",
+          "how": "Define success criteria, set up a minimal test environment, tackle the core technical challenge, check performance, and test integration."
+        }
+      ],
+      "Testing": [
+        {
+          "template": "testing",
+          "what": "The creation or improvement of tests.",
+          "why": "To prevent regressions, improve code quality, and enable confident changes.",
+          "how": "Map the input space, test happy paths, edge cases, and error paths, and measure code coverage."
+        },
+        {
+          "template": "user-testing",
+          "what": "Testing a product with real users.",
+          "why": "To get feedback on the usability and user experience of a product.",
+          "how": "Plan the test, set up the environment, run a pilot test, conduct user sessions, and analyze the results."
+        },
+        {
+          "template": "visual-regression",
+          "what": "Visual regression testing to catch unintended UI changes.",
+          "why": "To ensure that the UI remains consistent and that there are no visual regressions.",
+          "how": "Set up the test environment, create or update the baseline, implement the test suite, run the regression tests, and document the findings."
+        },
+        {
+          "template": "accessibility-audit",
+          "what": "An accessibility audit to ensure WCAG compliance.",
+          "why": "To ensure that a product is accessible to all users, regardless of their abilities.",
+          "how": "Perform automated testing, keyboard navigation testing, screen reader testing, visual testing, and form accessibility testing."
+        }
+      ],
+      "Analysis": [
+        {
+          "template": "debugging",
+          "what": "The process of finding and fixing bugs.",
+          "why": "To resolve issues that are negatively impacting users.",
+          "how": "Reproduce the bug, use binary search to find the last working version, isolate variables, form a hypothesis, and implement a fix."
+        },
+        {
+          "template": "deep-analysis",
+          "what": "A deep analysis of a system or problem.",
+          "why": "To gain a thorough understanding of a complex system or problem before making any changes.",
+          "how": "Explore the file system, analyze core components, synthesize findings, and create knowledge artifacts."
+        },
+        {
+          "template": "review",
+          "what": "A code or design review.",
+          "why": "To ensure the quality of a product before it is released.",
+          "how": "Understand the context, check the functionality, look for edge cases, and assess the quality of the code or design."
+        }
+      ],
+      "Documentation": [
+        {
+          "template": "documentation",
+          "what": "The creation of documentation.",
+          "why": "To enable users to understand and use a product.",
+          "how": "Outline the documentation, create a quick start guide, explain the core concepts, provide a reference, and add a troubleshooting section."
+        },
+        {
+          "template": "style-guide",
+          "what": "The creation of a style guide.",
+          "why": "To ensure design consistency across all products and teams.",
+          "how": "Document the foundation, create a component catalog, build a pattern library, provide visual examples, and write code guidelines."
+        },
+        {
+          "template": "automation",
+          "what": "The automation of a manual process.",
+          "why": "To save time, reduce errors, and improve efficiency.",
+          "how": "Document the current manual process, identify automation boundaries, build the core automation, add error handling, and test with real data."
+        }
+      ]
+    }
+  }
+}

@@ -4,8 +4,8 @@
     "status": "active",
     "priority": "high",
     "parent_project": "2025-06-28_my-first-ai-project",
-    "created": "2025-06-28T07:47:48Z",
-    "updated": "2025-06-28T07:47:48Z",
+    "created": "2025-06-28T07:52:01Z",
+    "updated": "2025-06-28T07:52:01Z",
     "title": "Implement Login Feature",
     "description": "Implementation task template"
   },
@@ -95,7 +95,7 @@
         "rag_memory___hybridSearch query=\"Implement Login Feature similar tasks patterns\"",
         "rag_memory___searchNodes query=\"type:task status:completed similar:Implement Login Feature\"",
         "# Create task entity and link to project",
-        "rag_memory___createEntities entities=[{\"name\": \"task_Implement Login Feature\", \"type\": \"task\", \"properties\": {\"created\": \"2025-06-28T07:47:48Z\", \"objective\": \"{{TASK_OBJECTIVE}}\", \"parent_project\": \"2025-06-28_my-first-ai-project\"}}}]",
+        "rag_memory___createEntities entities=[{\"name\": \"task_Implement Login Feature\", \"type\": \"task\", \"properties\": {\"created\": \"2025-06-28T07:52:01Z\", \"objective\": \"{{TASK_OBJECTIVE}}\", \"parent_project\": \"2025-06-28_my-first-ai-project\"}}}]",
         "rag_memory___createRelations relations=[{\"from\": \"project_2025-06-28_my-first-ai-project\", \"to\": \"task_Implement Login Feature\", \"type\": \"contains\"}]"
       ]
     },
@@ -114,7 +114,7 @@
         "- Calculate duration: Note in step as #duration:45m",
         "- Update step: Mark #status:completed",
         "- Store results:",
-        "rag_memory___createEntities entities=[{\"name\": \"step_2025-06-28T07:47:48Z_[step_num]\", \"type\": \"completed_step\", \"properties\": {\"duration\": \"[actual]\", \"estimate\": \"[estimated]\", \"blockers\": \"[any blockers]\", \"output\": \"[deliverable]\", \"lessons\": \"[key learning]\"}}}]",
+        "rag_memory___createEntities entities=[{\"name\": \"step_2025-06-28T07:52:01Z_[step_num]\", \"type\": \"completed_step\", \"properties\": {\"duration\": \"[actual]\", \"estimate\": \"[estimated]\", \"blockers\": \"[any blockers]\", \"output\": \"[deliverable]\", \"lessons\": \"[key learning]\"}}}]",
         "- If duration >2x estimate: Add to CRITICAL_FINDINGS.md"
       ]
     },

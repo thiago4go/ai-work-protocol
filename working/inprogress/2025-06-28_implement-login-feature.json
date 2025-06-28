@@ -4,8 +4,8 @@
     "status": "active",
     "priority": "high",
     "parent_project": "2025-06-28_my-first-ai-project",
-    "created": "2025-06-28T07:52:01Z",
-    "updated": "2025-06-28T07:52:01Z",
+    "created": "2025-06-28T08:06:51Z",
+    "updated": "2025-06-28T08:06:51Z",
     "title": "Implement Login Feature",
     "description": "Implementation task template"
   },
@@ -17,7 +17,7 @@
       "done_when": "User can {{SPECIFIC_ACTION}} without errors"
     },
     "context": {
-      "project": "2025-06-28_my-first-ai-project",
+      "project": "{{PARENT_PROJECT}}",
       "user_story": "As {{TARGET_USER}}, I want to {{USER_GOAL}} so that {{BENEFIT}}",
       "deliverable": "Working code that {{MEASURABLE_OUTCOME}}"
     },
@@ -74,8 +74,8 @@
         "Document technical debt immediately"
       ],
       "implementation_queries": [
-        "Before implementing: rag_memory___hybridSearch query=\"2025-06-28_my-first-ai-project design architecture decisions\"",
-        "Before implementing: rag_memory___searchNodes query=\"type:design parent:2025-06-28_my-first-ai-project\"",
+        "Before implementing: rag_memory___hybridSearch query=\"{{PARENT_PROJECT}} design architecture decisions\"",
+        "Before implementing: rag_memory___searchNodes query=\"type:design parent:{{PARENT_PROJECT}}\"",
         "After each step: rag_memory___createEntities entities=[{\"name\": \"impl_step_{{TIMESTAMP}}\", \"type\": \"implementation_detail\", \"properties\": {\"feature\": \"[what built]\", \"pattern\": \"[pattern used]\", \"debt\": \"[any shortcuts]\"}}}]"
       ],
       "quality_gates": [
@@ -92,11 +92,11 @@
       "description": "Before starting:",
       "steps": [
         "# Load context from similar tasks",
-        "rag_memory___hybridSearch query=\"Implement Login Feature similar tasks patterns\"",
-        "rag_memory___searchNodes query=\"type:task status:completed similar:Implement Login Feature\"",
+        "rag_memory___hybridSearch query=\"{{TITLE}} similar tasks patterns\"",
+        "rag_memory___searchNodes query=\"type:task status:completed similar:{{TITLE}}\"",
         "# Create task entity and link to project",
-        "rag_memory___createEntities entities=[{\"name\": \"task_Implement Login Feature\", \"type\": \"task\", \"properties\": {\"created\": \"2025-06-28T07:52:01Z\", \"objective\": \"{{TASK_OBJECTIVE}}\", \"parent_project\": \"2025-06-28_my-first-ai-project\"}}}]",
-        "rag_memory___createRelations relations=[{\"from\": \"project_2025-06-28_my-first-ai-project\", \"to\": \"task_Implement Login Feature\", \"type\": \"contains\"}]"
+        "rag_memory___createEntities entities=[{\"name\": \"task_{{TITLE}}\", \"type\": \"task\", \"properties\": {\"created\": \"{{DATE}}\", \"objective\": \"{{TASK_OBJECTIVE}}\", \"parent_project\": \"{{PARENT_PROJECT}}\"}}}]",
+        "rag_memory___createRelations relations=[{\"from\": \"project_{{PARENT_PROJECT}}\", \"to\": \"task_{{TITLE}}\", \"type\": \"contains\"}]"
       ]
     },
     "step_execution": {
@@ -114,7 +114,7 @@
         "- Calculate duration: Note in step as #duration:45m",
         "- Update step: Mark #status:completed",
         "- Store results:",
-        "rag_memory___createEntities entities=[{\"name\": \"step_2025-06-28T07:52:01Z_[step_num]\", \"type\": \"completed_step\", \"properties\": {\"duration\": \"[actual]\", \"estimate\": \"[estimated]\", \"blockers\": \"[any blockers]\", \"output\": \"[deliverable]\", \"lessons\": \"[key learning]\"}}}]",
+        "rag_memory___createEntities entities=[{\"name\": \"step_{{DATE}}_[step_num]\", \"type\": \"completed_step\", \"properties\": {\"duration\": \"[actual]\", \"estimate\": \"[estimated]\", \"blockers\": \"[any blockers]\", \"output\": \"[deliverable]\", \"lessons\": \"[key learning]\"}}}]",
         "- If duration >2x estimate: Add to CRITICAL_FINDINGS.md"
       ]
     },
@@ -134,14 +134,14 @@
         "2. Document key outcomes in CURRENT_IMPLEMENTATION.json",
         "3. Store and process complete task:",
         "# Store document",
-        "rag_memory___storeDocument id=\"task_Implement Login Feature_complete\" content=\"[full task content]\"",
+        "rag_memory___storeDocument id=\"task_{{TITLE}}_complete\" content=\"[full task content]\"",
         "# Process for search",
-        "rag_memory___chunkDocument documentId=\"task_Implement Login Feature_complete\"",
-        "rag_memory___embedChunks documentId=\"task_Implement Login Feature_complete\"",
-        "rag_memory___extractTerms documentId=\"task_Implement Login Feature_complete\"",
-        "rag_memory___linkEntitiesToDocument documentId=\"task_Implement Login Feature_complete\" entityNames=[\"task_{{TITLE}}\"]",
+        "rag_memory___chunkDocument documentId=\"task_{{TITLE}}_complete\"",
+        "rag_memory___embedChunks documentId=\"task_{{TITLE}}_complete\"",
+        "rag_memory___extractTerms documentId=\"task_{{TITLE}}_complete\"",
+        "rag_memory___linkEntitiesToDocument documentId=\"task_{{TITLE}}_complete\" entityNames=[\"task_{{TITLE}}\"]",
         "# Update entity",
-        "rag_memory___updateEntity name=\"task_Implement Login Feature\" properties={\"status\": \"completed\", \"duration\": \"[total]\"}",
+        "rag_memory___updateEntity name=\"task_{{TITLE}}\" properties={\"status\": \"completed\", \"duration\": \"[total]\"}",
         "4. For each critical finding:",
         "- Add 1-line to CRITICAL_FINDINGS.md: \"Finding description → keywords\"",
         "- Execute FULL PIPELINE in CRITICAL_FINDINGS.md protocol"

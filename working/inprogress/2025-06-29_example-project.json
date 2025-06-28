@@ -1,0 +1,137 @@
+{
+  "project_name": "{{TITLE}}",
+  "goal": "{{PROJECT_GOAL}}",
+  "context": {
+    "problem": "{{PROBLEM_DESCRIPTION}}",
+    "solution": "{{PROPOSED_SOLUTION}}",
+    "users": "{{TARGET_USERS}}"
+  },
+  "success_criteria": [
+    "Functionality: {{CORE_FEATURE}} works for {{TARGET_USER}}",
+    "Quality: Zero critical bugs, <2s response time",
+    "Adoption: {{TARGET_USER}} can complete {{KEY_TASK}} without help"
+  ],
+  "value_driven_task_sequence": [
+    "Discovery: What's the smallest thing that proves value?",
+    "MVP: Build just that → Get feedback",
+    "Iterate: Fix top 3 issues from feedback",
+    "Scale: Only after MVP validated",
+    "Polish: Documentation, edge cases, performance"
+  ],
+  "constraints": {
+    "timeline": "{{TIMELINE}}",
+    "resources": "{{RESOURCES}}",
+    "dependencies": "{{DEPENDENCIES}}"
+  },
+  "instructions": {
+    "inherits_from": "base_project.md workflow",
+    "project_specific": [
+      "Focus on clear problem definition before solution",
+      "Break down into discrete, testable features",
+      "Each task should produce working code or clear decisions"
+    ]
+  },
+  "placeholders_guide": {
+    "PROJECT_GOAL": {
+      "type": "string",
+      "description": "A concise statement of the project's primary objective."
+    },
+    "PROBLEM_DESCRIPTION": {
+      "type": "string",
+      "description": "Detailed description of the problem this project aims to solve."
+    },
+    "PROPOSED_SOLUTION": {
+      "type": "string",
+      "description": "Brief overview of the proposed solution."
+    },
+    "TARGET_USERS": {
+      "type": "string",
+      "description": "Description of the target user group."
+    },
+    "CORE_FEATURE": {
+      "type": "string",
+      "description": "The main feature to be implemented."
+    },
+    "KEY_TASK": {
+      "type": "string",
+      "description": "A key task users should be able to complete."
+    },
+    "TIMELINE": {
+      "type": "string",
+      "description": "Estimated project timeline (e.g., '2 weeks', '1 month')."
+    },
+    "RESOURCES": {
+      "type": "string",
+      "description": "Required resources (e.g., '2 developers', 'cloud budget')."
+    },
+    "DEPENDENCIES": {
+      "type": "string",
+      "description": "External dependencies or prerequisites."
+    }
+  },
+  "workflow_guidance": {
+    "project_creation": {
+      "description": "When creating this project:",
+      "steps": [
+        "Query for similar projects:",
+        "rag_memory___hybridSearch query=\"{{TITLE}} similar projects outcomes\"",
+        "rag_memory___searchNodes query=\"type:project status:completed\"",
+        "Create project entity:",
+        "rag_memory___createEntities entities=[{\"name\": \"project_{{TITLE}}\", \"type\": \"project\", \"properties\": {\"goal\": \"{{PROJECT_GOAL}}\", \"status\": \"active\", \"success_criteria\": [\"criterion1\", \"criterion2\", \"criterion3\"]}}]",
+        "Store and process initial state:",
+        "# Store document",
+        "rag_memory___storeDocument id=\"project_{{TITLE}}_init\" content=\"[project definition]\"",
+        "# Process for search",
+        "rag_memory___chunkDocument documentId=\"project_{{TITLE}}_init\"",
+        "rag_memory___embedChunks documentId=\"project_{{TITLE}}_init\"",
+        "rag_memory___extractTerms documentId=\"project_{{TITLE}}_init\"",
+        "rag_memory___linkEntitiesToDocument documentId=\"project_{{TITLE}}_init\" entityNames=[\"project_{{TITLE}}\"]"
+      ]
+    },
+    "daily_startup": {
+      "description": "Every session with this PROJECT:",
+      "steps": [
+        "# Load full project context",
+        "rag_memory___hybridSearch query=\"{{TITLE}} progress decisions blockers\"",
+        "rag_memory___getRelatedNodes nodeNames=[\"project_{{TITLE}}\"]",
+        "# Check completed tasks",
+        "rag_memory___searchNodes query=\"parent_project:{{TITLE}} type:task status:completed\""
+      ]
+    },
+    "task_planning": {
+      "description": "Before creating new task:",
+      "steps": [
+        "1. Review what's been done:",
+        "rag_memory___hybridSearch query=\"{{TITLE}} completed tasks outcomes\"",
+        "2. Identify next logical step based on:",
+        "- Success criteria progress",
+        "- Dependencies completed",
+        "- Lessons from previous tasks",
+        "3. Create informed task: Use your task creation tool (e.g., by writing a new task JSON file in working/inprogress/)"
+      ]
+    },
+    "progress_tracking": [
+      "Update CURRENT_IMPLEMENTATION.json after each work session",
+      "Track completion % against success criteria",
+      "Document major decisions with rationale",
+      "Capture assumptions that change"
+    ],
+    "project_patterns": [
+      "Common patterns to watch for:",
+      "Morning sessions more productive → Schedule complex work AM",
+      "External dependencies cause delays → Front-load these tasks",
+      "Discovery tasks often exceed estimates → Buffer accordingly",
+      "Implementation goes faster with good discovery → Invest in research"
+    ]
+  },
+  "metadata": {
+    "created": "2025-06-28T21:28:20Z",
+    "updated": "2025-06-28T21:28:20Z",
+    "title": "Example Project",
+    "parent_project": ""
+  },
+  "details": {
+    "project_name": "Example Project",
+    "task_name": "Example Project"
+  }
+}

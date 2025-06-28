@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# status.sh - Show current work status
+# status.sh - Show current work status with AI guidance
 
 echo "📊 Memory System Status"
 echo "═══════════════════════"
 
-# Check active work
-PROJECT=$(find plans/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | head -1)
-TASK=$(find plans/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | head -1)
+# Check active work - fix directory paths
+PROJECT=$(find working/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | head -1)
+TASK=$(find working/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | head -1)
 
 # Show current state
 echo ""
@@ -15,6 +15,15 @@ if [ -n "$PROJECT" ]; then
     PROJECT_TITLE=$(grep "^title:" "$PROJECT" | cut -d' ' -f2-)
     echo "🎯 PROJECT: $PROJECT_TITLE"
     echo "   File: $(basename "$PROJECT")"
+    
+    # Check if project content is filled
+    OBJECTIVES=$(grep -c "^## Objectives" "$PROJECT" 2>/dev/null || echo 0)
+    DELIVERABLES=$(grep -c "^## Deliverables" "$PROJECT" 2>/dev/null || echo 0)
+    if [ "$OBJECTIVES" -eq 0 ] || [ "$DELIVERABLES" -eq 0 ]; then
+        echo "   ⚠️  PROJECT TEMPLATE NOT FILLED - Needs actual content!"
+    fi
+else
+    echo "❌ No active PROJECT"
 fi
 
 if [ -n "$TASK" ]; then
@@ -27,54 +36,92 @@ if [ -n "$TASK" ]; then
     DONE=$(grep -c "^- \[x\]" "$TASK" 2>/dev/null || echo 0)
     echo "   Progress: $DONE/$TOTAL steps completed"
     
+    # Check if task has actual steps
+    if [ "$TOTAL" -eq 0 ]; then
+        echo "   ⚠️  TASK TEMPLATE NOT FILLED - Needs actual steps!"
+    fi
+    
     # Show current step
     CURRENT=$(grep -n "#status:inprogress" "$TASK" 2>/dev/null | head -1)
     if [ -n "$CURRENT" ]; then
         echo "   Current: $(echo "$CURRENT" | cut -d: -f3- | sed 's/^- \[.\] //')"
     fi
-fi
-
-# Next action
-echo ""
-echo "🔮 Next Action:"
-if [ -z "$PROJECT" ] && [ -z "$TASK" ]; then
-    echo "   → make project title=\"Your Project\""
-elif [ -n "$PROJECT" ] && [ -z "$TASK" ]; then
-    echo "   → make task title=\"First Task\""
-elif [ -n "$TASK" ]; then
-    echo "   → Continue working on current task"
-    echo "   → When done: make done"
+else
+    echo "❌ No active TASK"
 fi
 
 # Quick stats
 echo ""
 echo "📈 Stats:"
-echo "   Active: $(find plans/inprogress -name "*.md" 2>/dev/null | wc -l)/2 (max)"
-echo "   Backlog: $(find plans/backlog -name "*.md" 2>/dev/null | wc -l) items"
-echo "   Completed: $(find plans/completed -name "*.md" 2>/dev/null | wc -l) plans"
+echo "   Active: $(find working/inprogress -name "*.md" 2>/dev/null | wc -l)/2 (max)"
+echo "   Backlog: $(find working/backlog -name "*.md" 2>/dev/null | wc -l) items"
+echo "   Completed: $(find working/completed -name "*.md" 2>/dev/null | wc -l) plans"
 
-# AI Guidance
+# Enhanced AI Guidance
 echo ""
 echo "🤖 AI NEXT ACTIONS:"
+echo "══════════════════"
+
 if [ -z "$PROJECT" ] && [ -z "$TASK" ]; then
-    echo "1. Query RAG for similar projects: rag_memory___hybridSearch query='project patterns successful'"
-    echo "2. Review any prior work: rag_memory___listDocuments"
-    echo "3. Create informed project: make project title='Your Project Name'"
+    echo "🚀 NO ACTIVE WORK - Start fresh:"
+    echo "1. Read state: Use any method to read CURRENT_IMPLEMENTATION.md"
+    echo "2. IF RAG available: rag_memory___hybridSearch query='recent projects patterns successful'"
+    echo "3. Create project: make project title='Your Project Name'"
+    echo "4. CRITICAL: Fill project template with actual content!"
+    
 elif [ -n "$PROJECT" ] && [ -z "$TASK" ]; then
-    echo "1. Load project context: rag_memory___getRelatedNodes nodeNames=['project_$PROJECT_TITLE']"
-    echo "2. Query what's needed: rag_memory___hybridSearch query='$PROJECT_TITLE next steps'"
-    echo "3. Create task based on findings: make task title='Specific Goal'"
-elif [ -n "$TASK" ]; then
-    if [ -n "$CURRENT" ]; then
-        STEP_DESC=$(echo "$CURRENT" | cut -d: -f3- | sed 's/^- \[.\] //' | cut -d'→' -f1 | xargs)
-        echo "1. Load step context: rag_memory___hybridSearch query='$STEP_DESC patterns'"
-        echo "2. Work on current step (started at: check CURRENT_IMPLEMENTATION.md)"
-        echo "3. Update step when done: mark #status:completed #duration:XXm"
+    echo "📋 PROJECT EXISTS, NO TASK:"
+    echo "1. Read project: Use any method to read $PROJECT"
+    
+    # Check if project is filled
+    OBJECTIVES=$(grep -c "^## Objectives" "$PROJECT" 2>/dev/null || echo 0)
+    if [ "$OBJECTIVES" -eq 0 ]; then
+        echo "2. ⚠️  FILL PROJECT CONTENT FIRST:"
+        echo "   - Define objectives and deliverables"
+        echo "   - Set success criteria and timeline"
+        echo "   - Update file: Use any available editing method"
+        echo "3. THEN create first task aligned with project"
     else
-        echo "1. All steps complete! Calculate metrics in CURRENT_IMPLEMENTATION.md"
-        echo "2. Store lessons: rag_memory___createEntities entities=[{...lessons...}]"
-        echo "3. Complete task: make done"
+        echo "2. IF RAG available: rag_memory___hybridSearch query='$PROJECT_TITLE next tasks breakdown'"
+        echo "3. Create aligned task: make task title='Specific Task Name'"
+        echo "4. CRITICAL: Ensure task contributes to project objectives!"
+    fi
+    
+elif [ -n "$PROJECT" ] && [ -n "$TASK" ]; then
+    # Check if task has content
+    TOTAL=$(grep -c "^- \[" "$TASK" 2>/dev/null || echo 0)
+    if [ "$TOTAL" -eq 0 ]; then
+        echo "📝 TASK EXISTS BUT EMPTY:"
+        echo "1. Read project context: Use any method to read $PROJECT"
+        echo "2. Read task template: Use any method to read $TASK"
+        echo "3. IF RAG available: rag_memory___hybridSearch query='$TASK_TITLE $PROJECT_TITLE task breakdown'"
+        echo "4. FILL TASK with actual steps using any editing method:"
+        echo "   - Break into 3-7 concrete steps"
+        echo "   - Align with project objectives"
+        echo "   - Set realistic time estimates"
+    elif [ -n "$CURRENT" ]; then
+        STEP_DESC=$(echo "$CURRENT" | cut -d: -f3- | sed 's/^- \[.\] //' | cut -d'→' -f1 | xargs)
+        echo "🔄 ACTIVE STEP IN PROGRESS:"
+        echo "1. Current step: '$STEP_DESC'"
+        echo "2. IF RAG available: rag_memory___hybridSearch query='$STEP_DESC best practices patterns'"
+        echo "3. Work on step and update progress"
+        echo "4. When done: mark #status:completed #duration:XXm"
+        echo "5. Update: Use any available method to modify $TASK"
+    else
+        echo "✅ ALL STEPS COMPLETE:"
+        echo "1. Review completed work in: $TASK"
+        echo "2. Update metrics in CURRENT_IMPLEMENTATION.md (any method)"
+        echo "3. IF valuable findings: document in CRITICAL_FINDINGS.md (any method)"
+        echo "4. Complete task: make done"
+        echo "5. IF RAG available: store lessons learned"
     fi
 fi
+
 echo ""
-echo "⚡ REMEMBER: Update CURRENT_IMPLEMENTATION.md after EVERY action!"
+echo "🔥 CRITICAL REMINDERS:"
+echo "• Templates are EMPTY - AI must fill with actual content"
+echo "• Tasks must ALIGN with project objectives"
+echo "• Always update CURRENT_IMPLEMENTATION.md after changes"
+echo "• Use ANY available file tools - work must continue!"
+echo "• File reading: cat, less, fs_read, editors, viewers"
+echo "• File writing: fs_write, sed, echo >>, editors"

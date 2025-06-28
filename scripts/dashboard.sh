@@ -28,8 +28,8 @@ echo -e "${CYAN}║                    MEMORY SYSTEM DASHBOARD                  
 echo -e "${CYAN}╚══════════════════════════════════════════════════════════════╝${NC}"
 
 # Find active work
-PROJECT=$(find plans/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | head -1)
-TASK=$(find plans/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | head -1)
+PROJECT=$(find working/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | head -1)
+TASK=$(find working/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | head -1)
 
 # PROJECT Progress
 if [ -n "$PROJECT" ]; then
@@ -74,8 +74,8 @@ echo ""
 echo -e "${YELLOW}📊 STATISTICS${NC}"
 echo "═══════════════════════════════════════════════════════════════"
 TOTAL_TASKS=$(find plans -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | wc -l)
-COMPLETED=$(find plans/completed -name "*.md" 2>/dev/null | wc -l)
-ACTIVE=$(find plans/inprogress -name "*.md" 2>/dev/null | wc -l)
+COMPLETED=$(find working/completed -name "*.md" 2>/dev/null | wc -l)
+ACTIVE=$(find working/inprogress -name "*.md" 2>/dev/null | wc -l)
 
 echo "Total Tasks: $TOTAL_TASKS"
 echo "Completed: $COMPLETED"

@@ -1,0 +1,21 @@
+{
+  "test_settings": {
+    "timeout": 30,
+    "max_retries": 3,
+    "parallel_tests": false
+  },
+  "performance_thresholds": {
+    "max_response_time": 2.0,
+    "min_success_rate": 0.8,
+    "min_usability_score": 0.7
+  },
+  "rag_settings": {
+    "test_rag_integration": true,
+    "rag_timeout": 15
+  },
+  "output_settings": {
+    "save_detailed_logs": true,
+    "generate_html_report": true,
+    "export_metrics": true
+  }
+}

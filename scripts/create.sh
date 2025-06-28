@@ -5,9 +5,9 @@
 TEMPLATES_DIR="templates"
 
 # Ensure necessary directories exist
-mkdir -p plans/inprogress
-mkdir -p plans/backlog
-mkdir -p plans/completed
+mkdir -p working/inprogress
+mkdir -p working/backlog
+mkdir -p working/completed
 
 # List templates if requested
 if [ "$1" == "list" ] || [ -z "$1" ]; then
@@ -38,23 +38,23 @@ fi
 
 # Check WIP limits
 if [ "$TYPE" == "project" ]; then
-    ACTIVE_COUNT=$(find plans/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | wc -l || echo 0)
+    ACTIVE_COUNT=$(find working/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | wc -l || echo 0)
     if [ "$ACTIVE_COUNT" -ge 1 ]; then
         echo "⚠️  PROJECT limit reached (1 active). Creating in backlog instead."
         echo "   Complete current project or use 'make activate' to swap."
-        OUTPUT_DIR="plans/backlog"
+        OUTPUT_DIR="working/backlog"
     fi
 elif [ "$TYPE" == "task" ]; then
-    ACTIVE_COUNT=$(find plans/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | wc -l || echo 0)
+    ACTIVE_COUNT=$(find working/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | wc -l || echo 0)
     if [ "$ACTIVE_COUNT" -ge 1 ]; then
         echo "⚠️  TASK limit reached (1 active). Creating in backlog instead."
         echo "   Complete current task or use 'make activate' to swap."
-        OUTPUT_DIR="plans/backlog"
+        OUTPUT_DIR="working/backlog"
     fi
     
     # Auto-detect parent if not provided
     if [ -z "$PARENT_PROJECT" ]; then
-        PARENT_PROJECT=$(find plans/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | head -1 | xargs basename 2>/dev/null)
+        PARENT_PROJECT=$(find working/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | head -1 | xargs basename 2>/dev/null)
         if [ -z "$PARENT_PROJECT" ]; then
             echo "❌ No PROJECT found. Create a PROJECT first."
             exit 1
@@ -68,7 +68,7 @@ SLUG=$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]/-/g' | sed 
 FILENAME="${DATE}_${SLUG}.md"
 
 # Set output directory (may have been changed to backlog)
-OUTPUT_DIR=${OUTPUT_DIR:-"plans/inprogress"}
+OUTPUT_DIR=${OUTPUT_DIR:-"working/inprogress"}
 OUTPUT="$OUTPUT_DIR/$FILENAME"
 
 # Check template exists
@@ -123,7 +123,54 @@ echo "📋 Template Instructions:"
 echo "════════════════════════"
 awk '/^---INSTRUCTIONS---$/,/^---END-INSTRUCTIONS---$/' "$OUTPUT" | grep -v "^---" | head -20
 echo ""
-echo "Open $OUTPUT to see full instructions and begin work."
+
+# Critical AI Instructions
+echo "🤖 CRITICAL AI NEXT ACTIONS:"
+echo "═══════════════════════════"
+if [ "$TYPE" == "project" ]; then
+    echo "1. READ the template: Use any available method to read $OUTPUT"
+    echo "   Options: cat, less, fs_read, text editor, file viewer"
+    echo "2. IF RAG available: rag_memory___hybridSearch query=\"$TITLE similar projects patterns requirements\""
+    echo "3. FILL project details using any available method:"
+    echo "   - Define clear objectives and deliverables"
+    echo "   - Set success criteria and constraints"
+    echo "   - Identify required resources and timeline"
+    echo "4. UPDATE file: Use any method (fs_write, text editor, sed, etc.)"
+    echo "5. UPDATE state: Modify CURRENT_IMPLEMENTATION.md (any method)"
+    echo "6. IF RAG available: rag_memory___createEntities (store project context)"
+    echo ""
+    echo "⚠️  TEMPLATE IS EMPTY - YOU MUST FILL IT WITH ACTUAL PROJECT CONTENT!"
+elif [ "$TYPE" == "task" ]; then
+    # Get parent project info
+    if [ -n "$PARENT_PROJECT" ]; then
+        PROJECT_PATH="working/inprogress/$PARENT_PROJECT"
+        echo "1. READ parent project: Use any method to read $PROJECT_PATH"
+        echo "2. READ task template: Use any method to read $OUTPUT"
+        echo "3. IF RAG available: rag_memory___hybridSearch query=\"$TITLE $(basename $PARENT_PROJECT .md) task breakdown steps\""
+        echo "4. ALIGN task with project using any available editing method:"
+        echo "   - Ensure task contributes to project objectives"
+        echo "   - Break down into 3-7 concrete steps"
+        echo "   - Set realistic time estimates per step"
+        echo "   - Define clear completion criteria"
+        echo "5. UPDATE task file: Use any method (fs_write, editor, sed, etc.)"
+        echo "6. UPDATE state: Modify CURRENT_IMPLEMENTATION.md (any method)"
+        echo "7. IF RAG available: rag_memory___createEntities (link task to project)"
+    else
+        echo "1. READ task template: Use any method to read $OUTPUT"
+        echo "2. IF RAG available: rag_memory___hybridSearch query=\"$TITLE task breakdown best practices\""
+        echo "3. DEFINE task steps and estimates (any editing method)"
+        echo "4. UPDATE task file: Use any available method"
+    fi
+    echo ""
+    echo "⚠️  TEMPLATE IS EMPTY - YOU MUST FILL IT WITH ACTUAL TASK STEPS!"
+fi
+echo ""
+echo "🔧 TOOL FLEXIBILITY:"
+echo "• File Reading: cat, less, fs_read, nano, vim, text editors"
+echo "• File Writing: fs_write, sed, echo >>, nano, vim, text editors"
+echo "• Use whatever tools are available - the work must continue!"
+echo ""
+echo "🚨 REMEMBER: Templates are just starting points - the AI must create the actual content!"
 
 # Remove only instructions section from file (keep workflow)
 sed -i '/^---INSTRUCTIONS---$/,/^---END-INSTRUCTIONS---$/d' "$OUTPUT"

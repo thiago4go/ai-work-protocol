@@ -24,11 +24,11 @@ description: Standard PROJECT template
 3. **Adoption**: {{TARGET_USER}} can complete {{KEY_TASK}} without help
 
 ## Value-Driven Task Sequence
-- [ ] **Discovery**: What's the smallest thing that proves value? (1-2 days)
-- [ ] **MVP**: Build just that → Get feedback (2-3 days)
-- [ ] **Iterate**: Fix top 3 issues from feedback (1-2 days)
-- [ ] **Scale**: Only after MVP validated (2-3 days)
-- [ ] **Polish**: Documentation, edge cases, performance (1-2 days)
+- [x] **Discovery**: What's the smallest thing that proves value? (1-2 days)
+- [x] **MVP**: Build just that → Get feedback (2-3 days)
+- [x] **Iterate**: Fix top 3 issues from feedback (1-2 days)
+- [x] **Scale**: Only after MVP validated (2-3 days)
+- [x] **Polish**: Documentation, edge cases, performance (1-2 days)
 
 ## Constraints
 - **Timeline**: {{TIMELINE}}

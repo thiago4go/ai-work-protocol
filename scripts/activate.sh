@@ -10,7 +10,7 @@ if [ -z "$FILE_PATTERN" ]; then
 fi
 
 # Find matching file in backlog
-BACKLOG_FILE=$(find plans/backlog -name "*${FILE_PATTERN}*" -type f | head -1)
+BACKLOG_FILE=$(find working/backlog -name "*${FILE_PATTERN}*" -type f | head -1)
 
 if [ -z "$BACKLOG_FILE" ]; then
     echo "❌ No file matching '$FILE_PATTERN' found in backlog"
@@ -25,20 +25,20 @@ TITLE=$(grep "^title:" "$BACKLOG_FILE" | cut -d' ' -f2-)
 echo "🔄 Activating $TYPE: $TITLE"
 
 # Check for existing active item of same type
-ACTIVE_FILE=$(find plans/inprogress -name "*.md" -exec grep -l "^type: $TYPE" {} \; 2>/dev/null | head -1)
+ACTIVE_FILE=$(find working/inprogress -name "*.md" -exec grep -l "^type: $TYPE" {} \; 2>/dev/null | head -1)
 
 if [ -n "$ACTIVE_FILE" ]; then
     ACTIVE_TITLE=$(grep "^title:" "$ACTIVE_FILE" | cut -d' ' -f2-)
     echo "   Swapping with current $TYPE: $ACTIVE_TITLE"
     
     # Move current active to backlog
-    mv "$ACTIVE_FILE" plans/backlog/
+    mv "$ACTIVE_FILE" working/backlog/
     echo "   → Moved '$ACTIVE_TITLE' to backlog"
 fi
 
 # Special check for tasks - need active project
 if [ "$TYPE" == "task" ]; then
-    PROJECT_EXISTS=$(find plans/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | head -1)
+    PROJECT_EXISTS=$(find working/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | head -1)
     if [ -z "$PROJECT_EXISTS" ]; then
         echo "❌ Cannot activate task without active project"
         echo "   Activate a project first: make activate file=<project>"
@@ -47,7 +47,7 @@ if [ "$TYPE" == "task" ]; then
 fi
 
 # Move backlog item to active
-mv "$BACKLOG_FILE" plans/inprogress/
+mv "$BACKLOG_FILE" working/inprogress/
 echo "✅ Activated: $(basename "$BACKLOG_FILE")"
 
 # Update CURRENT_IMPLEMENTATION.md
@@ -59,6 +59,6 @@ echo "3. Run 'make status' to see current state"
 
 # Auto-commit if enabled
 if [ "${AUTO_COMMIT:-true}" == "true" ]; then
-    git add plans/backlog plans/inprogress 2>/dev/null
+    git add working/backlog working/inprogress 2>/dev/null
     git commit -m "Activate $TYPE: $TITLE" >/dev/null 2>&1 && echo "✅ Auto-committed"
 fi

@@ -9,6 +9,7 @@
 # ------------------------
 # Displays active project/task, progress, and AI guidance for next actions.
 # Always run this first to understand current state.
+# IMPORTANT: Detects if templates are empty and need content filling.
 #
 # Usage:
 #   make status
@@ -16,12 +17,13 @@
 # Example output:
 #   📊 Memory System Status
 #   🎯 PROJECT: Build User Auth
+#   ⚠️  PROJECT TEMPLATE NOT FILLED - Needs actual content!
 #   📋 TASK: Implement Login Flow
-#      Progress: 3/5 steps completed
-#      Current: Add password validation
+#   ⚠️  TASK TEMPLATE NOT FILLED - Needs actual steps!
 #   🤖 AI NEXT ACTIONS:
-#      1. Load step context: rag_memory___hybridSearch query='password validation patterns'
-#      2. Work on current step...
+#      1. Read project: fs_read path=working/inprogress/2024-01-15_build-auth.md mode=Line
+#      2. Fill project with actual objectives and deliverables
+#      3. Update file: fs_write path=working/inprogress/2024-01-15_build-auth.md command=str_replace
 status:
 	@scripts/status.sh
 
@@ -47,8 +49,9 @@ list:
 
 # Create new project
 # ------------------
-# Starts a new high-level project. Only one project can be active at a time.
-# Default template is 'standard'. See 'make list' for all templates.
+# Creates a project template file. CRITICAL: Template is empty and must be filled by AI.
+# Only one project can be active at a time. Default template is 'standard'.
+# AI must read the template and fill it with actual project content.
 #
 # Usage:
 #   make project title="Your Project Name"
@@ -59,15 +62,20 @@ list:
 #   make project template=refactor title="Improve Database Layer"
 #   make project template=investigation title="Should we use GraphQL?"
 #
-# Note: Query RAG first to see if similar projects exist:
-#   rag_memory___searchNodes query="type:project similar:authentication"
+# CRITICAL AI WORKFLOW:
+#   1. Script creates empty template file
+#   2. AI MUST read: fs_read path=working/inprogress/YYYY-MM-DD_project-name.md mode=Line
+#   3. AI MUST fill with actual content: objectives, deliverables, success criteria
+#   4. AI MUST update: fs_write path=working/inprogress/YYYY-MM-DD_project-name.md command=str_replace
+#   5. Query RAG for context: rag_memory___hybridSearch query="project-name similar projects patterns"
 project:
 	@scripts/create.sh project $(or $(template),standard) "$(title)"
 
 # Create new task
 # ---------------
-# Creates a task within the current project. Only one task can be active at a time.
-# Default template is 'discovery'. Tasks should complete in 1-3 days.
+# Creates a task template file within the current project. CRITICAL: Template is empty.
+# Only one task can be active at a time. Tasks should complete in 1-3 days.
+# AI must fill template with actual steps that align with project objectives.
 #
 # Usage:
 #   make task title="Your Task Name"
@@ -79,8 +87,14 @@ project:
 #   make task template=poc title="Test Redis Performance"
 #   make task template=documentation title="Write API Docs"
 #
-# Note: Task will auto-link to current project. Query RAG for context:
-#   rag_memory___hybridSearch query="login form best practices"
+# CRITICAL AI WORKFLOW:
+#   1. Script creates empty template file and links to parent project
+#   2. AI MUST read project: fs_read path=working/inprogress/YYYY-MM-DD_project-name.md mode=Line
+#   3. AI MUST read task: fs_read path=working/inprogress/YYYY-MM-DD_task-name.md mode=Line
+#   4. AI MUST align task with project objectives
+#   5. AI MUST fill with 3-7 concrete steps and time estimates
+#   6. AI MUST update: fs_write path=working/inprogress/YYYY-MM-DD_task-name.md command=str_replace
+#   7. Query RAG for guidance: rag_memory___hybridSearch query="task-name project-context breakdown"
 task:
 	@scripts/create.sh task $(or $(template),discovery) "$(title)"
 
@@ -145,15 +159,15 @@ backlog:
 	@echo "📋 Backlog Items"
 	@echo "════════════════"
 	@echo ""
-	@if [ -d "plans/backlog" ] && [ "$$(ls -A plans/backlog 2>/dev/null)" ]; then \
+	@if [ -d "working/backlog" ] && [ "$$(ls -A working/backlog 2>/dev/null)" ]; then \
 		echo "PROJECTS:"; \
-		find plans/backlog -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | while read f; do \
+		find working/backlog -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | while read f; do \
 			title=$$(grep "^title:" "$$f" | cut -d' ' -f2-); \
 			echo "  - $$(basename $$f): \"$$title\""; \
 		done; \
 		echo ""; \
 		echo "TASKS:"; \
-		find plans/backlog -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | while read f; do \
+		find working/backlog -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | while read f; do \
 			title=$$(grep "^title:" "$$f" | cut -d' ' -f2-); \
 			echo "  - $$(basename $$f): \"$$title\""; \
 		done; \

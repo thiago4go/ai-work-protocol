@@ -10,15 +10,15 @@ source "$SCRIPT_DIR/git_utils.sh"
 TASK_FILE="$1"
 if [ -z "$TASK_FILE" ]; then
     # Auto-detect current task
-    TASK_FILE=$(find plans/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | head -1 | xargs basename 2>/dev/null)
+    TASK_FILE=$(find working/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | head -1 | xargs basename 2>/dev/null)
     if [ -z "$TASK_FILE" ]; then
         echo "❌ No active task found"
         exit 1
     fi
 fi
 
-SOURCE="plans/inprogress/$TASK_FILE"
-DEST="plans/completed/$TASK_FILE"
+SOURCE="working/inprogress/$TASK_FILE"
+DEST="working/completed/$TASK_FILE"
 
 # Verify task exists
 if [ ! -f "$SOURCE" ]; then
@@ -38,12 +38,12 @@ sed -i 's/status: active/status: completed/' "$DEST"
 sed -i "s/updated: .*/completed: $(date -u +"%Y-%m-%dT%H:%M:%SZ")/" "$DEST"
 
 echo "✅ Completed task: $TASK_TITLE"
-echo "   Archived to: plans/completed/"
+echo "   Archived to: working/completed/"
 
 # Update parent PROJECT if exists
-if [ -n "$PARENT_PROJECT" ] && [ -f "plans/inprogress/$PARENT_PROJECT" ]; then
+if [ -n "$PARENT_PROJECT" ] && [ -f "working/inprogress/$PARENT_PROJECT" ]; then
     # Find and mark the corresponding task
-    sed -i "0,/\[ \].*$TASK_TITLE/{s/\[ \]/[x]/}" "plans/inprogress/$PARENT_PROJECT"
+    sed -i "0,/\[ \].*$TASK_TITLE/{s/\[ \]/[x]/}" "working/inprogress/$PARENT_PROJECT"
     echo "   Updated task in: $PARENT_PROJECT"
 fi
 

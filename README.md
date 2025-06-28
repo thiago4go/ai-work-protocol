@@ -46,8 +46,8 @@ make findings keyword=X  # Query knowledge
 ## Hierarchy
 ```
 PROJECT (goal) → TASK (1-3 days) → STEP (measurable)
-└── plans/inprogress (1 project + 1 task max)
-└── plans/backlog    (overflow queue)
+└── working/inprogress (1 project + 1 task max)
+└── working/backlog    (overflow queue)
 └── RAG memory       (all knowledge)
 ```
 

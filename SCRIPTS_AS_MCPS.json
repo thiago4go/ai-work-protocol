@@ -6,11 +6,12 @@
       "usage": "run_shell_command(command='scripts/status.sh')",
       "arguments": [],
       "expected_output": "Human-readable text output detailing active project/task, progress, and general next steps.",
+      "parsing_guidance": "Look for '✅ Active work files:' followed by file paths for active items. Extract counts for 'Active:', 'Backlog:', and 'Completed:' from the 'Stats:' section. For errors, look for '❌' and capture the message.",
       "ai_usage": "Call this at the beginning of a session or when needing an overview of the current work state.",
       "related_ai_workflow": [
         "AI_PROTOCOL.md: Scenario 1: Starting Fresh Conversation (Step 1)"
       ]
-    },
+    },,,
     {
       "name": "create.sh",
       "description": "Creates a new project or task file from a specified template. Handles WIP limits by moving new items to the backlog if limits are reached. Populates the new JSON file with initial metadata and performs variable substitutions.",
@@ -42,6 +43,7 @@
         }
       ],
       "expected_output": "Confirmation message of creation, including the filename. May include warnings if WIP limits are hit.",
+      "parsing_guidance": "Look for '✅ Created <type>: <filename> (in <path>)' for success. Extract type, filename, and path. For errors, look for '❌' and capture the message.",
       "ai_usage": "Call this when a new project or task needs to be initiated. After creation, the AI should read the newly created JSON file to fill in detailed content.",
       "related_ai_workflow": [
         "AI_PROTOCOL.md: Scenario 1: Starting Fresh Conversation (Step 4)",
@@ -62,6 +64,7 @@
         }
       ],
       "expected_output": "Confirmation of activation and any swaps that occurred. Warnings if an active project is required for a task.",
+      "parsing_guidance": "Look for '✅ Activated: <filename>' for success. Extract activated filename. If a swap occurred, look for '→ Moved <title> to backlog'. For errors, look for '❌' and capture the message.",
       "ai_usage": "Call this when a new project/task needs to be brought into active work, or when swapping between backlog items.",
       "related_ai_workflow": []
     },
@@ -78,6 +81,7 @@
         }
       ],
       "expected_output": "Confirmation of task completion and archiving. Provides guidance for the AI to update CURRENT_IMPLEMENTATION.json and store lessons learned in RAG.",
+      "parsing_guidance": "Look for '✅ Completed task: <title>' and 'Archived to: <path>' for success. Extract task title and archived path. For errors, look for '❌' and capture the message.",
       "ai_usage": "Call this when all steps of an active task are finished. Follow the output guidance to update state and RAG.",
       "related_ai_workflow": [
         "AI_PROTOCOL.md: Pragmatic Update Rules: After Step Completion"

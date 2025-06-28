@@ -62,6 +62,14 @@ READ: CURRENT_IMPLEMENTATION.json (parse as JSON)
 
 **CRITICAL**: RAG is NOT optional. It is integral to the agent's memory and learning.
 
+## ADAPTING THE PROTOCOL
+
+While this protocol is designed to be robust, it's not a one-size-fits-all solution. Here are some guidelines for adapting it to different scenarios:
+
+*   **For small, self-contained projects:** You may not need to create a full project/task hierarchy. A single task file might be sufficient.
+*   **For exploratory work:** If you're not sure what the final outcome will be, you can start with a more loosely defined task and add more structure as you go.
+*   **For teams:** If you're working with a team, you'll need to establish clear conventions for how you use the system. This includes things like naming conventions for projects and tasks, and how you share information through the RAG.
+
 ## FLEXIBLE WORKFLOWS FOR EVERY SCENARIO
 
 ### Scenario 1: Starting Fresh Conversation

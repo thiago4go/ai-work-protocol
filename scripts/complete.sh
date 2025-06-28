@@ -2,8 +2,18 @@
 
 # complete.sh - Complete and archive current task
 
+# Get the directory where the script is located to resolve all paths correctly.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+MEMORY_DIR=$(cd -- "$SCRIPT_DIR/.." &>/dev/null && pwd)
+
+# Check for dependencies.
+if ! command -v jq &>/dev/null; then
+    echo "❌ Error: 'jq' is not installed. Please install it to continue." >&2
+    echo "   (e.g., 'sudo apt-get install jq' or 'brew install jq')" >&2
+    exit 1
+fi
+
 # Source git utilities (if still needed, otherwise remove)
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/git_utils.sh"
 
 # Get task file
@@ -11,7 +21,7 @@ TASK_FILE_PATH=$1
 if [ -z "$TASK_FILE_PATH" ]; then
     # Auto-detect current task (looking for .json)
     TASK_FILE_PATH=""
-    for file in $(find working/inprogress -name "*.json"); do
+    for file in $(find "$MEMORY_DIR/working/inprogress" -name "*.json"); do
         if jq -e '.metadata.type == "task"' "$file" >/dev/null 2>&1; then
             TASK_FILE_PATH="$file"
             break
@@ -25,7 +35,7 @@ if [ -z "$TASK_FILE_PATH" ]; then
 fi
 
 SOURCE="$TASK_FILE_PATH"
-DEST="working/completed/$(basename "$TASK_FILE_PATH")"
+DEST="$MEMORY_DIR/working/completed/$(basename "$TASK_FILE_PATH")"
 
 # Verify task exists
 if [ ! -f "$SOURCE" ]; then
@@ -49,7 +59,7 @@ mv "$SOURCE" "$DEST"
 echo "$UPDATED_TASK_CONTENT" > "$DEST"
 
 echo "✅ Completed task: $TASK_TITLE"
-echo "   Archived to: working/completed/"
+echo "   Archived to: $MEMORY_DIR/working/completed/"
 
 # Auto-commit
 auto_commit "Complete task: $TASK_TITLE"

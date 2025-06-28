@@ -1,0 +1,145 @@
+---
+type: task
+status: active
+priority: high
+parent_project: 2025-06-28_my-first-project.md
+created: 2025-06-28T06:04:14Z
+updated: 2025-06-28T06:04:14Z
+title: Complete Task
+description: Research and discovery task template
+---
+
+# TASK: Complete Task
+
+## Objective
+{{TASK_OBJECTIVE}}
+
+## Context
+- **PROJECT**: 2025-06-28_my-first-project.md
+- **Purpose**: Understanding the problem before building
+- **Deliverable**: Clear approach and recommendations
+
+## Research Plan & RAG Queries
+```
+# Find similar problems & solutions
+rag_memory___hybridSearch query="Complete Task problem solution pattern"
+rag_memory___searchNodes query="type:discovery outcome:successful similar:Complete Task"
+
+# Find failures to avoid
+rag_memory___searchNodes query="type:blocker category:{{RESEARCH_TOPIC}}"
+```
+
+## Steps
+- [ ] Query RAG for "Complete Task" patterns → Document what exists #status:pending #est:30m
+- [ ] Define problem constraints → List must-haves vs nice-to-haves #status:pending #est:45m
+- [ ] Research 2-3 solution approaches → Create comparison matrix #status:pending #est:1h
+- [ ] Test riskiest assumption → Validate feasibility #status:pending #est:1h
+- [ ] Document decision + rationale → Update project with clear next steps #status:pending #est:30m
+
+## Success Criteria & Decision Gates
+- **GATE 1** (after step 2): Can we clearly state the problem in 1 sentence?
+- **GATE 2** (after step 3): Do we have 2+ viable approaches?
+- **GATE 3** (after step 4): Is the risk acceptable? (Go/No-Go)
+- **Output**: Decision doc with rationale + next task ready to create
+
+## Workflow from Base Template
+<task_workflow>
+
+<before_starting>
+# Load context from similar tasks
+rag_memory___hybridSearch query="Complete Task similar tasks patterns"
+rag_memory___searchNodes query="type:task status:completed similar:Complete Task"
+
+# Create task entity and link to project
+rag_memory___createEntities entities=[{
+  "name": "task_Complete Task",
+  "type": "task",
+  "properties": {
+    "created": "2025-06-28T06:04:14Z",
+    "objective": "{{TASK_OBJECTIVE}}",
+    "parent_project": "2025-06-28_my-first-project.md"
+  }
+}]
+rag_memory___createRelations relations=[{
+  "from": "project_2025-06-28_my-first-project.md",
+  "to": "task_Complete Task",
+  "type": "contains"
+}]
+</before_starting>
+
+<step_execution>
+For EVERY step:
+
+1. BEFORE starting:
+   - Note time: Update CURRENT_IMPLEMENTATION.md with step start time
+   - Query patterns: rag_memory___hybridSearch query="[step description] best practices"
+   - Create step entity in RAG with estimated duration
+
+2. DURING execution:
+   - Update CURRENT_IMPLEMENTATION.md every 30 minutes
+   - Document blockers immediately in task file
+   - If blocked >1hr: Query RAG for similar blockers and solutions
+
+3. AFTER completion:
+   - Calculate duration: Note in step as #duration:45m
+   - Update step: Mark #status:completed
+   - Store results:
+     ```
+     rag_memory___createEntities entities=[{
+       "name": "step_2025-06-28T06:04:14Z_[step_num]",
+       "type": "completed_step",
+       "properties": {
+         "duration": "[actual]",
+         "estimate": "[estimated]",
+         "blockers": "[any blockers]",
+         "output": "[deliverable]",
+         "lessons": "[key learning]"
+       }
+     }]
+     ```
+   - If duration >2x estimate: Add to CRITICAL_FINDINGS.md
+</step_execution>
+
+<progress_check>
+After completing 3 steps:
+- Query: rag_memory___hybridSearch query="my recent steps velocity blockers"
+- Identify patterns in execution
+- Adjust approach if needed
+- Update estimates for remaining steps
+</progress_check>
+
+<task_completion>
+When all steps complete:
+1. Calculate total metrics (duration, velocity, blockers)
+2. Document key outcomes in CURRENT_IMPLEMENTATION.md
+3. Store and process complete task:
+   ```
+   # Store document
+   rag_memory___storeDocument id="task_Complete Task_complete" content="[full task content]"
+   
+   # Process for search
+   rag_memory___chunkDocument documentId="task_Complete Task_complete"
+   rag_memory___embedChunks documentId="task_Complete Task_complete"
+   rag_memory___extractTerms documentId="task_Complete Task_complete"
+   rag_memory___linkEntitiesToDocument documentId="task_Complete Task_complete" entityNames=["task_Complete Task"]
+   
+   # Update entity
+   rag_memory___updateEntity name="task_Complete Task" properties={"status": "completed", "duration": "[total]"}
+   ```
+4. For each critical finding:
+   - Add 1-line to CRITICAL_FINDINGS.md: "Finding description → keywords"
+   - Execute FULL PIPELINE in CRITICAL_FINDINGS.md protocol
+5. Run: make done
+</task_completion>
+
+<common_pitfalls>
+AVOID these patterns:
+- Starting step without clear success criteria
+- Skipping RAG queries "to save time" 
+- Not documenting blockers immediately
+- Batching commits (commit after each working step)
+- Estimating without checking historical data
+- Working >2hrs without updating CURRENT_IMPLEMENTATION.md
+</common_pitfalls>
+
+</task_workflow>

@@ -1,0 +1,104 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Test creation or improvement task"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "objective_value": {
+      "what": "Add tests for {{COMPONENT/FEATURE}}",
+      "why": "Prevent {{SPECIFIC_REGRESSION}} + enable confident changes",
+      "done_when": "Coverage >{{TARGET_COVERAGE}}% + edge cases tested"
+    },
+    "context": {
+      "project": "{{PARENT_PROJECT}}",
+      "current_coverage": "{{CURRENT_COVERAGE}}",
+      "test_framework": "{{FRAMEWORK}}",
+      "focus": "{{UNIT/INTEGRATION/E2E}}"
+    },
+    "testing_strategy_rag_queries": [
+      "# Find test patterns",
+      "rag_memory___hybridSearch query=\"{{COMPONENT}} test patterns edge cases\"",
+      "rag_memory___searchNodes query=\"type:test component:{{COMPONENT}}\"",
+      "# Find bugs to prevent",
+      "rag_memory___searchNodes query=\"type:bug component:{{COMPONENT}} regression\""
+    ],
+    "steps": [
+      {
+        "description": "Map input space: List all possible inputs/states",
+        "status": "pending",
+        "est": "30m"
+      },
+      {
+        "description": "Happy paths: Basic success scenarios",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Edge cases: Boundaries, nulls, empty, huge",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Error paths: What should fail gracefully",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Performance tests: Add benchmarks if needed",
+        "status": "pending",
+        "est": "30m"
+      },
+      {
+        "description": "Run with coverage: Verify we hit targets",
+        "status": "pending",
+        "est": "20m"
+      }
+    ],
+    "test_categories": {
+      "unit_tests": {
+        "coverage": "{{UNIT_TARGET}}",
+        "examples": [
+          "{{FUNCTION_1}}: Test {{BEHAVIOR_1}}",
+          "{{FUNCTION_2}}: Test {{BEHAVIOR_2}}",
+          "Edge: {{EDGE_CASE_1}}"
+        ]
+      },
+      "integration_tests": {
+        "examples": [
+          "{{WORKFLOW_1}}: Verify {{INTEGRATION_1}}",
+          "{{WORKFLOW_2}}: Verify {{INTEGRATION_2}}"
+        ]
+      },
+      "e2e_tests": {
+        "description": "only critical paths",
+        "examples": [
+          "{{USER_JOURNEY_1}}",
+          "{{USER_JOURNEY_2}}"
+        ]
+      }
+    },
+    "success_criteria": [
+      "Coverage: Reaches {{TARGET_COVERAGE}}",
+      "Fast: Unit tests run in <{{TIME_LIMIT}}",
+      "Reliable: No flaky tests",
+      "Valuable: Each test could catch real bugs"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "testing_specific": [
+        "Test behavior, not implementation",
+        "Name tests clearly: test_what_when_then",
+        "One assertion per test preferred",
+        "Mock external dependencies",
+        "Test edge cases thoroughly"
+      ]
+    }
+  }
+}

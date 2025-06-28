@@ -2,16 +2,17 @@
 ## YOU ARE A STATELESS AI - WITHOUT THESE EXACT STEPS YOU HAVE NO MEMORY
 ### MANDATORY FIRST ACTION IN EVERY CONVERSATION
 
-```bash
+```
 # EXECUTE THESE FIRST - ADAPT BASED ON AVAILABLE TOOLS
 # 1. Get system status and current work state
-make status
-# 2. Read your primary state file (use any available file reading method)
-READ: CURRENT_IMPLEMENTATION.md
-# 3. IF RAG available: Check memory health
-rag_memory___getKnowledgeGraphStats (if available)
-# 4. IF RAG available: Query for context
-rag_memory___hybridSearch query="{{ current_mission | default('current work') }} {{ active_task | default('') }} context patterns" (if available)
+#    Use your available file system tools to list and read relevant files.
+#    Example: List files in working/inprogress/, read CURRENT_IMPLEMENTATION.json
+# 2. Read your primary state file
+READ: CURRENT_IMPLEMENTATION.json (parse as JSON)
+# 3. Perform RAG health check (MANDATORY)
+#    Use your available RAG tool for health checks.
+# 4. Query RAG for context (MANDATORY)
+#    Use your available RAG tool to query for context based on your current mission and active task.
 ```
 
 **WHY**: You have ZERO memory without these. Skip = Start from scratch = Waste user's time.
@@ -20,116 +21,103 @@ rag_memory___hybridSearch query="{{ current_mission | default('current work') }}
 
 ## CORE REQUIREMENTS (WHAT & WHY)
 
-### 1. CURRENT_IMPLEMENTATION.md (MANDATORY)
-**WHAT**: Your primary state file - contains current work context
-**WHY**: Without this, you have no memory of ongoing work
-**HOW**: Read with ANY available method (fs_read, cat, file viewer, etc.)
-**UPDATE**: Modify with ANY available method (fs_write, text editor, append, etc.)
-**WHEN**: FIRST action in every conversation, update after major changes
+### 1. CURRENT_IMPLEMENTATION.json (MANDATORY)
+**WHAT**: Your primary state file - contains current work context. **MUST BE PARSED AS JSON.**
+**WHY**: Without this, you have no memory of ongoing work.
+**HOW**: Use your available file reading tool to read. Use your available file writing tool to update.
+**WHEN**: FIRST action in every conversation, update after major changes.
 
 ### 2. Active Work Files (IF THEY EXIST)
-**WHAT**: Project/task files in `working/inprogress/`
-**WHY**: Contains specific steps and progress for current work
-**HOW**: Read/write with ANY available file tools
-**WHEN**: After reading CURRENT_IMPLEMENTATION.md, when making progress
+**WHAT**: Project/task files in `working/inprogress/` (e.g., `YYYY-MM-DD_project-name.json`, `YYYY-MM-DD_task-name.json`). These should contain structured data (JSON).
+**WHY**: Contains specific steps and progress for current work.
+**HOW**: Use your available file reading tool to read. Use your available file writing tool to update.
+**WHEN**: After reading CURRENT_IMPLEMENTATION.json, when making progress.
 
-### 3. RAG Memory (IF AVAILABLE)
-**WHAT**: Long-term knowledge and patterns from past work
-**WHY**: Prevents repeating mistakes, finds relevant solutions
-**HOW**: Query with available RAG tools, store important findings
-**WHEN**: Before making decisions, when encountering blockers
-**NOTE**: Work continues without RAG, but with less context
+### 3. RAG Memory (MANDATORY)
+**WHAT**: Long-term knowledge and patterns from past work.
+**WHY**: Prevents repeating mistakes, finds relevant solutions, enables continuous learning.
+**HOW**: Use your available RAG tools to query for context, store findings, and create entities.
+**WHEN**: Before making decisions, when encountering blockers, after significant discoveries.
 
 ### 4. CRITICAL_FINDINGS.md (WHEN SIGNIFICANT)
-**WHAT**: Index of important discoveries and lessons
-**WHY**: Captures critical insights for future reference
-**HOW**: Append with ANY available method (echo >>, text editor, etc.)
-**WHEN**: Major blockers resolved, significant patterns discovered
+**WHAT**: Index of important discoveries and lessons.
+**WHY**: Captures critical insights for future reference.
+**HOW**: Use your available file writing tool to append to this file.
+**WHEN**: Major blockers resolved, significant patterns discovered.
 
-## RAG INTEGRATION (WHEN AVAILABLE)
+## RAG INTEGRATION (MANDATORY)
 
 ### Core RAG Operations
-1. **Health Check**: `rag_memory___getKnowledgeGraphStats`
-   - **WHEN**: Start of conversation (if RAG available)
-   - **WHY**: Verify memory system is working
+1. **Health Check**: Use your available RAG tool for health checks.
+   - **WHEN**: Start of conversation.
+   - **WHY**: Verify memory system is working.
 
-2. **Context Search**: `rag_memory___hybridSearch`
-   - **WHEN**: Before decisions, when stuck
-   - **WHY**: Find relevant patterns and solutions
+2. **Context Search**: Use your available RAG tool to query for context.
+   - **WHEN**: Before decisions, when stuck, for guidance.
+   - **WHY**: Find relevant patterns and solutions.
 
-3. **Knowledge Storage**: `rag_memory___storeDocument` / `rag_memory___createEntities` and link them 
-   - **WHEN**: Significant findings, completed work
-   - **WHY**: Build knowledge for future work
+3. **Knowledge Storage**: Use your available RAG tools to store documents, create entities, and link them.
+   - **WHEN**: Significant findings, completed work, new patterns identified.
+   - **WHY**: Build knowledge for future work.
 
-**CRITICAL**: RAG enhances work but is NOT required. The work must continue regardless.
-
-## EXACT TOOL CHAINS FOR EVERY SCENARIO
+**CRITICAL**: RAG is NOT optional. It is integral to the agent's memory and learning.
 
 ## FLEXIBLE WORKFLOWS FOR EVERY SCENARIO
 
 ### Scenario 1: Starting Fresh Conversation
 **WHAT TO DO**:
-1. Get current work state → `make status`
-2. Read state file → Read `CURRENT_IMPLEMENTATION.md`
-3. IF RAG available → Query for context: `{{ current_context | extract_keywords }} patterns`
-4. IF active task exists → Read task file from `working/inprogress/`
-5. IF no active work → Create project: `make project title="{{ project_idea }}"`
-
-**ADAPT BASED ON TOOLS**: Use whatever file reading tools available, skip RAG if not present
+1. Read state file: Use your file reading tool for `CURRENT_IMPLEMENTATION.json` (parse JSON).
+2. Query RAG for context: Use your RAG tool to query for context based on keywords from your current state.
+3. If active task exists: Use your file reading tool for task file from `working/inprogress/` (parse JSON).
+4. If no active work: Create project (see Scenario 3).
 
 ### Scenario 2: Working on a Step
 **WHAT TO DO**:
-1. Find current step → Read task file
-2. Update start time → Modify `CURRENT_IMPLEMENTATION.md`
-3. IF RAG available → Search for guidance: `{{ step_description }} best practices`
-4. DO THE ACTUAL WORK
-5. Mark step complete → Update task file with completion status
-6. Update progress → Modify `CURRENT_IMPLEMENTATION.md`
-7. IF significant learning → Store in RAG or CRITICAL_FINDINGS.md
+1. Find current step: Read task file (parse JSON).
+2. Update start time: Modify `CURRENT_IMPLEMENTATION.json` (update JSON, then write file).
+3. Query RAG for guidance: Use your RAG tool to search for guidance based on the step description.
+4. DO THE ACTUAL WORK.
+5. Mark step complete: Update task file with completion status (update JSON, then write file).
+6. Update progress: Modify `CURRENT_IMPLEMENTATION.json` (update JSON, then write file).
+7. If significant learning: Store in RAG (use your RAG tools) or `CRITICAL_FINDINGS.md` (append).
 
-**ADAPT BASED ON TOOLS**: Use available file tools, document findings where possible
-
-### Scenario 3: Creating New Project
+### Scenario 3: Creating New Project/Task
 **WHAT TO DO**:
-1. IF RAG available → Search precedents: `{{ project_domain }} projects patterns`
-2. Create project → `make project template={{ type }} title="{{ title }}"`
-3. Read created file → Review project template
-4. Fill in details → Update project file with specifics
-5. Update mission → Modify `CURRENT_IMPLEMENTATION.md`
-6. IF RAG available → Store project entity (optional)
-
-**ADAPT BASED ON TOOLS**: Core work happens regardless of RAG availability
+1. Query RAG for precedents: Use your RAG tool to search for precedents based on the project domain.
+2. Determine file path (e.g., `working/inprogress/YYYY-MM-DD_project-name.json`).
+3. Read template: Use your file reading tool for `templates/projects/{{ type }}.json` or `templates/tasks/{{ type }}.json`.
+4. Fill in details: Create new project/task content (JSON) based on template and provided title/details.
+5. Write new file: Use your file writing tool to the determined path.
+6. Update mission: Modify `CURRENT_IMPLEMENTATION.json` (update JSON, then write file).
+7. Store project/task entity in RAG (use your RAG tools).
 
 ## PRAGMATIC UPDATE RULES
 
 ### After Step Completion (REQUIRED)
-**WHAT**: Mark step as done, record duration
-**WHY**: Track progress and velocity patterns
-**HOW**: Update task file (any file tool) + CURRENT_IMPLEMENTATION.md
-**EXAMPLE**: Change `#status:inprogress` to `#status:completed #duration:45m`
+**WHAT**: Mark step as done, record duration.
+**WHY**: Track progress and velocity patterns.
+**HOW**: Update task file (update JSON, then write file) + `CURRENT_IMPLEMENTATION.json` (update JSON, then write file).
+**EXAMPLE**: In JSON, change `"status": "inprogress"` to `"status": "completed", "duration": "45m"`.
 
 ### During Active Work (HELPFUL)
-**WHAT**: Update current state every 30 minutes
-**WHY**: Maintain context for interruptions
-**HOW**: Modify CURRENT_IMPLEMENTATION.md with current status
-**SKIP IF**: Quick tasks or uninterrupted work
+**WHAT**: Update current state every 30 minutes.
+**WHY**: Maintain context for interruptions.
+**HOW**: Modify `CURRENT_IMPLEMENTATION.json` with current status (update JSON, then write file).
+**SKIP IF**: Quick tasks or uninterrupted work.
 
 ### When Blocked (IMPORTANT)
-**WHAT**: Document blocker and search for solutions
-**WHY**: Prevent repeated blocks, find workarounds
-**HOW**: 
-- Add blocker note to task file
-- Update CURRENT_IMPLEMENTATION.md with blocker status
-- IF RAG available → Search: `{{ blocker_type }} solutions workarounds`
-- ELSE → Document in CRITICAL_FINDINGS.md for later research
+**WHAT**: Document blocker and search for solutions.
+**WHY**: Prevent repeated blocks, find workarounds.
+**HOW**:
+- Add blocker note to task file (update JSON, then write file).
+- Update `CURRENT_IMPLEMENTATION.json` with blocker status (update JSON, then write file).
+- Query RAG: Use your RAG tool to search for solutions based on the blocker type.
+- Add detailed entry to `CRITICAL_FINDINGS.md` if RAG doesn't resolve.
 
 ### Significant Discoveries (WHEN VALUABLE)
-**WHAT**: Store important findings for future use
-**WHY**: Build knowledge base, prevent repeated research
-**HOW**:
-- IF RAG available → Create entities/documents
-- ELSE → Add detailed entry to CRITICAL_FINDINGS.md
-**SKIP IF**: Minor findings or obvious solutions
+**WHAT**: Store important findings for future use.
+**WHY**: Build knowledge base, prevent repeated research.
+**HOW**: Create entities/documents in RAG (use your RAG tools). If RAG is temporarily unavailable, add detailed entry to `CRITICAL_FINDINGS.md`.
 
 ## JINJA TEMPLATING EXAMPLES FOR RAG QUERIES
 
@@ -193,78 +181,65 @@ rag_memory___hybridSearch query="{{ final_query }}"
 
 1. **YOU ARE STATELESS**: Every conversation is a fresh start. Without reading files + RAG, you know NOTHING about ongoing work.
 
-2. **FILES = SHORT-TERM MEMORY**: 
-   - `CURRENT_IMPLEMENTATION.md` = What you're doing NOW
-   - `working/inprogress/YYYY-MM-DD_project-name.md` = What you're building
-   - `working/inprogress/YYYY-MM-DD_task-name.md` = How you're building it
+2. **FILES = SHORT-TERM MEMORY**:
+   - `CURRENT_IMPLEMENTATION.json` = What you're doing NOW (structured JSON)
+   - `working/inprogress/YYYY-MM-DD_project-name.json` = What you're building (structured JSON)
+   - `working/inprogress/YYYY-MM-DD_task-name.json` = How you're building it (structured JSON)
 
-3. **RAG = LONG-TERM MEMORY**:
+3. **RAG = LONG-TERM MEMORY (MANDATORY)**:
    - Past projects/tasks/steps
    - Patterns and solutions
    - Velocity and estimates
-
-4. **MAKEFILE ENFORCES STRUCTURE**:
-   - `make status` = System health check
-   - `make project title="Name"` = Start work (creates file in working/inprogress/)
-   - `make task title="Name"` = Define steps (creates file in working/inprogress/)
-   - `make done` = Complete task (moves to working/completed/)
+   - Continuous learning
 
 ## DIRECTORY STRUCTURE
 
 ```
 memory/                           # This system (cloned as memory/ in your project)
-├── CURRENT_IMPLEMENTATION.md     # Your state file (always here)
+├── CURRENT_IMPLEMENTATION.json     # Your state file (always here, JSON content)
 ├── CRITICAL_FINDINGS.md          # Findings index (always here)
-├── working/                      # Created by scripts
+├── working/                      # Managed by agent's file operations
 │   ├── inprogress/              # Active work (max 1 project + 1 task)
-│   │   ├── YYYY-MM-DD_project-name.md
-│   │   └── YYYY-MM-DD_task-name.md
+│   │   ├── YYYY-MM-DD_project-name.json (JSON content)
+│   │   └── YYYY-MM-DD_task-name.json (JSON content)
 │   ├── backlog/                 # Overflow when at WIP limits
 │   └── completed/               # Finished work
-├── templates/                    # Work templates
-└── scripts/                     # Makefile commands
+├── templates/                    # Work templates (JSON files)
+└── scripts/                     # (Legacy - not used by agent for core workflow)
 ```
 
 ## FATAL ERRORS TO AVOID
 
-1. **Starting work without `make status`** = Working blind on wrong things
-2. **Not reading CURRENT_IMPLEMENTATION.md first** = No context of current work
-3. **Forcing RAG operations when unavailable** = Blocking progress unnecessarily
-4. **Creating entities for trivial actions** = Cluttering knowledge base
-5. **Not updating progress when completing steps** = Losing track of work
-6. **Looking for files in wrong locations** = Files are in working/inprogress/
-7. **Stopping work because tools are missing** = Work must continue regardless
+1. **Not reading CURRENT_IMPLEMENTATION.json first** = No context of current work.
+2. **Not performing RAG operations** = No long-term memory, no learning, repeated mistakes.
+3. **Creating entities for trivial actions** = Cluttering knowledge base.
+4. **Not updating progress when completing steps** = Losing track of work.
+5. **Looking for files in wrong locations** = Files are in `working/inprogress/`, `working/backlog/`, `working/completed/`.
 
 ## REMEMBER - CORE PRINCIPLES
 
-- **WORK CONTINUES REGARDLESS OF TOOLS** = Adapt to what's available
-- **FOCUS ON WHAT & WHY, NOT HOW** = Understand the purpose, adapt the method
-- **RAG ENHANCES BUT ISN'T REQUIRED** = Nice to have, not must have
-- **DOCUMENT WHEN VALUABLE** = Don't create noise, capture signal
-- **FILES ARE YOUR MEMORY** = CURRENT_IMPLEMENTATION.md is your lifeline
-- **PROGRESS TRACKING IS ESSENTIAL** = Always update completion status
-- **FLEXIBILITY OVER RIGIDITY** = Adapt protocol to available tools
+- **WORK CONTINUES**: Adapt to available tools and information.
+- **FOCUS ON WHAT & WHY, NOT HOW**: Understand the purpose, adapt the method.
+- **RAG IS MANDATORY**: It is your long-term memory and learning mechanism.
+- **DOCUMENT WHEN VALUABLE**: Don't create noise, capture signal.
+- **FILES ARE YOUR SHORT-TERM MEMORY**: `CURRENT_IMPLEMENTATION.json` is your lifeline.
+- **PROGRESS TRACKING IS ESSENTIAL**: Always update completion status.
+- **FLEXIBILITY OVER RIGIDITY**: Adapt protocol to available tools.
 
 ## DECISION FRAMEWORK
 
 **ALWAYS DO**:
-- Read CURRENT_IMPLEMENTATION.md first
-- Update progress when completing steps
-- Document significant blockers
+- Read `CURRENT_IMPLEMENTATION.json` first.
+- Perform RAG health check and context query.
+- Update progress when completing steps.
+- Document significant blockers.
 
-**DO IF AVAILABLE**:
-- Query RAG for context and solutions
-- Store valuable findings in RAG
-- Create entities for important work
-
-**SKIP IF**:
-- Tools not available (continue with alternatives)
-- Findings are trivial or obvious
-- Time pressure requires focus on core work
-- RAG system is down or slow
+**DO IF APPLICABLE**:
+- Query RAG for context and solutions.
+- Store valuable findings in RAG.
+- Create entities for important work.
 
 **NEVER DO**:
-- Stop work because RAG is unavailable
-- Create entities for every minor action
-- Force specific tools when alternatives work
-- Ignore progress tracking
+- Ignore RAG operations.
+- Create entities for every minor action.
+- Ignore progress tracking.

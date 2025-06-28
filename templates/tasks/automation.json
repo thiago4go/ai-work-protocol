@@ -1,0 +1,92 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Process automation task"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "objective_value": {
+      "what": "Automate {{MANUAL_PROCESS}}",
+      "why": "Save {{TIME_SAVED}}/week + reduce {{ERROR_TYPE}} errors",
+      "done_when": "Process runs without human intervention"
+    },
+    "context": {
+      "project": "{{PARENT_PROJECT}}",
+      "current_process": "{{MANUAL_STEPS}} taking {{CURRENT_TIME}}",
+      "target": "Reduce to {{TARGET_TIME}} with {{AUTOMATION_LEVEL}}% automation",
+      "triggers": "{{WHEN_RUNS}}"
+    },
+    "automation_plan_rag_queries": [
+      "# Find similar automations",
+      "rag_memory___hybridSearch query=\"automate {{PROCESS_TYPE}} script workflow\"",
+      "rag_memory___searchNodes query=\"type:automation category:{{PROCESS_TYPE}}\"",
+      "# Find failure patterns",
+      "rag_memory___searchNodes query=\"type:automation_failure\""
+    ],
+    "steps": [
+      {
+        "description": "Document current manual process in detail",
+        "status": "pending",
+        "estimate": "30m"
+      },
+      {
+        "description": "Identify automation boundaries + exceptions",
+        "status": "pending",
+        "estimate": "30m"
+      },
+      {
+        "description": "Build core automation for happy path",
+        "status": "pending",
+        "estimate": "2h"
+      },
+      {
+        "description": "Add error handling + alerting",
+        "status": "pending",
+        "estimate": "1h"
+      },
+      {
+        "description": "Test with real data + edge cases",
+        "status": "pending",
+        "estimate": "1h"
+      },
+      {
+        "description": "Create runbook for failures",
+        "status": "pending",
+        "estimate": "30m"
+      }
+    ],
+    "process_mapping": {
+      "current_manual_steps": [
+        "{{MANUAL_STEP_1}} ",
+        "{{MANUAL_STEP_2}} ",
+        "{{MANUAL_STEP_3}} "
+      ],
+      "exceptions_requiring_human": [
+        "{{EXCEPTION_1}}",
+        "{{EXCEPTION_2}}"
+      ]
+    },
+    "success_metrics": {
+      "time": "From {{CURRENT_TIME}} to {{TARGET_TIME}}",
+      "accuracy": "Error rate from {{CURRENT_ERROR}}% to <{{TARGET_ERROR}}%",
+      "reliability": "Runs successfully {{SUCCESS_TARGET}}% of time",
+      "roi": "Pays back in {{PAYBACK_PERIOD}}"
+    },
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "automation_specific": [
+        "Map process completely first",
+        "Start simple, enhance iteratively",
+        "Plan for failures from day one",
+        "Make it observable (logs/metrics)",
+        "Document for operators"
+      ]
+    }
+  }
+}

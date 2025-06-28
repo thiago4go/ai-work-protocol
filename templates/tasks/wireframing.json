@@ -1,0 +1,85 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Wireframing TASK for low-fidelity design exploration"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "summary": "Create low-fidelity wireframes to explore layout options and user flows before high-fidelity design.",
+    "context": {
+      "feature_page": "{{FEATURE_NAME}}",
+      "user_goals": "{{USER_GOALS}}",
+      "content_requirements": "{{CONTENT_TYPES}}",
+      "inspiration_sources": "{{REFERENCE_SITES}}"
+    },
+    "pre_conditions": [
+      "User requirements gathered",
+      "Content inventory complete",
+      "Competitor research done",
+      "Device targets defined"
+    ],
+    "steps": [
+      {
+        "description": "Competitor Analysis",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Information Architecture",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Sketch Exploration",
+        "estimate": "3h",
+        "status": "pending"
+      },
+      {
+        "description": "Digital Wireframes",
+        "estimate": "4h",
+        "status": "pending"
+      },
+      {
+        "description": "Responsive Variations",
+        "estimate": "3h",
+        "status": "pending"
+      },
+      {
+        "description": "Flow Documentation",
+        "estimate": "2h",
+        "status": "pending"
+      }
+    ],
+    "definition_of_done": [
+      "All key screens wireframed",
+      "Mobile and desktop versions complete",
+      "User flows documented",
+      "Annotations explain functionality",
+      "Team feedback incorporated",
+      "Ready for high-fidelity design"
+    ],
+    "deliverables": [
+      "Wireframe files (Figma/Sketch)",
+      "Exported PNGs/PDFs",
+      "User flow diagrams",
+      "Annotation documentation",
+      "Decision rationale in RAG"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "task_specific": [
+        "Keep it low-fidelity - no colors, fonts, or styling",
+        "Focus on layout, hierarchy, and flow",
+        "Create multiple options for A/B testing",
+        "Always annotate your thinking",
+        "Test ideas quickly before investing in details"
+      ]
+    }
+  }
+}

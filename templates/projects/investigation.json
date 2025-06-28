@@ -1,0 +1,61 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Research spike or investigation project"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "Answer: {{KEY_QUESTION}}",
+    "context": {
+      "unknown": "{{WHAT_WE_DONT_KNOW}}",
+      "why_it_matters": "{{BUSINESS_IMPACT}}",
+      "decisions_blocked": "{{WAITING_DECISIONS}}"
+    },
+    "success_criteria": [
+      "Clear Answer: Definitive yes/no/recommendation on {{KEY_QUESTION}}",
+      "Evidence: Data, benchmarks, or POC supporting conclusion",
+      "Actionable: Clear next steps with effort estimates"
+    ],
+    "investigation_plan": [
+      "Form Hypotheses: List 3 possible answers + implications (0.5 day)",
+      "Design Experiments: How to test each hypothesis (0.5 day)",
+      "Gather Evidence: Run experiments, collect data (2-3 days)",
+      "Analyze Results: Compare findings, identify patterns (1 day)",
+      "Document Decision: Clear recommendation + rationale (0.5 day)"
+    ],
+    "hypotheses_to_test": [
+      {
+        "hypothesis": "{{HYPOTHESIS_1}}",
+        "test_method": "{{TEST_METHOD_1}}"
+      },
+      {
+        "hypothesis": "{{HYPOTHESIS_2}}",
+        "test_method": "{{TEST_METHOD_2}}"
+      },
+      {
+        "hypothesis": "{{HYPOTHESIS_3}}",
+        "test_method": "{{TEST_METHOD_3}}"
+      }
+    ],
+    "constraints": {
+      "timebox": "Max {{MAX_DAYS}} days (spike, not production)",
+      "scope": "Answer the question, don't build the solution",
+      "output": "Decision document, not working code"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "investigation_specific": [
+        "Define success as \"question answered\" not \"code built\"",
+        "Timebox ruthlessly - perfect answer too late has no value",
+        "Document negative results (what doesn't work is valuable)",
+        "Create artifacts (benchmarks, POCs) for future reference",
+        "Focus on decision enablement"
+      ]
+    }
+  }
+}

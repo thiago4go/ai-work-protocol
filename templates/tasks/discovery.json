@@ -1,0 +1,71 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Research and discovery task template"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "objective": "{{TASK_OBJECTIVE}}",
+    "context": {
+      "project": "{{PARENT_PROJECT}}",
+      "purpose": "Understanding the problem before building",
+      "deliverable": "Clear approach and recommendations"
+    },
+    "research_plan_rag_queries": [
+      "# Find similar problems & solutions",
+      "rag_memory___hybridSearch query=\"{{TITLE}} problem solution pattern\"",
+      "rag_memory___searchNodes query=\"type:discovery outcome:successful similar:{{TITLE}}\"",
+      "# Find failures to avoid",
+      "rag_memory___searchNodes query=\"type:blocker category:{{RESEARCH_TOPIC}}\""
+    ],
+    "steps": [
+      {
+        "description": "Query RAG for \"{{TITLE}}\" patterns ",
+        "status": "pending",
+        "est": "30m"
+      },
+      {
+        "description": "Define problem constraints ",
+        "status": "pending",
+        "est": "45m"
+      },
+      {
+        "description": "Research 2-3 solution approaches ",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Test riskiest assumption ",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Document decision + rationale ",
+        "status": "pending",
+        "est": "30m"
+      }
+    ],
+    "success_criteria_decision_gates": [
+      "GATE 1 (after step 2): Can we clearly state the problem in 1 sentence?",
+      "GATE 2 (after step 3): Do we have 2+ viable approaches?",
+      "GATE 3 (after step 4): Is the risk acceptable? (Go/No-Go)",
+      "Output: Decision doc with rationale + next task ready to create"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "discovery_specific": [
+        "Heavy RAG querying before each step",
+        "Document ALL findings, even negative results",
+        "Create entities for key discoveries",
+        "Link findings to project goals",
+        "If no prior art found, document that explicitly"
+      ]
+    }
+  }
+}

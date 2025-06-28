@@ -27,9 +27,9 @@ echo -e "${CYAN}╔════════════════════�
 echo -e "${CYAN}║                    MEMORY SYSTEM DASHBOARD                   ║${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════════════════════╝${NC}"
 
-# Find active work
-PROJECT=$(find working/inprogress -name "*.md" -exec grep -l "^type: project" {} \; 2>/dev/null | head -1)
-TASK=$(find working/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | head -1)
+# Find active work (now looking for .json files)
+PROJECT=$(find working/inprogress -name "*.json" -exec jq -e '.metadata.type == "project"' {} >/dev/null \; -print | head -1)
+TASK=$(find working/inprogress -name "*.json" -exec jq -e '.metadata.type == "task"' {} >/dev/null \; -print | head -1)
 
 # PROJECT Progress
 if [ -n "$PROJECT" ]; then
@@ -37,10 +37,17 @@ if [ -n "$PROJECT" ]; then
     echo -e "${GREEN}🎯 ACTIVE PROJECT${NC}"
     echo "═══════════════════════════════════════════════════════════════"
     
-    PROJECT_TITLE=$(grep "^title:" "$PROJECT" | cut -d' ' -f2-)
-    TOTAL_TASKS=$(grep -c "^- \[.\]" "$PROJECT")
-    DONE_TASKS=$(grep -c "^- \[x\]" "$PROJECT")
-    PERCENT=$((DONE_TASKS * 100 / (TOTAL_TASKS + 1)))
+    PROJECT_TITLE=$(jq -r '.metadata.title' "$PROJECT")
+    
+    # For projects, value_driven_task_sequence is an array of strings, not objects with status.
+    # So, we'll just show the total number of planned tasks for now.
+    TOTAL_TASKS=$(jq '.details.value_driven_task_sequence | length' "$PROJECT" 2>/dev/null || echo 0)
+    DONE_TASKS=0 # Cannot determine from string array without more complex parsing
+    
+    PERCENT=0
+    if [ "$TOTAL_TASKS" -gt 0 ]; then
+        PERCENT=$((DONE_TASKS * 100 / TOTAL_TASKS))
+    fi
     
     echo "Title: $PROJECT_TITLE"
     echo -n "Progress: "
@@ -54,10 +61,16 @@ if [ -n "$TASK" ]; then
     echo -e "${BLUE}📋 ACTIVE TASK${NC}"
     echo "═══════════════════════════════════════════════════════════════"
     
-    TASK_TITLE=$(grep "^title:" "$TASK" | cut -d' ' -f2-)
-    TOTAL_STEPS=$(grep -c "^- \[" "$TASK")
-    DONE_STEPS=$(grep -c "^- \[x\]" "$TASK")
-    PERCENT=$((DONE_STEPS * 100 / (TOTAL_STEPS + 1)))
+    TASK_TITLE=$(jq -r '.metadata.title' "$TASK")
+    
+    # Steps are objects with a status field, so we can calculate progress
+    TOTAL_STEPS=$(jq '.details.steps | length' "$TASK" 2>/dev/null || echo 0)
+    DONE_STEPS=$(jq '.details.steps | map(select(.status == "completed")) | length' "$TASK" 2>/dev/null || echo 0)
+    
+    PERCENT=0
+    if [ "$TOTAL_STEPS" -gt 0 ]; then
+        PERCENT=$((DONE_STEPS * 100 / TOTAL_STEPS))
+    fi
     
     echo "Title: $TASK_TITLE"
     echo -n "Progress: "
@@ -65,17 +78,17 @@ if [ -n "$TASK" ]; then
     echo " ($DONE_STEPS/$TOTAL_STEPS steps)"
     
     # Current step
-    CURRENT=$(grep "#status:inprogress" "$TASK" | head -1 | sed 's/.*- \[.\] //' | cut -d'#' -f1)
-    [ -n "$CURRENT" ] && echo "Current: $CURRENT"
+    CURRENT_STEP_DESC=$(jq -r '.details.steps[] | select(.status == "pending") | .description' "$TASK" | head -1)
+    [ -n "$CURRENT_STEP_DESC" ] && echo "Current: $CURRENT_STEP_DESC"
 fi
 
 # Statistics
 echo ""
 echo -e "${YELLOW}📊 STATISTICS${NC}"
 echo "═══════════════════════════════════════════════════════════════"
-TOTAL_TASKS=$(find plans -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | wc -l)
-COMPLETED=$(find working/completed -name "*.md" 2>/dev/null | wc -l)
-ACTIVE=$(find working/inprogress -name "*.md" 2>/dev/null | wc -l)
+TOTAL_TASKS=$(find working -name "*.json" -exec jq -e '.metadata.type == "task"' {} >/dev/null \; -print | wc -l)
+COMPLETED=$(find working/completed -name "*.json" 2>/dev/null | wc -l)
+ACTIVE=$(find working/inprogress -name "*.json" 2>/dev/null | wc -l)
 
 echo "Total Tasks: $TOTAL_TASKS"
 echo "Completed: $COMPLETED"

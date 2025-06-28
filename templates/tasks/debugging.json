@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Systematic debugging task"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "objective_value": {
+      "what": "Find why {{SYSTEM/FEATURE}} is {{PROBLEM_BEHAVIOR}}",
+      "why": "{{USER_IMPACT}}",
+      "done_when": "Root cause identified + fix validated"
+    },
+    "context": {
+      "project": "{{PARENT_PROJECT}}",
+      "symptoms": "{{WHAT_IS_BROKEN}}",
+      "started": "{{WHEN_STARTED}}",
+      "frequency": "{{HOW_OFTEN}}"
+    },
+    "debugging_strategy_rag_queries": [
+      "# Find similar issues",
+      "rag_memory___hybridSearch query=\"{{PROBLEM_BEHAVIOR}} {{SYSTEM}} debug\"",
+      "rag_memory___searchNodes query=\"type:bug symptoms:{{SYMPTOMS}}\"",
+      "# Check recent changes",
+      "rag_memory___hybridSearch query=\"{{SYSTEM}} recent changes commits\""
+    ],
+    "steps": [
+      {
+        "description": "Reproduce locally with minimal test case",
+        "status": "pending",
+        "est": "30m"
+      },
+      {
+        "description": "Binary search: Find last working version",
+        "status": "pending",
+        "est": "45m"
+      },
+      {
+        "description": "Isolate variables: What exactly triggers it?",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Form hypothesis \u2192 Test \u2192 Document results",
+        "status": "pending",
+        "est": "2h"
+      },
+      {
+        "description": "Implement fix \u2192 Verify \u2192 Add regression test",
+        "status": "pending",
+        "est": "1h"
+      }
+    ],
+    "debug_toolkit": {
+      "logs": "Check {{LOG_LOCATION}} for patterns",
+      "metrics": "Compare {{METRIC}} before/after",
+      "git_bisect": "Between {{LAST_KNOWN_GOOD}} and {{FIRST_BROKEN}}",
+      "debugger": "Breakpoints at {{KEY_FUNCTIONS}}"
+    },
+    "success_criteria_gates": [
+      "GATE 1 (after step 2): Can reproduce consistently?",
+      "GATE 2 (after step 3): Understand trigger conditions?",
+      "GATE 3 (after step 4): Have working hypothesis?",
+      "Output: Root cause doc + tested fix"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "debugging_specific": [
+        "Reproduce before attempting fix",
+        "Change one variable at a time",
+        "Document failed hypotheses too",
+        "Use binary search to isolate",
+        "Keep debug log of what tried"
+      ]
+    }
+  }
+}

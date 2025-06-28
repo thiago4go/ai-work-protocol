@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "UI Design PROJECT with MCP tools integration"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "{{PROJECT_GOAL}}",
+    "context": {
+      "design_challenge": "{{DESIGN_CHALLENGE}}",
+      "target_users": "{{TARGET_USERS}}",
+      "brand_guidelines": "{{BRAND_CONSTRAINTS}}",
+      "technical_stack": "React + Shadcn/UI + Tailwind"
+    },
+    "success_criteria": [
+      "Visual: Consistent design system following brand guidelines",
+      "Usability: {{TARGET_USER}} can complete {{KEY_TASKS}} without confusion",
+      "Accessibility: WCAG 2.1 AA compliance verified with Selenium",
+      "Performance: < 3s load time, smooth interactions",
+      "Responsive: Works on mobile, tablet, desktop"
+    ],
+    "ui_ux_task_sequence": [
+      "Research & Wireframing: Analyze competitors, create low-fi designs (1-2 days)",
+      "Component Selection: Choose shadcn/ui components (0.5 days)",
+      "Prototype: Build interactive prototype (2-3 days)",
+      "User Testing: Validate with target users (1-2 days)",
+      "Refinement: Iterate based on feedback (1-2 days)"
+    ],
+    "mcp_tool_integration": {
+      "selenium": "Visual testing, user flow automation, screenshot documentation",
+      "shadcn_ui": "Component library, rapid prototyping, consistent design"
+    },
+    "constraints": {
+      "timeline": "{{TIMELINE}}",
+      "budget": "{{BUDGET}}",
+      "tech_limitations": "{{TECH_CONSTRAINTS}}"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "project_specific": [
+        "Always start with competitor analysis using Selenium screenshots",
+        "Document every design decision in RAG with rationale",
+        "Use shadcn/ui components as foundation, customize as needed",
+        "Create automated visual tests for each major feature",
+        "Store screenshots and test results in RAG for future reference"
+      ]
+    }
+  }
+}

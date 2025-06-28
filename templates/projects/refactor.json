@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Technical debt and refactoring project"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "Improve {{SYSTEM_COMPONENT}} without changing external behavior",
+    "context": {
+      "tech_debt": "{{SPECIFIC_DEBT}}",
+      "pain_points": "{{CURRENT_PROBLEMS}}",
+      "impact": "Affects {{WHO_AFFECTED}} when {{WHEN_AFFECTED}}"
+    },
+    "success_criteria": [
+      "Performance: {{METRIC}} improves by {{TARGET}}% (measure before/after)",
+      "Maintainability: {{SPECIFIC_IMPROVEMENT}} (e.g., reduce complexity from X to Y)",
+      "No Regressions: All existing tests pass + no new bugs"
+    ],
+    "refactor_strategy": [
+      "Measure Baseline: Document current metrics + pain points (1 day)",
+      "Safety Net: Create/improve test coverage to 80%+ (2 days)",
+      "Incremental Changes: Refactor in small, safe steps (3-4 days)",
+      "Validate Each Step: Run tests + check metrics (ongoing)",
+      "Document Changes: Update docs + team knowledge (1 day)"
+    ],
+    "constraints": {
+      "no_breaking_changes": "API/behavior must remain identical",
+      "incremental": "Must be able to stop at any point",
+      "reversible": "Each change must be revertable"
+    },
+    "risk_mitigation": [
+      "Feature flag for gradual rollout",
+      "Automated performance benchmarks",
+      "Canary deployment strategy"
+    ],
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "refactor_specific": [
+        "Always measure before changing",
+        "Create comprehensive tests FIRST",
+        "Make smallest possible changes",
+        "Commit after each green test run",
+        "Document why, not just what"
+      ]
+    }
+  }
+}

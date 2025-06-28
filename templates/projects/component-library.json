@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Component Library PROJECT for reusable UI components"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "{{PROJECT_GOAL}}",
+    "context": {
+      "design_system": "{{DESIGN_SYSTEM_NAME}}",
+      "tech_stack": "React + TypeScript + Shadcn/UI + Storybook",
+      "target_projects": "{{TARGET_PROJECTS}}",
+      "component_scope": "{{COMPONENT_CATEGORIES}}"
+    },
+    "success_criteria": [
+      "Coverage: {{COMPONENT_COUNT}} reusable components documented",
+      "Adoption: Used in {{PROJECT_COUNT}} projects",
+      "Consistency: 100% design token compliance",
+      "Documentation: All components have examples and API docs",
+      "Testing: 100% visual regression coverage with Selenium"
+    ],
+    "component_development_sequence": [
+      "Foundation Setup: Design tokens, themes, utilities (1-2 days)",
+      "Core Components: Buttons, forms, cards (3-4 days)",
+      "Layout Components: Grid, containers, navigation (2-3 days)",
+      "Complex Components: Data tables, modals, wizards (3-4 days)",
+      "Documentation Site: Usage guide and examples (2-3 days)"
+    ],
+    "component_standards": {
+      "naming": "{{NAMING_CONVENTION}}",
+      "props": "TypeScript interfaces required",
+      "styling": "Tailwind + CSS variables",
+      "testing": "Unit + Visual regression",
+      "a11y": "ARIA compliant, keyboard navigable"
+    },
+    "integration_strategy": [
+      "NPM package publishing",
+      "Version management",
+      "Migration guides",
+      "Breaking change policy"
+    ],
+    "constraints": {
+      "browser_support": "{{BROWSER_MATRIX}}",
+      "performance": "< 50kb per component",
+      "dependencies": "Minimize external deps"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "project_specific": [
+        "Start with most-used components based on audit",
+        "Extend shadcn/ui rather than rebuilding from scratch",
+        "Document everything - props, examples, edge cases",
+        "Version carefully - breaking changes hurt adoption",
+        "Test across all target projects"
+      ]
+    }
+  }
+}

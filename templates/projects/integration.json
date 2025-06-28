@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "System integration project"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "Connect {{SYSTEM_A}} with {{SYSTEM_B}} for {{PURPOSE}}",
+    "context": {
+      "data_flow": "{{SYSTEM_A}} \u2192 {{DATA_TYPE}} \u2192 {{SYSTEM_B}}",
+      "volume": "{{EXPECTED_TRANSACTIONS}}/day, {{DATA_SIZE}}/transaction",
+      "latency_requirements": "{{MAX_LATENCY}}ms"
+    },
+    "success_criteria": [
+      "Functional: Data flows correctly end-to-end",
+      "Reliable: 99.9% uptime, automatic retry on failure",
+      "Observable: Monitoring, alerting, and debugging tools ready"
+    ],
+    "integration_plan": [
+      "Define Contract: API spec, data schema, error codes (1 day)",
+      "Build Mock: Fake integration for testing (1 day)",
+      "Implement Core: Basic happy path working (2 days)",
+      "Add Resilience: Retries, circuit breakers, backpressure (2 days)",
+      "Production Ready: Monitoring, alerts, runbooks (1 day)"
+    ],
+    "technical_design": {
+      "protocol": "{{REST/GraphQL/gRPC/Message Queue}}",
+      "authentication": "{{AUTH_METHOD}}",
+      "data_format": "{{JSON/XML/Protobuf}}",
+      "error_handling": "{{RETRY_STRATEGY}}"
+    },
+    "constraints": {
+      "no_downtime": "Must deploy without affecting either system",
+      "backward_compatible": "Support existing integrations",
+      "rate_limits": "Respect {{SYSTEM_B}} limit of {{RATE_LIMIT}}"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "integration_specific": [
+        "Start with contract/interface definition",
+        "Build with mocks before real systems",
+        "Test failure modes extensively",
+        "Add monitoring from day one",
+        "Document everything (runbooks!)"
+      ]
+    }
+  }
+}

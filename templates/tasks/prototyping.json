@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Interactive Prototyping TASK with shadcn/ui components"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "summary": "Build interactive prototype using shadcn/ui components with automated testing via Selenium.",
+    "context": {
+      "feature": "{{FEATURE_NAME}}",
+      "user_story": "As a {{USER_TYPE}}, I want to {{USER_GOAL}} so that {{USER_BENEFIT}}",
+      "design_specs": "{{DESIGN_REFERENCE}}"
+    },
+    "pre_conditions": [
+      "Wireframes approved",
+      "Shadcn/ui components identified",
+      "Test scenarios defined"
+    ],
+    "steps": [
+      {
+        "description": "Component Research",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Build Layout Structure",
+        "estimate": "3h",
+        "status": "pending"
+      },
+      {
+        "description": "Add Interactivity",
+        "estimate": "4h",
+        "status": "pending"
+      },
+      {
+        "description": "Visual Polish",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Automated Testing Setup",
+        "estimate": "3h",
+        "status": "pending"
+      },
+      {
+        "description": "User Flow Documentation",
+        "estimate": "2h",
+        "status": "pending"
+      }
+    ],
+    "definition_of_done": [
+      "All components render correctly",
+      "Interactions work as designed",
+      "Responsive on all target devices",
+      "Automated tests pass",
+      "Screenshots captured and stored",
+      "Design decisions documented in RAG"
+    ],
+    "deliverables": [
+      "Working prototype URL",
+      "Component documentation",
+      "Test automation scripts",
+      "Visual regression baseline",
+      "User flow screenshots"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "task_specific": [
+        "Always start by researching existing shadcn components",
+        "Build incrementally - layout first, then interactions",
+        "Test each component in isolation before integration",
+        "Use Selenium to verify all interactions work",
+        "Document component customizations for reuse"
+      ]
+    }
+  }
+}

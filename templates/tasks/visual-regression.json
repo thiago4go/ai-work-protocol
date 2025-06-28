@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Visual Regression Testing TASK using Selenium MCP"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "summary": "Implement visual regression testing to catch unintended UI changes using Selenium automation.",
+    "context": {
+      "test_scope": "{{TEST_SCOPE}}",
+      "baseline_version": "{{BASELINE_VERSION}}",
+      "critical_paths": "{{CRITICAL_USER_PATHS}}"
+    },
+    "pre_conditions": [
+      "Selenium MCP available",
+      "Baseline screenshots exist or need creation",
+      "Test environments accessible"
+    ],
+    "steps": [
+      {
+        "description": "Setup Test Environment",
+        "estimate": "1h",
+        "status": "pending"
+      },
+      {
+        "description": "Create/Update Baseline",
+        "estimate": "3h",
+        "status": "pending"
+      },
+      {
+        "description": "Implement Test Suite",
+        "estimate": "4h",
+        "status": "pending"
+      },
+      {
+        "description": "Run Regression Tests",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Document Findings",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Update Test Coverage",
+        "estimate": "1h",
+        "status": "pending"
+      }
+    ],
+    "definition_of_done": [
+      "All critical paths have visual tests",
+      "Baseline screenshots are current",
+      "Test suite runs automatically",
+      "Differences are documented",
+      "No unintended regressions",
+      "Results stored in RAG"
+    ],
+    "deliverables": [
+      "Visual test suite scripts",
+      "Baseline screenshot library",
+      "Regression test reports",
+      "Coverage documentation",
+      "CI/CD integration plan"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "task_specific": [
+        "Always test multiple viewports",
+        "Include hover/focus states",
+        "Test both light/dark themes if applicable",
+        "Document why each baseline was approved",
+        "Keep history of visual changes in RAG"
+      ]
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Implementation task template"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "objective_value": {
+      "what": "{{IMPLEMENTATION_GOAL}}",
+      "why": "Enables {{TARGET_USER}} to {{USER_GOAL}}",
+      "done_when": "User can {{SPECIFIC_ACTION}} without errors"
+    },
+    "context": {
+      "project": "{{PARENT_PROJECT}}",
+      "user_story": "As {{TARGET_USER}}, I want to {{USER_GOAL}} so that {{BENEFIT}}",
+      "deliverable": "Working code that {{MEASURABLE_OUTCOME}}"
+    },
+    "implementation_plan": {
+      "approach": "{{APPROACH}}",
+      "dependencies": "{{DEPENDENCIES}}",
+      "testing": "{{TEST_STRATEGY}}"
+    },
+    "steps": [
+      {
+        "description": "Setup: Load design from RAG + verify dependencies",
+        "status": "pending",
+        "estimated_time": "20m"
+      },
+      {
+        "description": "Core logic: Implement main functionality (no edge cases)",
+        "status": "pending",
+        "estimated_time": "2h"
+      },
+      {
+        "description": "Happy path test: Verify basic functionality works",
+        "status": "pending",
+        "estimated_time": "30m"
+      },
+      {
+        "description": "Edge cases: Handle errors + validate inputs",
+        "status": "pending",
+        "estimated_time": "1h"
+      },
+      {
+        "description": "Integration: Connect to existing code + full test suite",
+        "status": "pending",
+        "estimated_time": "1h"
+      },
+      {
+        "description": "Polish: Refactor + document + commit working code",
+        "status": "pending",
+        "estimated_time": "30m"
+      }
+    ],
+    "success_criteria": [
+      "Feature works as designed",
+      "Tests pass",
+      "Code is clean and documented",
+      "User can use the feature"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "implementation_specific": [
+        "Load design decisions before starting",
+        "Follow existing code patterns",
+        "Test each step before moving on",
+        "Commit working code frequently",
+        "Document technical debt immediately"
+      ],
+      "implementation_queries": [
+        "Before implementing: rag_memory___hybridSearch query=\"{{PARENT_PROJECT}} design architecture decisions\"",
+        "Before implementing: rag_memory___searchNodes query=\"type:design parent:{{PARENT_PROJECT}}\"",
+        "After each step: rag_memory___createEntities entities=[{\"name\": \"impl_step_{{TIMESTAMP}}\", \"type\": \"implementation_detail\", \"properties\": {\"feature\": \"[what built]\", \"pattern\": \"[pattern used]\", \"debt\": \"[any shortcuts]\"}}}]"
+      ],
+      "quality_gates": [
+        "All tests pass",
+        "Code reviewed against standards",
+        "No critical TODOs",
+        "Performance validated",
+        "Documentation complete"
+      ]
+    }
+  }
+}

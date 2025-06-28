@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Performance optimization project"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "Make {{FEATURE/SYSTEM}} {{TARGET_MULTIPLIER}}x faster",
+    "context": {
+      "current_performance": "{{CURRENT_METRIC}} (P50/P95/P99)",
+      "target_performance": "{{TARGET_METRIC}}",
+      "user_impact": "{{HOW_SLOWNESS_AFFECTS_USERS}}"
+    },
+    "success_criteria": [
+      "Speed: Achieve {{TARGET_METRIC}} for {{USE_CASE}}",
+      "Consistent: P95 latency < {{P95_TARGET}}",
+      "Sustainable: No increase in resource usage/cost"
+    ],
+    "optimization_strategy": [
+      "Profile Current: Where is time actually spent? (1 day)",
+      "Quick Wins: Cache, indexes, obvious fixes (1 day)",
+      "Measure Impact: Did quick wins help? How much? (0.5 day)",
+      "Deep Changes: Algorithm/architecture if needed (2-3 days)",
+      "Validate: Load test, measure, tune (1 day)"
+    ],
+    "performance_baseline": {
+      "metric": "{{METRIC_NAME}}",
+      "current_p50": "{{CURRENT_P50}}",
+      "current_p95": "{{CURRENT_P95}}",
+      "current_p99": "{{CURRENT_P99}}"
+    },
+    "suspected_bottlenecks": [
+      {
+        "bottleneck": "{{BOTTLENECK_1}}",
+        "impact": "{{IMPACT_1}}"
+      },
+      {
+        "bottleneck": "{{BOTTLENECK_2}}",
+        "impact": "{{IMPACT_2}}"
+      },
+      {
+        "bottleneck": "{{BOTTLENECK_3}}",
+        "impact": "{{IMPACT_3}}"
+      }
+    ],
+    "constraints": {
+      "budget": "Stay within current infrastructure costs",
+      "compatibility": "Don't break existing functionality",
+      "complexity": "Keep code maintainable"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "optimization_specific": [
+        "MEASURE before optimizing",
+        "Profile with real data/load",
+        "Start with algorithmic improvements",
+        "Optimize the right metric (user-facing)",
+        "Document why each change helps"
+      ]
+    }
+  }
+}

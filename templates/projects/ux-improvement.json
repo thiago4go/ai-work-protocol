@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "UX Improvement PROJECT focusing on user experience optimization"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "{{PROJECT_GOAL}}",
+    "context": {
+      "current_state": "{{CURRENT_UX_ISSUES}}",
+      "target_state": "{{DESIRED_UX_IMPROVEMENTS}}",
+      "user_pain_points": "{{USER_PAIN_POINTS}}",
+      "success_metrics": "{{UX_METRICS}}"
+    },
+    "success_criteria": [
+      "Usability: {{USABILITY_METRIC}} improvement (measured via user testing)",
+      "Task Completion: Reduce time to complete {{KEY_TASK}} by {{PERCENTAGE}}%",
+      "Error Rate: Decrease user errors by {{ERROR_REDUCTION}}%",
+      "Satisfaction: Achieve {{SATISFACTION_SCORE}}/10 user satisfaction score",
+      "Accessibility: Meet WCAG 2.1 {{LEVEL}} standards"
+    ],
+    "ux_improvement_task_sequence": [
+      "User Research: Understand current pain points (2-3 days)",
+      "Journey Mapping: Document current vs ideal flows (1-2 days)",
+      "Design Solutions: Create improved workflows (2-3 days)",
+      "Prototype Testing: Validate improvements (2-3 days)",
+      "Implementation: Roll out improvements (3-4 days)"
+    ],
+    "research_methods": [
+      "Quantitative: Analytics, A/B tests, performance metrics",
+      "Qualitative: User interviews, usability tests, surveys",
+      "Automated: Selenium journey recording, heatmaps"
+    ],
+    "constraints": {
+      "user_disruption": "{{DISRUPTION_TOLERANCE}}",
+      "technical_debt": "{{TECH_CONSTRAINTS}}",
+      "timeline": "{{TIMELINE}}"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "project_specific": [
+        "Always start with data - don't assume you know the problems",
+        "Test with real users, not just internal team",
+        "Measure before and after to prove improvements",
+        "Consider gradual rollout to minimize disruption",
+        "Document all user feedback in RAG"
+      ]
+    }
+  }
+}

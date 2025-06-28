@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Data or system migration project"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "Migrate {{WHAT}} from {{SOURCE}} to {{DESTINATION}}",
+    "context": {
+      "scale": "{{DATA_SIZE}} records, {{STORAGE_SIZE}}GB",
+      "downtime_window": "{{ACCEPTABLE_DOWNTIME}}",
+      "criticality": "{{BUSINESS_IMPACT_IF_FAILED}}"
+    },
+    "success_criteria": [
+      "Complete: 100% of data successfully migrated",
+      "Accurate: Zero data loss, checksums match",
+      "Timely: Completed within {{TIME_WINDOW}}"
+    ],
+    "migration_strategy": [
+      "Analyze Source: Document schema, count records (1 day)",
+      "Build Pipeline: Create migration scripts + validation (2 days)",
+      "Test Migration: Run on subset, verify accuracy (1 day)",
+      "Dry Run: Full migration to staging (1 day)",
+      "Execute: Production migration with monitoring (1 day)",
+      "Validate: Confirm all data, cleanup source (1 day)"
+    ],
+    "migration_details": {
+      "data_types": "{{TABLES/COLLECTIONS/FILES}}",
+      "transformation": "{{ANY_SCHEMA_CHANGES}}",
+      "dependencies": "{{WHAT_DEPENDS_ON_THIS_DATA}}"
+    },
+    "rollback_plan": [
+      "Before Point of No Return: Stop migration, revert to source",
+      "After Point of No Return: Reverse migrate from destination",
+      "Emergency: Restore from backup taken at {{BACKUP_TIME}}"
+    ],
+    "constraints": {
+      "zero_data_loss": "Every record must be accounted for",
+      "minimal_downtime": "Use {{STRATEGY}} approach",
+      "audit_trail": "Log every record migrated"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "migration_specific": [
+        "Count everything twice (source & destination)",
+        "Test with real data subset first",
+        "Have rollback plan for each phase",
+        "Monitor throughout migration",
+        "Keep source until verified"
+      ]
+    }
+  }
+}

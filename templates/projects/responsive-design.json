@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Responsive Design PROJECT for multi-device optimization"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "{{PROJECT_GOAL}}",
+    "context": {
+      "current_state": "{{CURRENT_RESPONSIVE_ISSUES}}",
+      "target_devices": "{{DEVICE_MATRIX}}",
+      "user_distribution": "{{DEVICE_USAGE_STATS}}",
+      "performance_budget": "{{PERFORMANCE_TARGETS}}"
+    },
+    "success_criteria": [
+      "Device Coverage: Works on {{DEVICE_COUNT}} target devices",
+      "Performance: < {{LOAD_TIME}}s on 3G mobile",
+      "Usability: Touch targets \u2265 44px on mobile",
+      "Content Parity: All features available on all devices",
+      "Testing: Automated tests for all breakpoints"
+    ],
+    "responsive_design_task_sequence": [
+      "Device Audit: Analyze current state across devices (1-2 days)",
+      "Breakpoint Strategy: Define responsive system (1 day)",
+      "Component Adaptation: Make components responsive (3-4 days)",
+      "Layout Optimization: Improve layouts per device (2-3 days)",
+      "Performance Tuning: Optimize for mobile (2-3 days)",
+      "Cross-Device Testing: Validate on real devices (2-3 days)"
+    ],
+    "technical_approach": {
+      "css_strategy": "{{CSS_APPROACH}}",
+      "grid_system": "{{GRID_FRAMEWORK}}",
+      "image_strategy": "{{IMAGE_OPTIMIZATION}}",
+      "font_loading": "{{FONT_STRATEGY}}"
+    },
+    "testing_matrix": [
+      {
+        "device_category": "Mobile Small",
+        "viewport": "320-375px",
+        "test_coverage": "Selenium automated"
+      },
+      {
+        "device_category": "Mobile Large",
+        "viewport": "376-414px",
+        "test_coverage": "Selenium automated"
+      },
+      {
+        "device_category": "Tablet",
+        "viewport": "768-1024px",
+        "test_coverage": "Selenium automated"
+      },
+      {
+        "device_category": "Desktop",
+        "viewport": "1025px+",
+        "test_coverage": "Selenium automated"
+      }
+    ],
+    "constraints": {
+      "legacy_support": "{{LEGACY_REQUIREMENTS}}",
+      "framework_limits": "{{FRAMEWORK_CONSTRAINTS}}",
+      "timeline": "{{TIMELINE}}"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "project_specific": [
+        "Always start mobile-first",
+        "Test on real devices, not just browser DevTools",
+        "Consider touch, mouse, and keyboard inputs",
+        "Performance is part of responsive design",
+        "Document breakpoint decisions in RAG"
+      ]
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Bug fixing project"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "Fix: {{BUG_DESCRIPTION}}",
+    "context": {
+      "severity": "{{SEVERITY_LEVEL}} - {{USERS_AFFECTED}} users affected",
+      "symptoms": "{{WHAT_USERS_SEE}}",
+      "first_reported": "{{WHEN_STARTED}}",
+      "frequency": "{{HOW_OFTEN}}"
+    },
+    "success_criteria": [
+      "Fixed: Bug no longer reproducible with original steps",
+      "Tested: Automated test prevents regression",
+      "Root Cause: Documented to prevent similar bugs"
+    ],
+    "fix_strategy": [
+      "Reproduce Reliably: Document exact steps (0.5 day)",
+      "Isolate Root Cause: Debug to find actual problem (1-2 days)",
+      "Implement Fix: Minimal change that solves issue (1 day)",
+      "Add Regression Test: Automated test for this case (0.5 day)",
+      "Verify Fix: Test in multiple scenarios (0.5 day)"
+    ],
+    "bug_details": {
+      "steps_to_reproduce": [
+        "{{STEP_1}}",
+        "{{STEP_2}}",
+        "{{STEP_3}}"
+      ],
+      "expected": "{{EXPECTED_BEHAVIOR}}",
+      "actual": "{{ACTUAL_BEHAVIOR}}"
+    },
+    "constraints": {
+      "minimal_change": "Fix only this bug, no \"improvements\"",
+      "backward_compatible": "Don't break existing functionality",
+      "performance": "Fix shouldn't degrade performance"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "bugfix_specific": [
+        "Reproduce before attempting fix",
+        "Find root cause, not just symptoms",
+        "Write test that fails before fix",
+        "Make minimal necessary change",
+        "Document for future prevention"
+      ]
+    }
+  }
+}

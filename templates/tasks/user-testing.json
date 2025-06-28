@@ -1,0 +1,97 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "User Testing TASK with Selenium automation support"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "summary": "Conduct user testing to validate designs and identify usability issues using both manual and automated methods.",
+    "context": {
+      "test_type": "{{TEST_TYPE}} (moderated/unmoderated/automated)",
+      "feature_under_test": "{{FEATURE_NAME}}",
+      "target_users": "{{USER_DEMOGRAPHICS}}",
+      "sample_size": "{{PARTICIPANT_COUNT}}"
+    },
+    "pre_conditions": [
+      "Prototype/product ready for testing",
+      "Test scenarios defined",
+      "Participant recruitment complete",
+      "Testing environment prepared"
+    ],
+    "steps": [
+      {
+        "description": "Test Planning",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Environment Setup",
+        "estimate": "1h",
+        "status": "pending"
+      },
+      {
+        "description": "Pilot Testing",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "User Sessions",
+        "estimate": "6h",
+        "status": "pending"
+      },
+      {
+        "description": "Automated Testing",
+        "estimate": "3h",
+        "status": "pending"
+      },
+      {
+        "description": "Analysis & Reporting",
+        "estimate": "4h",
+        "status": "pending"
+      }
+    ],
+    "test_scenarios": [
+      {
+        "task": "{{TASK_DESCRIPTION}}",
+        "success_criteria": "{{SUCCESS_METRIC}}",
+        "time_limit": "{{TIME_LIMIT}}"
+      },
+      {
+        "task": "{{TASK_DESCRIPTION}}",
+        "success_criteria": "{{SUCCESS_METRIC}}",
+        "time_limit": "{{TIME_LIMIT}}"
+      }
+    ],
+    "definition_of_done": [
+      "All participants tested",
+      "Data compiled and analyzed",
+      "Issues prioritized by severity",
+      "Recommendations documented",
+      "Stakeholders briefed",
+      "Findings stored in RAG"
+    ],
+    "deliverables": [
+      "Test recordings/screenshots",
+      "Findings report with severity ratings",
+      "Recommendation priority list",
+      "Success metrics summary",
+      "Automated test scripts"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "task_specific": [
+        "Keep sessions under 60 minutes",
+        "Test one thing at a time",
+        "Don't lead the participant",
+        "Document everything, even small issues",
+        "Use both qualitative and quantitative data"
+      ]
+    }
+  }
+}

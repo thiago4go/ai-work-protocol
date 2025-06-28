@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Proof of concept task"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "objective_value": {
+      "what": "Prove {{CONCEPT/APPROACH}} is feasible",
+      "why": "De-risk before committing to full implementation",
+      "done_when": "Clear yes/no answer with working prototype"
+    },
+    "context": {
+      "project": "{{PARENT_PROJECT}}",
+      "risk": "{{WHAT_WERE_UNSURE_ABOUT}}",
+      "investment": "{{WHAT_FULL_IMPLEMENTATION_COSTS}}",
+      "alternative": "{{WHAT_HAPPENS_IF_NOT_FEASIBLE}}"
+    },
+    "poc_scope_rag_queries": [
+      "# Find similar POCs",
+      "rag_memory___hybridSearch query=\"POC {{CONCEPT}} feasibility prototype\"",
+      "rag_memory___searchNodes query=\"type:poc outcome:*\"",
+      "# Find technical constraints",
+      "rag_memory___hybridSearch query=\"{{TECHNOLOGY}} limitations constraints\""
+    ],
+    "steps": [
+      {
+        "description": "Define success criteria: What proves it works?",
+        "status": "pending",
+        "est": "30m"
+      },
+      {
+        "description": "Minimal setup: Simplest test environment",
+        "status": "pending",
+        "est": "30m"
+      },
+      {
+        "description": "Core technical challenge: Can we {{KEY_CHALLENGE}}?",
+        "status": "pending",
+        "est": "2h"
+      },
+      {
+        "description": "Performance check: Fast enough for {{USE_CASE}}?",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Integration test: Works with {{EXISTING_SYSTEM}}?",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Document findings + demo",
+        "status": "pending",
+        "est": "30m"
+      }
+    ],
+    "proof_points": {
+      "must_prove": [
+        "Technical: {{TECHNICAL_REQUIREMENT}} is achievable",
+        "Performance: Can handle {{LOAD_REQUIREMENT}}",
+        "Integration: Compatible with {{SYSTEM}}"
+      ],
+      "out_of_scope": [
+        "Production readiness",
+        "Error handling",
+        "Security hardening",
+        "Full test coverage"
+      ]
+    },
+    "success_criteria": [
+      "Go Decision: All proof points demonstrated",
+      "No-Go Decision: Clear blocker identified",
+      "Pivot Decision: Partial success, try {{ALTERNATIVE}}"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "poc_specific": [
+        "Timebox ruthlessly",
+        "Focus on biggest risk first",
+        "Quick and dirty is OK",
+        "Document what won't work too",
+        "Keep code throwaway"
+      ]
+    }
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Documentation creation task"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "objective_value": {
+      "what": "Document {{SYSTEM/FEATURE}} for {{AUDIENCE}}",
+      "why": "Enable {{AUDIENCE}} to {{USER_GOAL}} independently",
+      "done_when": "{{AUDIENCE}} successfully completes {{TASK}} using only docs"
+    },
+    "context": {
+      "project": "{{PARENT_PROJECT}}",
+      "audience": "{{TECHNICAL_LEVEL}} users who need to {{USE_CASE}}",
+      "format": "{{README/API/TUTORIAL/GUIDE}}",
+      "location": "{{WHERE_PUBLISHED}}"
+    },
+    "documentation_plan_rag_queries": [
+      "# Find existing docs to reference",
+      "rag_memory___hybridSearch query=\"{{SYSTEM}} documentation examples\"",
+      "rag_memory___searchNodes query=\"type:documentation audience:{{AUDIENCE}}\"",
+      "# Find common questions",
+      "rag_memory___searchNodes query=\"type:support_ticket component:{{SYSTEM}}\""
+    ],
+    "steps": [
+      {
+        "description": "Outline: List all questions docs must answer",
+        "status": "pending",
+        "est": "30m"
+      },
+      {
+        "description": "Quick Start: Minimal working example",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Core Concepts: Explain key ideas simply",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Reference: Complete API/configuration",
+        "status": "pending",
+        "est": "2h"
+      },
+      {
+        "description": "Troubleshooting: Common issues + solutions",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Test: Have someone follow the docs",
+        "status": "pending",
+        "est": "30m"
+      }
+    ],
+    "documentation_structure": [
+      "Overview: What is this? (1 paragraph)",
+      "Quick Start: Copy-paste to success (5 min)",
+      "Concepts: Mental model needed",
+      "How-To: Common tasks step-by-step",
+      "Reference: Every option explained",
+      "Troubleshooting: When things go wrong"
+    ],
+    "success_criteria_gates": [
+      "GATE 1: Can newcomer get started in <15 min?",
+      "GATE 2: Are all parameters documented?",
+      "GATE 3: Do examples actually work?",
+      "Output: Published docs + positive test feedback"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "documentation_specific": [
+        "Write for your audience's level",
+        "Show, don't just tell (examples!)",
+        "Test every code sample",
+        "Include \"why\" not just \"how\"",
+        "Add diagrams where helpful"
+      ]
+    }
+  }
+}

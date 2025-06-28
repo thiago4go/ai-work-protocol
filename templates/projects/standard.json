@@ -1,0 +1,45 @@
+{
+  "metadata": {
+    "type": "project",
+    "status": "active",
+    "priority": "high",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Standard PROJECT template"
+  },
+  "details": {
+    "project_name": "{{TITLE}}",
+    "goal": "{{PROJECT_GOAL}}",
+    "context": {
+      "problem": "{{PROBLEM_DESCRIPTION}}",
+      "solution": "{{PROPOSED_SOLUTION}}",
+      "users": "{{TARGET_USERS}}"
+    },
+    "success_criteria": [
+      "Functionality: {{CORE_FEATURE}} works for {{TARGET_USER}}",
+      "Quality: Zero critical bugs, <2s response time",
+      "Adoption: {{TARGET_USER}} can complete {{KEY_TASK}} without help"
+    ],
+    "value_driven_task_sequence": [
+      "Discovery: What's the smallest thing that proves value? (1-2 days)",
+      "MVP: Build just that → Get feedback (2-3 days)",
+      "Iterate: Fix top 3 issues from feedback (1-2 days)",
+      "Scale: Only after MVP validated (2-3 days)",
+      "Polish: Documentation, edge cases, performance (1-2 days)"
+    ],
+    "constraints": {
+      "timeline": "{{TIMELINE}}",
+      "resources": "{{RESOURCES}}",
+      "dependencies": "{{DEPENDENCIES}}"
+    },
+    "instructions": {
+      "inherits_from": "base_project.md workflow",
+      "project_specific": [
+        "Focus on clear problem definition before solution",
+        "Break down into discrete, testable features",
+        "Each task should produce working code or clear decisions"
+      ]
+    }
+  }
+}

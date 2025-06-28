@@ -1,0 +1,110 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Accessibility Audit TASK for WCAG compliance testing"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "summary": "Comprehensive accessibility audit to ensure WCAG 2.1 compliance and inclusive design for all users.",
+    "context": {
+      "audit_scope": "{{PAGES_OR_FEATURES}}",
+      "target_level": "WCAG 2.1 Level {{AA_OR_AAA}}",
+      "user_groups": "{{DISABILITY_CONSIDERATIONS}}",
+      "legal_requirements": "{{COMPLIANCE_NEEDS}}"
+    },
+    "pre_conditions": [
+      "WCAG checklist prepared",
+      "Testing tools installed",
+      "Screen reader configured",
+      "Keyboard testing ready"
+    ],
+    "steps": [
+      {
+        "description": "Automated Testing",
+        "estimate": "3h",
+        "status": "pending"
+      },
+      {
+        "description": "Keyboard Navigation",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Screen Reader Testing",
+        "estimate": "3h",
+        "status": "pending"
+      },
+      {
+        "description": "Visual Testing",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Form Accessibility",
+        "estimate": "2h",
+        "status": "pending"
+      },
+      {
+        "description": "Documentation & Fixes",
+        "estimate": "3h",
+        "status": "pending"
+      }
+    ],
+    "wcag_checklist": {
+      "perceivable": [
+        "Images have alt text",
+        "Videos have captions",
+        "Color not sole indicator",
+        "Contrast ratios meet standards"
+      ],
+      "operable": [
+        "Keyboard accessible",
+        "No keyboard traps",
+        "Skip links present",
+        "Sufficient time limits"
+      ],
+      "understandable": [
+        "Clear labels",
+        "Consistent navigation",
+        "Error identification",
+        "Help available"
+      ],
+      "robust": [
+        "Valid HTML",
+        "ARIA used correctly",
+        "Works with assistive tech"
+      ]
+    },
+    "definition_of_done": [
+      "All WCAG criteria tested",
+      "Issues documented with severity",
+      "Fix recommendations provided",
+      "Remediation plan created",
+      "Report delivered to team",
+      "Findings stored in RAG"
+    ],
+    "deliverables": [
+      "Accessibility audit report",
+      "Issue tracker tickets",
+      "Screenshot evidence",
+      "Remediation timeline",
+      "Automated test suite"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "task_specific": [
+        "Test with real assistive technologies",
+        "Include users with disabilities if possible",
+        "Document everything - legal compliance matters",
+        "Prioritize fixes by user impact",
+        "Automate what you can for regression prevention"
+      ]
+    }
+  }
+}

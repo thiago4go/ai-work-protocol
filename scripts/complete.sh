@@ -2,23 +2,30 @@
 
 # complete.sh - Complete and archive current task
 
-# Source git utilities
+# Source git utilities (if still needed, otherwise remove)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/git_utils.sh"
 
 # Get task file
-TASK_FILE="$1"
-if [ -z "$TASK_FILE" ]; then
-    # Auto-detect current task
-    TASK_FILE=$(find working/inprogress -name "*.md" -exec grep -l "^type: task" {} \; 2>/dev/null | head -1 | xargs basename 2>/dev/null)
-    if [ -z "$TASK_FILE" ]; then
+TASK_FILE_PATH=$1
+if [ -z "$TASK_FILE_PATH" ]; then
+    # Auto-detect current task (looking for .json)
+    TASK_FILE_PATH=""
+    for file in $(find working/inprogress -name "*.json"); do
+        if jq -e '.metadata.type == "task"' "$file" >/dev/null 2>&1; then
+            TASK_FILE_PATH="$file"
+            break
+        fi
+    done
+
+    if [ -z "$TASK_FILE_PATH" ]; then
         echo "❌ No active task found"
         exit 1
     fi
 fi
 
-SOURCE="working/inprogress/$TASK_FILE"
-DEST="working/completed/$TASK_FILE"
+SOURCE="$TASK_FILE_PATH"
+DEST="working/completed/$(basename "$TASK_FILE_PATH")"
 
 # Verify task exists
 if [ ! -f "$SOURCE" ]; then
@@ -26,39 +33,23 @@ if [ ! -f "$SOURCE" ]; then
     exit 1
 fi
 
-# Get task info
-TASK_TITLE=$(grep "^title:" "$SOURCE" | cut -d' ' -f2-)
-PARENT_PROJECT=$(grep "^parent_project:" "$SOURCE" | cut -d' ' -f2-)
+# Read task JSON, update status and completed timestamp
+TASK_CONTENT=$(cat "$SOURCE")
+DATE_ISO=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+UPDATED_TASK_CONTENT=$(echo "$TASK_CONTENT" | jq --arg date_iso "$DATE_ISO" '.metadata.status = "completed" | .metadata.updated = $date_iso')
+
+# Get task info for messages
+TASK_TITLE=$(echo "$TASK_CONTENT" | jq -r '.metadata.title')
+PARENT_PROJECT_SLUG=$(echo "$TASK_CONTENT" | jq -r '.metadata.parent_project')
 
 # Move to completed
 mv "$SOURCE" "$DEST"
 
-# Update status
-sed -i 's/status: active/status: completed/' "$DEST"
-sed -i "s/updated: .*/completed: $(date -u +"%Y-%m-%dT%H:%M:%SZ")/" "$DEST"
+# Write updated content to destination
+echo "$UPDATED_TASK_CONTENT" > "$DEST"
 
 echo "✅ Completed task: $TASK_TITLE"
 echo "   Archived to: working/completed/"
 
-# Update parent PROJECT if exists
-if [ -n "$PARENT_PROJECT" ] && [ -f "working/inprogress/$PARENT_PROJECT" ]; then
-    # Find and mark the corresponding task
-    sed -i "0,/\[ \].*$TASK_TITLE/{s/\[ \]/[x]/}" "working/inprogress/$PARENT_PROJECT"
-    echo "   Updated task in: $PARENT_PROJECT"
-fi
-
 # Auto-commit
 auto_commit "Complete task: $TASK_TITLE"
-
-# Prompt for reflection
-echo ""
-echo "📝 REFLECTION TIME"
-echo "══════════════════"
-echo "Add a lesson learned to CRITICAL_FINDINGS.md:"
-echo ""
-echo "## $(date +%Y-%m-%d) - $TASK_TITLE"
-echo "**What worked:** "
-echo "**Challenge:** "
-echo "**Learning:** "
-echo ""
-echo "This helps future work!"

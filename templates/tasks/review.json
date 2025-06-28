@@ -1,0 +1,92 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Code or design review task"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "objective_value": {
+      "what": "Review {{WHAT_TO_REVIEW}} for {{PURPOSE}}",
+      "why": "Ensure {{QUALITY_ASPECT}} before {{DEADLINE}}",
+      "done_when": "Feedback provided + critical issues resolved"
+    },
+    "context": {
+      "project": "{{PARENT_PROJECT}}",
+      "type": "{{CODE/DESIGN/ARCHITECTURE}} review",
+      "scope": "{{FILES/COMPONENTS/SYSTEMS}}",
+      "author": "{{AUTHOR}}"
+    },
+    "review_focus_rag_queries": [
+      "# Find standards and patterns",
+      "rag_memory___hybridSearch query=\"{{COMPONENT}} coding standards patterns\"",
+      "rag_memory___searchNodes query=\"type:standard category:{{REVIEW_TYPE}}\"",
+      "# Find common issues",
+      "rag_memory___searchNodes query=\"type:review_finding component:{{COMPONENT}}\"
+    ],
+    "steps": [
+      {
+        "description": "Understand context: Why was this built?",
+        "status": "pending",
+        "est": "20m"
+      },
+      {
+        "description": "Functionality: Does it meet requirements?",
+        "status": "pending",
+        "est": "45m"
+      },
+      {
+        "description": "Edge cases: What could break this?",
+        "status": "pending",
+        "est": "45m"
+      },
+      {
+        "description": "Quality: Performance, security, maintainability",
+        "status": "pending",
+        "est": "1h"
+      },
+      {
+        "description": "Document findings + discuss with author",
+        "status": "pending",
+        "est": "30m"
+      }
+    ],
+    "review_checklist": {
+      "functionality": [
+        "Solves stated problem",
+        "Handles error cases",
+        "Has appropriate tests"
+      ],
+      "code_quality": [
+        "Follows team standards",
+        "Clear naming and structure",
+        "No obvious performance issues"
+      ],
+      "security": [
+        "Input validation",
+        "Auth/permissions correct",
+        "No sensitive data exposed"
+      ]
+    },
+    "success_criteria": [
+      "Must Fix: All blockers addressed",
+      "Should Fix: Plan for important issues",
+      "Documented: Review feedback in writing"
+    ],
+    "instructions": {
+      "inherits_from": "base_task.md workflow",
+      "review_specific": [
+        "Understand intent before critiquing",
+        "Focus on significant issues",
+        "Provide specific examples",
+        "Suggest improvements, not just problems",
+        "Be constructive and respectful"
+      ]
+    }
+  }
+}

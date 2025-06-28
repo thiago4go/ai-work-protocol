@@ -1,0 +1,144 @@
+{
+  "metadata": {
+    "type": "task",
+    "status": "active",
+    "priority": "high",
+    "parent_project": "{{PARENT_PROJECT}}",
+    "created": "{{DATE}}",
+    "updated": "{{DATE}}",
+    "title": "{{TITLE}}",
+    "description": "Deep analysis task with 5W1H framework and comprehensive research"
+  },
+  "details": {
+    "task_name": "{{TITLE}}",
+    "objective": {
+      "goal": "{{ANALYSIS_GOAL}}",
+      "success": "Comprehensive understanding with actionable insights",
+      "deliverable": "Detailed analysis report with recommendations"
+    },
+    "context": {
+      "project": "{{PARENT_PROJECT}}",
+      "phase": "Deep Analysis/Research",
+      "value": "Thorough understanding before implementation"
+    },
+    "research_foundation": {
+      "what": "{{WHAT_ANALYZING}}",
+      "why": "{{WHY_IMPORTANT}}",
+      "who": "{{WHO_STAKEHOLDERS}}",
+      "when": "{{WHEN_TIMELINE}}",
+      "where": "{{WHERE_SCOPE}}",
+      "how": "5W1H + RAG + Web Research methodology"
+    },
+    "steps": [
+      {
+        "description": "STEP 1: Explore File System & Document Structure",
+        "status": "pending",
+        "foundation": {
+          "what": "Map relevant directories and files",
+          "why": "Understand existing codebase/documentation",
+          "how": "tree -L 3, find . -name \"*.md\", grep -r \"pattern\""
+        },
+        "rag_queries": [
+          "rag_memory___hybridSearch query=\"{{TITLE}} existing documentation\"",
+          "rag_memory___hybridSearch query=\"project structure conventions\"",
+          "rag_memory___hybridSearch query=\"similar analysis patterns\""
+        ],
+        "web_search": [
+          "\"{{TECH_STACK}} project structure best practices 2025\" (fetch 3 sources)",
+          "\"documentation standards for {{PROJECT_TYPE}}\" (fetch 3 sources)"
+        ],
+        "deliverable": "Directory map and file inventory in CURRENT_IMPLEMENTATION.md"
+      },
+      {
+        "description": "STEP 2: Analyze Core Components",
+        "status": "pending",
+        "foundation": {
+          "what": "{{COMPONENT_TO_ANALYZE}}",
+          "why": "{{ANALYSIS_REASON}}",
+          "how": "Read files, trace dependencies, understand flow"
+        },
+        "rag_queries": [
+          "rag_memory___hybridSearch query=\"{{COMPONENT}} architecture patterns\"",
+          "rag_memory___hybridSearch query=\"{{COMPONENT}} implementation examples\"",
+          "rag_memory___hybridSearch query=\"{{COMPONENT}} common issues\""
+        ],
+        "web_search": [
+          "\"{{COMPONENT}} best practices 2025\" (fetch 3 sources)",
+          "\"{{COMPONENT}} performance optimization\" (fetch 3 sources)"
+        ],
+        "deliverable": "Component analysis document with diagrams"
+      },
+      {
+        "description": "STEP 3: Synthesize Findings & Patterns",
+        "status": "pending",
+        "foundation": {
+          "what": "Patterns and insights from analysis",
+          "why": "Create actionable recommendations",
+          "how": "Compare findings, identify gaps, propose solutions"
+        },
+        "rag_queries": [
+          "rag_memory___hybridSearch query=\"synthesis techniques for technical analysis\"",
+          "rag_memory___hybridSearch query=\"{{DOMAIN}} decision frameworks\"",
+          "rag_memory___hybridSearch query=\"technical recommendation templates\""
+        ],
+        "web_search": [
+          "\"technical decision records {{TECH_STACK}} 2025\" (fetch 3 sources)",
+          "\"{{PROBLEM_DOMAIN}} solution patterns\" (fetch 3 sources)"
+        ],
+        "deliverable": "Synthesis report with clear recommendations"
+      },
+      {
+        "description": "STEP 4: Create Knowledge Artifacts",
+        "status": "pending",
+        "foundation": {
+          "what": "Entities, relationships, and documentation",
+          "why": "Preserve knowledge for future use",
+          "how": "RAG storage, entity creation, relationship mapping"
+        },
+        "actions": [
+          "rag_memory___storeDocument id=\"analysis_{{TITLE}}\" content=\"[synthesis]\"",
+          "rag_memory___chunkDocument documentId=\"analysis_{{TITLE}}\"",
+          "rag_memory___embedChunks documentId=\"analysis_{{TITLE}}\"",
+          "rag_memory___createEntities entities=[{\"name\": \"{{KEY_CONCEPT_1}}\", \"type\": \"concept\", \"properties\": {...}},{\"name\": \"{{KEY_CONCEPT_2}}\", \"type\": \"pattern\", \"properties\": {...}}]",
+          "rag_memory___createRelations relations=[{\"from\": \"{{CONCEPT_1}}\", \"to\": \"{{CONCEPT_2}}\", \"type\": \"implements\"}]"
+        ],
+        "deliverable": "Knowledge graph with entities and relationships"
+      }
+    ],
+    "outcomes": {
+      "user": "Clear understanding and actionable plan",
+      "business": "Informed decisions based on thorough analysis",
+      "technical": "Documented patterns and reusable knowledge"
+    },
+    "pivot_triggers": [
+      "Cannot access necessary files/documentation",
+      "Analysis reveals fundamentally different problem",
+      "Time investment exceeds value"
+    ],
+    "instructions": {
+      "deep_analysis_protocol": {
+        "methodology": [
+          "Every step MUST follow this pattern:",
+          "1. Foundation: Use 5W1H to establish clear context",
+          "2. RAG Research: 3 queries minimum for existing knowledge",
+          "3. Web Research: 2 searches, fetch and read 3 sources each",
+          "4. Synthesis: Assimilate findings into coherent insights",
+          "5. Storage: Create entities and relationships in RAG"
+        ],
+        "quality_checks": [
+          "Before marking step complete:",
+          "Did you use 5W1H framework?",
+          "Did you run 3 RAG queries?",
+          "Did you perform 2 web searches?",
+          "Did you read 3 sources per search?",
+          "Did you create entities/relationships?",
+          "Is the deliverable clear and actionable?"
+        ],
+        "remember": [
+          "This template is for DEEP understanding, not quick implementation.",
+          "Take time to research thoroughly - the insights guide everything else."
+        ]
+      }
+    }
+  }
+}

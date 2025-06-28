@@ -1,0 +1,57 @@
+{
+  "workflow_guidance": {
+    "project_creation": {
+      "description": "When creating this project:",
+      "steps": [
+        "Query for similar projects:",
+        "rag_memory___hybridSearch query=\"{{TITLE}} similar projects outcomes\"",
+        "rag_memory___searchNodes query=\"type:project status:completed\"",
+        "Create project entity:",
+        "rag_memory___createEntities entities=[{\"name\": \"project_{{TITLE}}\", \"type\": \"project\", \"properties\": {\"goal\": \"{{PROJECT_GOAL}}\", \"created\": \"{{DATE}}\", \"status\": \"active\", \"success_criteria\": [\"criterion1\", \"criterion2\", \"criterion3\"]}}]",
+        "Store and process initial state:",
+        "# Store document",
+        "rag_memory___storeDocument id=\"project_{{TITLE}}_init\" content=\"[project definition]\"",
+        "# Process for search",
+        "rag_memory___chunkDocument documentId=\"project_{{TITLE}}_init\"",
+        "rag_memory___embedChunks documentId=\"project_{{TITLE}}_init\"",
+        "rag_memory___extractTerms documentId=\"project_{{TITLE}}_init\"",
+        "rag_memory___linkEntitiesToDocument documentId=\"project_{{TITLE}}_init\" entityNames=[\"project_{{TITLE}}\"]"
+      ]
+    },
+    "daily_startup": {
+      "description": "Every session with this PROJECT:",
+      "steps": [
+        "# Load full project context",
+        "rag_memory___hybridSearch query=\"{{TITLE}} progress decisions blockers\"",
+        "rag_memory___getRelatedNodes nodeNames=[\"project_{{TITLE}}\"]",
+        "# Check completed tasks",
+        "rag_memory___searchNodes query=\"parent_project:{{TITLE}} type:task status:completed\""
+      ]
+    },
+    "task_planning": {
+      "description": "Before creating new task:",
+      "steps": [
+        "1. Review what's been done:",
+        "rag_memory___hybridSearch query=\"{{TITLE}} completed tasks outcomes\"",
+        "2. Identify next logical step based on:",
+        "- Success criteria progress",
+        "- Dependencies completed",
+        "- Lessons from previous tasks",
+        "3. Create informed task: Use your task creation tool (e.g., by writing a new task JSON file in working/inprogress/)"
+      ]
+    },
+    "progress_tracking": [
+      "Update CURRENT_IMPLEMENTATION.json after each work session",
+      "Track completion % against success criteria",
+      "Document major decisions with rationale",
+      "Capture assumptions that change"
+    ],
+    "project_patterns": [
+      "Common patterns to watch for:",
+      "Morning sessions more productive \u2192 Schedule complex work AM",
+      "External dependencies cause delays \u2192 Front-load these tasks",
+      "Discovery tasks often exceed estimates \u2192 Buffer accordingly",
+      "Implementation goes faster with good discovery \u2192 Invest in research"
+    ]
+  }
+}

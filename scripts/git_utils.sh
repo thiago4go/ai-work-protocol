@@ -23,18 +23,22 @@ generate_commit_msg() {
     local file="$2"
     local timestamp=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
     
+    # Remove .json extension for display in commit message if present
+    local base_filename=$(basename "$file")
+    local display_name="${base_filename%.json}"
+    
     case "$action" in
         "complete_plan")
-            echo "✅ Completed plan: $(basename "$file" .md) - $timestamp"
+            echo "✅ Completed plan: $display_name - $timestamp"
             ;;
         "new_epic")
-            echo "🎯 Created new EPIC: $(basename "$file" .md) - $timestamp"
+            echo "🎯 Created new EPIC: $display_name - $timestamp"
             ;;
         "new_plan")
-            echo "📋 Created new plan: $(basename "$file" .md) - $timestamp"
+            echo "📋 Created new plan: $display_name - $timestamp"
             ;;
         "update_status")
-            echo "📊 Updated status: $file - $timestamp"
+            echo "📊 Updated status: $display_name - $timestamp"
             ;;
         *)
             echo "🔄 Memory system update: $action - $timestamp"

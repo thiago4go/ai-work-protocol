@@ -71,7 +71,7 @@ OUTPUT_DIR="$WORKING_DIR/inprogress" # Default output directory.
 
 if [ "$TYPE" == "project" ]; then
     # Check project WIP limit.
-    ACTIVE_COUNT=$(find "$WORKING_DIR/inprogress" -name "*.json" -exec jq -e '.title != null and .tasks != null' {} >/dev/null \; -print 2>/dev/null | wc -l)
+    ACTIVE_COUNT=$(find "$WORKING_DIR/inprogress" -name "*.json" -print0 | xargs -0 jq -r '.metadata.type' | grep -c "project")
     if [ "$ACTIVE_COUNT" -ge 1 ]; then
         echo "⚠️  PROJECT limit reached (1 active). Creating in backlog instead."
         OUTPUT_DIR="$WORKING_DIR/backlog"
@@ -126,11 +126,7 @@ else
 fi
 
 # Perform variable replacements using jq.
-FINAL_CONTENT=$(echo "$MERGED_CONTENT" | \
-    jq --arg date_iso "$DATE_ISO" \
-       --arg title "$TITLE" \
-       --arg parent_project "$PARENT_PROJECT" \
-       '.metadata.created = $date_iso | .metadata.updated = $date_iso | .metadata.title = $title | .details.project_name = ($title | select(. != null)) | .details.task_name = ($title | select(. != null)) | .metadata.parent_project = ($parent_project | select(. != null))')
+FINAL_CONTENT=$(echo "$MERGED_CONTENT" | jq --arg date_iso "$DATE_ISO" --arg title "$TITLE" --arg parent_project "$PARENT_PROJECT" --arg type "$TYPE" '.metadata.created = $date_iso | .metadata.updated = $date_iso | .metadata.title = $title | .metadata.type = $type | .details.project_name = ($title | select(. != null)) | .details.task_name = ($title | select(. != null)) | .metadata.parent_project = ($parent_project | select(. != null))')
 
 # --- Final Actions ---
 

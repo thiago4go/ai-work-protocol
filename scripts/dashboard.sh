@@ -86,7 +86,7 @@ fi
 echo ""
 echo -e "${YELLOW}📊 STATISTICS${NC}"
 echo "═══════════════════════════════════════════════════════════════"
-TOTAL_TASKS=$(find working -name "*.json" -exec jq -e '.metadata.type == "task"' {} >/dev/null \; -print | wc -l)
+TOTAL_TASKS=$(find working -name "*.json" -print0 | xargs -0 jq -r '.metadata.type' | grep -c "task")
 COMPLETED=$(find working/completed -name "*.json" 2>/dev/null | wc -l)
 ACTIVE=$(find working/inprogress -name "*.json" 2>/dev/null | wc -l)
 

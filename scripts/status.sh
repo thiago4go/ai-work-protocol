@@ -2,6 +2,10 @@
 
 # status.sh - Show current work status
 
+# Get the directory where the script is located to resolve all paths correctly.
+SCRIPT_DIR=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+MEMORY_DIR=$(cd -- "$SCRIPT_DIR/.." &>/dev/null && pwd)
+
 echo "📊 Memory System Status"
 echo "═══════════════════════"
 
@@ -29,6 +33,6 @@ echo "💡 Next Steps:"
 echo "   - Use 'make project' or 'make task' to create new work."
 echo "   - Use 'make activate' to move items from backlog to active."
 echo "   - Use 'make done' to complete the current task."
-   - Use 'make status' to check progress."
+   echo "   - Use 'make status' to check progress."
 echo "   - Use 'make backlog' to view queued work."
 echo "   - Consult AI_PROTOCOL.md for detailed guidance."

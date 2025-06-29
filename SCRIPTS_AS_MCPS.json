@@ -11,7 +11,7 @@
       "related_ai_workflow": [
         "AI_PROTOCOL.md: Scenario 1: Starting Fresh Conversation (Step 1)"
       ]
-    },,,
+    },
     {
       "name": "create.sh",
       "description": "Creates a new project or task file from a specified template. Handles WIP limits by moving new items to the backlog if limits are reached. Populates the new JSON file with initial metadata and performs variable substitutions.",

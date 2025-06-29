@@ -1,0 +1,608 @@
+{
+  "protocol_version": "1.0",
+  "description": "Mandatory operational protocol for AI session coherence, context management, and resilient workflow execution. This protocol defines how the AI interacts with its memory system and external tools.",
+  "procedure_execution_guide": {
+    "description": "When an 'action' object contains 'procedure_name' and 'procedure_inputs', the AI's execution engine MUST dynamically construct and execute the appropriate tool call by consulting 'SCRIPTS_AS_MCPS.json'.",
+    "steps": [
+      "1. Load 'SCRIPTS_AS_MCPS.json' to access the manifest of available script-based tools.",
+      "2. For a given 'procedure_name' (e.g., 'create_project'), locate the corresponding entry in 'SCRIPTS_AS_MCPS.json'.",
+      "3. Extract the 'usage' string (e.g., 'run_shell_command(command='scripts/create.sh <type> <template> '<title>' [parent_project]')') and 'arguments' array from the located entry.",
+      "4. Dynamically construct the 'command' string for the 'run_shell_command' tool by mapping the 'procedure_inputs' (e.g., 'template', 'title') to the script's expected 'arguments' and substituting them into the 'usage' string.",
+      "5. Execute the constructed 'run_shell_command' using the AI's available tool invocation mechanism."
+    ]
+  },
+  "variables": {
+    "current_implementation_path": "memory/CURRENT_IMPLEMENTATION.json",
+    "critical_findings_path": "memory/CRITICAL_FINDINGS.md",
+    "inprogress_dir": "memory/working/inprogress/"
+  },
+  "startup_sequence": [
+    {
+      "step_id": "S1_READ_CURRENT_IMPLEMENTATION",
+      "description": "Attempt to read the primary state file to re-establish current work context. This is the first and most critical step for session coherence.",
+      "action": {
+        "tool": "read_file",
+        "params": {
+          "absolute_path": "{{variables.current_implementation_path}}"
+        }
+      },
+      "on_success": "S2_RAG_HEALTH_CHECK",
+      "on_failure": {
+        "strategy": "log_and_fallback",
+        "message": "Failed to read CURRENT_IMPLEMENTATION.json. Assuming no prior session or corrupted state. Attempting to initialize default state.",
+        "fallback_step": "S1_INIT_DEFAULT_STATE"
+      }
+    },
+    {
+      "step_id": "S1_INIT_DEFAULT_STATE",
+      "description": "Initialize a default CURRENT_IMPLEMENTATION.json if reading failed or file was empty. This ensures a clean starting point.",
+      "action": {
+        "tool": "write_file",
+        "params": {
+          "file_path": "{{variables.current_implementation_path}}",
+          "content": "{ \"status\": \"initialized\", \"active_project\": null, \"active_task\": null, \"last_session_start\": \"{{current_timestamp}}\", \"last_error\": null }"
+        }
+      },
+      "on_success": "S2_RAG_HEALTH_CHECK",
+      "on_failure": {
+        "strategy": "fatal_error",
+        "message": "CRITICAL: Cannot initialize default state for CURRENT_IMPLEMENTATION.json. System cannot proceed without a writable state file."
+      }
+    },
+    {
+      "step_id": "S2_RAG_HEALTH_CHECK",
+      "description": "Perform a health check on the RAG system to ensure long-term memory is accessible. This is mandatory for learning and avoiding repeated mistakes.",
+      "action": {
+        "tool": "getKnowledgeGraphStats",
+        "params": {}
+      },
+      "on_success": "S3_RAG_CONTEXT_QUERY",
+      "on_failure": {
+        "strategy": "log_and_continue",
+        "message": "RAG health check failed. Operating in degraded mode without full long-term memory. This may lead to reduced context and potential rework. Proceeding with file-based context only."
+      }
+    },
+    {
+      "step_id": "S3_RAG_CONTEXT_QUERY",
+      "description": "Query RAG for context based on the current state (active project/task) to retrieve relevant past learnings and patterns.",
+      "action": {
+        "tool": "hybridSearch",
+        "params": {
+          "query": "context for current work: {{current_implementation.active_project.title | default('')}} {{current_implementation.active_task.title | default('')}}",
+          "limit": 5
+        }
+      },
+      "on_success": "S4_READ_ACTIVE_WORK_FILES",
+      "on_failure": {
+        "strategy": "log_and_continue",
+        "message": "RAG context query failed. Proceeding with file-based context only. Long-term memory may be incomplete."
+      }
+    },
+    {
+      "step_id": "S4_READ_ACTIVE_WORK_FILES",
+      "description": "Read the active project and task files (if specified in CURRENT_IMPLEMENTATION.json) to get detailed current work context.",
+      "action": {
+        "tool": "read_many_files",
+        "params": {
+          "paths": [
+            "{{variables.inprogress_dir}}{{current_implementation.active_project.filename | default('')}}",
+            "{{variables.inprogress_dir}}{{current_implementation.active_task.filename | default('')}}"
+          ],
+          "exclude": [""]
+        }
+      },
+      "on_success": "S5_DETERMINE_NEXT_ACTION",
+      "on_failure": {
+        "strategy": "log_and_continue",
+        "message": "Failed to read one or more active work files. Current work context may be incomplete. Proceeding based on available information."
+      }
+    },
+    {
+      "step_id": "S5_DETERMINE_NEXT_ACTION",
+      "description": "Based on the re-established context, determine the most appropriate next action. This is the entry point to the main operational loop.",
+      "action": {
+        "tool": "internal_decision_logic",
+        "params": {
+          "context": "{{current_implementation}}",
+          "rag_results": "{{rag_query_results}}",
+          "active_files_content": "{{active_files_content}}"
+        }
+      },
+      "on_success": "MAIN_LOOP_ENTRY",
+      "on_failure": {
+        "strategy": "fatal_error",
+        "message": "CRITICAL: Failed to determine next action after startup. System cannot proceed."
+      }
+    }
+  ],
+  "main_operational_loop": [
+    {
+      "step_id": "MAIN_LOOP_ENTRY",
+      "description": "The AI's continuous operational loop. It will process user requests or continue ongoing work.",
+      "action": {
+        "tool": "await_user_input_or_continue_work",
+        "params": {}
+      },
+      "on_success": "PROCESS_REQUEST_OR_WORK",
+      "on_failure": {
+        "strategy": "log_and_retry",
+        "message": "Error in main loop entry. Retrying...",
+        "retry_limit": 3
+      }
+    },
+    {
+      "step_id": "PROCESS_REQUEST_OR_WORK",
+      "description": "Evaluate the user's request or the current work state to select the appropriate action sequence.",
+      "conditional_actions": [
+        {
+          "condition": "user_request.type == 'create_project'",
+          "next_sequence": "ACTION_CREATE_PROJECT"
+        },
+        {
+          "condition": "user_request.type == 'create_task'",
+          "next_sequence": "ACTION_CREATE_TASK"
+        },
+        {
+          "condition": "user_request.type == 'complete_task'",
+          "next_sequence": "ACTION_COMPLETE_TASK"
+        },
+        {
+          "condition": "user_request.type == 'activate_item'",
+          "next_sequence": "ACTION_ACTIVATE_ITEM"
+        },
+        {
+          "condition": "user_request.type == 'get_status'",
+          "next_sequence": "ACTION_GET_STATUS"
+        },
+        {
+          "condition": "current_implementation.active_task != null && current_implementation.active_task.status != 'completed'",
+          "next_sequence": "ACTION_CONTINUE_TASK"
+        },
+        {
+          "condition": "true",
+          "next_sequence": "ACTION_DEFAULT_IDLE"
+        }
+      ],
+      "on_failure": {
+        "strategy": "log_and_continue",
+        "message": "Failed to process request or determine next work step. Returning to main loop entry."
+      }
+    }
+  ],
+  "actions": {
+    "ACTION_CREATE_PROJECT": [
+      {
+        "step_id": "A_CP_1_RUN_SCRIPT",
+        "description": "Execute the create.sh script to create a new project file.",
+        "action": {
+          "procedure_name": "create_project",
+          "procedure_inputs": {
+            "template": "{{user_request.template | default('standard')}}",
+            "title": "{{user_request.title}}"
+          }
+        },
+        "on_success": "A_CP_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to create project via script. Check script output for details."
+        }
+      },
+      {
+        "step_id": "A_CP_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "description": "Update CURRENT_IMPLEMENTATION.json to reflect the newly created active project.",
+        "action": {
+          "tool": "write_file",
+          "params": {
+            "file_path": "{{variables.current_implementation_path}}",
+            "content": "{{current_implementation | update_active_project(script_output.filename, script_output.title)}}"
+          }
+        },
+        "on_success": "A_CP_3_STORE_RAG_ENTITY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to update CURRENT_IMPLEMENTATION.json after project creation. Context may be lost on next session."
+        }
+      },
+      {
+        "step_id": "A_CP_3_STORE_RAG_ENTITY",
+        "description": "Store the new project as an entity in the RAG system for long-term memory and learning.",
+        "action": {
+          "tool": "createEntities",
+          "params": {
+            "entities": [
+              {
+                "name": "{{user_request.title}}",
+                "entityType": "PROJECT",
+                "observations": ["Created on {{current_timestamp}}", "Template: {{user_request.template | default('standard')}}"]
+              }
+            ]
+          }
+        },
+        "on_success": "MAIN_LOOP_ENTRY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to store project entity in RAG. Long-term learning may be impacted."
+        }
+      }
+    ],
+    "ACTION_CREATE_TASK": [
+      {
+        "step_id": "A_CT_0_CHECK_ACTIVE_PROJECT",
+        "description": "Ensure a project is active before attempting to create a task.",
+        "condition": "current_implementation.active_project != null",
+        "on_success": "A_CT_1_RUN_SCRIPT",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Cannot create task: No active project found. A task must belong to an active project."
+        }
+      },
+      {
+        "step_id": "A_CT_1_RUN_SCRIPT",
+        "description": "Execute the create.sh script to create a new task file.",
+        "action": {
+          "procedure_name": "create_task",
+          "procedure_inputs": {
+            "template": "{{user_request.template | default('implementation')}}",
+            "title": "{{user_request.title}}",
+            "parent_project": "{{current_implementation.active_project.filename | default('')}}"
+          }
+        },
+        "on_success": "A_CT_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to create task via script. Check script output for details."
+        }
+      },
+      {
+        "step_id": "A_CT_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "description": "Update CURRENT_IMPLEMENTATION.json to reflect the newly created active task.",
+        "action": {
+          "tool": "write_file",
+          "params": {
+            "file_path": "{{variables.current_implementation_path}}",
+            "content": "{{current_implementation | update_active_task(script_output.filename, script_output.title)}}"
+          }
+        },
+        "on_success": "A_CT_3_STORE_RAG_ENTITY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to update CURRENT_IMPLEMENTATION.json after task creation. Context may be lost on next session."
+        }
+      },
+      {
+        "step_id": "A_CT_3_STORE_RAG_ENTITY",
+        "description": "Store the new task as an entity in the RAG system.",
+        "action": {
+          "tool": "createEntities",
+          "params": {
+            "entities": [
+              {
+                "name": "{{user_request.title}}",
+                "entityType": "TASK",
+                "observations": ["Created on {{current_timestamp}}", "Template: {{user_request.template | default('implementation')}}", "Part of project: {{current_implementation.active_project.title | default('N/A')}}"]
+              }
+            ]
+          }
+        },
+        "on_success": "MAIN_LOOP_ENTRY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to store task entity in RAG. Long-term learning may be impacted."
+        }
+      }
+    ],
+    "ACTION_COMPLETE_TASK": [
+      {
+        "step_id": "A_CT_1_RUN_SCRIPT",
+        "description": "Execute the complete.sh script to mark the current active task as completed.",
+        "action": {
+          "procedure_name": "complete_task",
+          "procedure_inputs": {}
+        },
+        "on_success": "A_CT_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to complete task via script. Task may still be marked as in-progress."
+        }
+      },
+      {
+        "step_id": "A_CT_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "description": "Update CURRENT_IMPLEMENTATION.json to reflect the task completion and clear the active task.",
+        "action": {
+          "tool": "write_file",
+          "params": {
+            "file_path": "{{variables.current_implementation_path}}",
+            "content": "{{current_implementation | clear_active_task}}"
+          }
+        },
+        "on_success": "A_CT_3_STORE_RAG_FINDINGS",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to update CURRENT_IMPLEMENTATION.json after task completion. Context may be lost on next session."
+        }
+      },
+      {
+        "step_id": "A_CT_3_STORE_RAG_FINDINGS",
+        "description": "Store a summary of the completed task and any critical findings in RAG for future reference and learning.",
+        "action": {
+          "tool": "storeDocument",
+          "params": {
+            "id": "task_completion_{{current_implementation.active_task.filename | default('unknown')}}_{{current_timestamp}}",
+            "content": "Completed task: {{current_implementation.active_task.title | default('Unknown Task')}}. Summary: {{user_request.summary | default('No summary provided.')}}",
+            "metadata": {
+              "type": "task_completion",
+              "task_title": "{{current_implementation.active_task.title | default('Unknown Task')}}",
+              "project_title": "{{current_implementation.active_project.title | default('N/A')}}"
+            }
+          }
+        },
+        "on_success": "MAIN_LOOP_ENTRY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to store task completion findings in RAG. Long-term learning may be impacted."
+        }
+      }
+    ],
+    "ACTION_ACTIVATE_ITEM": [
+      {
+        "step_id": "A_AI_1_RUN_SCRIPT",
+        "description": "Execute the activate.sh script to move a project or task from backlog to in-progress.",
+        "action": {
+          "procedure_name": "activate_item",
+          "procedure_inputs": {
+            "filename_pattern": "{{user_request.filename_pattern}}"
+          }
+        },
+        "on_success": "A_AI_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to activate item via script. Item may still be in backlog."
+        }
+      },
+      {
+        "step_id": "A_AI_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "description": "Update CURRENT_IMPLEMENTATION.json to reflect the newly active item.",
+        "action": {
+          "tool": "write_file",
+          "params": {
+            "file_path": "{{variables.current_implementation_path}}",
+            "content": "{{current_implementation | update_active_item(script_output.activated_filename, script_output.activated_title, script_output.activated_type)}}"
+          }
+        },
+        "on_success": "MAIN_LOOP_ENTRY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to update CURRENT_IMPLEMENTATION.json after activating item. Context may be lost on next session."
+        }
+      }
+    ],
+    "ACTION_GET_STATUS": [
+      {
+        "step_id": "A_GS_1_RUN_SCRIPT",
+        "description": "Execute the status.sh script to get an overview of the current work state.",
+        "action": {
+          "procedure_name": "get_status",
+          "procedure_inputs": {}
+        },
+        "on_success": "MAIN_LOOP_ENTRY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to get status via script."
+        }
+      }
+    ],
+    "ACTION_CONTINUE_TASK": [
+      {
+        "step_id": "A_CT_1_READ_TASK_DETAILS",
+        "description": "Read the active task file to understand the next steps and current progress.",
+        "action": {
+          "tool": "read_file",
+          "params": {
+            "absolute_path": "{{variables.inprogress_dir}}{{current_implementation.active_task.filename}}"
+          }
+        },
+        "on_success": "A_CT_2_QUERY_RAG_FOR_GUIDANCE",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to read active task file. Cannot continue task without details."
+        }
+      },
+      {
+        "step_id": "A_CT_2_QUERY_RAG_FOR_GUIDANCE",
+        "description": "Query RAG for guidance based on the current task step and any identified blockers.",
+        "action": {
+          "tool": "hybridSearch",
+          "params": {
+            "query": "guidance for task: {{current_implementation.active_task.title}} step: {{active_task_content.current_step.description | default('')}} blockers: {{active_task_content.blockers | default('')}}",
+            "limit": 3
+          }
+        },
+        "on_success": "A_CT_3_PERFORM_WORK",
+        "on_failure": {
+          "strategy": "log_and_continue",
+          "message": "Failed to query RAG for guidance. Proceeding with task based on file context only."
+        }
+      },
+      {
+        "step_id": "A_CT_3_PERFORM_WORK",
+        "description": "This step represents the actual work being performed by the AI based on the task details and RAG guidance. This would involve internal AI logic and potentially other tool calls not explicitly defined here (e.g., code modifications, external API calls).",
+        "action": {
+          "tool": "internal_work_execution",
+          "params": {
+            "task_details": "{{active_task_content}}",
+            "rag_guidance": "{{rag_query_results}}"
+          }
+        },
+        "on_success": "A_CT_4_UPDATE_TASK_PROGRESS",
+        "on_failure": {
+          "strategy": "log_and_handle_blocker",
+          "message": "Work execution failed. Attempting to handle as a blocker.",
+          "blocker_details": "{{error_details}}"
+        }
+      },
+      {
+        "step_id": "A_CT_4_UPDATE_TASK_PROGRESS",
+        "description": "Update the active task file to reflect progress or completion of a step.",
+        "action": {
+          "tool": "write_file",
+          "params": {
+            "file_path": "{{variables.inprogress_dir}}{{current_implementation.active_task.filename}}",
+            "content": "{{active_task_content | update_step_status(work_execution_result)}}"
+          }
+        },
+        "on_success": "A_CT_5_UPDATE_CURRENT_IMPLEMENTATION",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to update task file progress. Progress may be lost."
+        }
+      },
+      {
+        "step_id": "A_CT_5_UPDATE_CURRENT_IMPLEMENTATION",
+        "description": "Update CURRENT_IMPLEMENTATION.json to reflect the latest task progress.",
+        "action": {
+          "tool": "write_file",
+          "params": {
+            "file_path": "{{variables.current_implementation_path}}",
+            "content": "{{current_implementation | update_task_progress(work_execution_result)}}"
+          }
+        },
+        "on_success": "MAIN_LOOP_ENTRY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to update CURRENT_IMPLEMENTATION.json with task progress. Context may be lost."
+        }
+      }
+    ],
+    "ACTION_HANDLE_BLOCKER": [
+      {
+        "step_id": "A_HB_1_DOCUMENT_BLOCKER",
+        "description": "Add a note about the blocker to the active task file.",
+        "action": {
+          "tool": "write_file",
+          "params": {
+            "file_path": "{{variables.inprogress_dir}}{{current_implementation.active_task.filename}}",
+            "content": "{{active_task_content | add_blocker_note(blocker_details)}}"
+          }
+        },
+        "on_success": "A_HB_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "on_failure": {
+          "strategy": "log_and_continue",
+          "message": "Failed to document blocker in task file. Blocker details may be lost."
+        }
+      },
+      {
+        "step_id": "A_HB_2_UPDATE_CURRENT_IMPLEMENTATION",
+        "description": "Update CURRENT_IMPLEMENTATION.json to reflect the blocker status.",
+        "action": {
+          "tool": "write_file",
+          "params": {
+            "file_path": "{{variables.current_implementation_path}}",
+            "content": "{{current_implementation | set_blocker_status(blocker_details)}}"
+          }
+        },
+        "on_success": "A_HB_3_QUERY_RAG_FOR_SOLUTIONS",
+        "on_failure": {
+          "strategy": "log_and_continue",
+          "message": "Failed to update CURRENT_IMPLEMENTATION.json with blocker status."
+        }
+      },
+      {
+        "step_id": "A_HB_3_QUERY_RAG_FOR_SOLUTIONS",
+        "description": "Query RAG for solutions or workarounds related to the blocker.",
+        "action": {
+          "tool": "hybridSearch",
+          "params": {
+            "query": "solution for blocker: {{blocker_details.type | default('general')}} in {{current_implementation.active_task.title | default('current task')}} context: {{blocker_details.context | default('')}}",
+            "limit": 5
+          }
+        },
+        "on_success": "A_HB_4_STORE_CRITICAL_FINDING",
+        "on_failure": {
+          "strategy": "log_and_continue",
+          "message": "Failed to query RAG for blocker solutions. AI may need to attempt manual resolution."
+        }
+      },
+      {
+        "step_id": "A_HB_4_STORE_CRITICAL_FINDING",
+        "description": "If RAG doesn't resolve, add a detailed entry to CRITICAL_FINDINGS.md and store in RAG.",
+        "action": {
+          "tool": "write_file",
+          "params": {
+            "file_path": "{{variables.critical_findings_path}}",
+            "content": "{{critical_findings_content | append_entry(blocker_details, rag_solutions)}}"
+          }
+        },
+        "on_success": "A_HB_5_STORE_RAG_FINDING_ENTITY",
+        "on_failure": {
+          "strategy": "log_and_continue",
+          "message": "Failed to update CRITICAL_FINDINGS.md. Blocker details may not be indexed."
+        }
+      },
+      {
+        "step_id": "A_HB_5_STORE_RAG_FINDING_ENTITY",
+        "description": "Store the critical finding as an entity in RAG.",
+        "action": {
+          "tool": "createEntities",
+          "params": {
+            "entities": [
+              {
+                "name": "Blocker: {{blocker_details.type | default('Unknown')}} - {{current_timestamp}}",
+                "entityType": "BLOCKER",
+                "observations": ["Task: {{current_implementation.active_task.title | default('N/A')}}", "Description: {{blocker_details.description | default('No description')}}", "Attempted solutions: {{rag_solutions | to_json}}"]
+              }
+            ]
+          }
+        },
+        "on_success": "MAIN_LOOP_ENTRY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to store blocker entity in RAG. Long-term learning may be impacted."
+        }
+      }
+    ],
+    "ACTION_DEFAULT_IDLE": [
+      {
+        "step_id": "A_DI_1_LOG_IDLE",
+        "description": "No active task or specific user request. AI is in an idle state, awaiting further instructions or new work.",
+        "action": {
+          "tool": "log_message",
+          "params": {
+            "message": "AI is idle. Awaiting new instructions or work."
+          }
+        },
+        "on_success": "MAIN_LOOP_ENTRY",
+        "on_failure": {
+          "strategy": "log_and_return",
+          "message": "Failed to log idle message."
+        }
+      }
+    ]
+  },
+  "error_handling_strategies": {
+    "log_and_continue": {
+      "action": "log",
+      "level": "WARNING",
+      "message": "Warning: {{message}}. Continuing to next step in sequence."
+    },
+    "log_and_fallback": {
+      "action": "log",
+      "level": "ERROR",
+      "message": "Error: {{message}}. Attempting fallback action: {{fallback_step}}."
+    },
+    "log_and_retry": {
+      "action": "log",
+      "level": "ERROR",
+      "message": "Error: {{message}}. Retrying step (attempt {{retry_count}} of {{retry_limit}})."
+    },
+    "log_and_return": {
+      "action": "log",
+      "level": "ERROR",
+      "message": "Error: {{message}}. Returning to main operational loop."
+    },
+    "fatal_error": {
+      "action": "log",
+      "level": "FATAL",
+      "message": "FATAL ERROR: {{message}}. System cannot recover and will halt."
+    }
+  }
+}
